@@ -16,7 +16,6 @@ div#header {
 	background-color: #171717;
 	height: calc(4vw + 4vh);
 	width: 100vw;
-
 	display: flex;
 	align-items: center;
 	font-size: calc(1.5vw + 1.5vh);
@@ -30,7 +29,6 @@ div#header>span {
 div#header-right {
 	margin-left: auto;
 	margin-right: calc(1vw + 1vh);
-
 	display: flex;
 	flex-direction: row;
 	align-items: center;
