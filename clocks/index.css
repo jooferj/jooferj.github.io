@@ -6,7 +6,7 @@ html, body {
     background-color: #000000;
 }
 
-a, a:visited {
+a {
     text-decoration: none;
     color: #c5c5c5;
 }
@@ -49,21 +49,12 @@ div#header-right {
     background-color: #202020;
 }
 
-#content > a > div {
-    width: calc(10vw + 10vh);
+#content > a > span {
     height: calc(7vw + 7vh);
-
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-#content > a > div > img {
-    width: calc(7vw + 7vh);
-}
-
-#content > a > span {
-    margin-left: calc(2vw + 2vh);
+    text-align: center;
     font-size: calc(2.5vw + 2.5vh);
-    width: calc(100vw - (10vw + 10vh));
+    width: 100vw;
 }
