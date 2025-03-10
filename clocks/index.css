@@ -9,7 +9,7 @@ body {
 
 a {
 	text-decoration: none;
-	color: #c5c5c5;
+	color: #ffffff;
 }
 
 div#header {
@@ -49,7 +49,7 @@ div#header-right {
 }
 
 #content>a>span {
-	height: calc(7vw + 7vh);
+	height: calc(7vw + 6vh);
 	display: flex;
 	justify-content: center;
 	align-items: center;
