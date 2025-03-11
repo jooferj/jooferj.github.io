@@ -38,13 +38,15 @@ div#header-right {
 	overflow: hidden;
 }
 
-#content>a {
+#content>a:nth-child(odd) {
 	display: flex;
 	align-items: center;
 	background-color: #2a2a2a;
 }
 
 #content>a:nth-child(even) {
+	display: flex;
+	align-items: center;
 	background-color: #202020;
 }
 
