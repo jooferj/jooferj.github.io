@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <!-- Original code from https://www.nayuki.io/page/full-screen-clock-javascript -->
+
 <html style="height:100%; margin:0; padding:0">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+		
 		<title>Clock</title>
 		<style type="text/css">
 			/* Customizable font and colors */
@@ -17,13 +20,16 @@
 			}
 		</style>
 	</head>
+	
 	<body style="display:flex; height:100%; margin:0; padding:0; justify-content:center; align-items:center">
 		<span id="clocktext" style="font-kerning: none; font-size: 230.363pt; padding:2vw;">00:00:00</span>
 		<script>
 			"use strict";
+			
 			let textElem = document.getElementById("clocktext");
 			const targetWidth = 0.9; // Proportion of full screen width
 			let curFontSize = 20; // Do not change
+			
 			function updateClock() {
 				const d = new Date();
 				let s = "";
@@ -40,6 +46,7 @@
 					textElem.style.fontSize = curFontSize + "pt";
 				}
 			}
+			
 			updateClock();
 			updateTextSize();
 			window.addEventListener("resize", updateTextSize);
