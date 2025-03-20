@@ -38,6 +38,16 @@ div#header-right {
 	overflow: hidden;
 }
 
+#content>span {
+	height: calc(7vw + 6vh);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: calc(2vw + 2vh);
+	width: 100vw;
+}
+
 #content>a:nth-child(odd) {
 	display: flex;
 	align-items: center;
