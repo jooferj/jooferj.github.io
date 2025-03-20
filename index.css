@@ -38,16 +38,6 @@ div#header-right {
 	overflow: hidden;
 }
 
-#content>span {
-	height: calc(7vw + 6vh);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	font-size: calc(2vw + 2vh);
-	width: 100vw;
-}
-
 #content>a:nth-child(odd) {
 	display: flex;
 	align-items: center;
@@ -68,4 +58,24 @@ div#header-right {
 	text-align: center;
 	font-size: calc(2.5vw + 2.5vh);
 	width: 100vw;
+}
+
+#content>span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100vw;
+}
+
+.title-text {
+	padding-top: 2vw;
+	padding-bottom: 1vw;
+	font-size: calc(2vw + 2vh);
+}
+
+.body-text {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+	font-size: calc(1.4vw + 1.4vh);
 }
