@@ -65,7 +65,7 @@
     <script>
         async function loadContracts() {
           try {
-            const response = await fetch('contracts.json');
+            const response = await fetch('lta-contracts-list.json');
             const data = await response.json();
     
             const tbody = document.querySelector('#contractsTable tbody');
