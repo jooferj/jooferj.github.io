@@ -29,6 +29,27 @@
         h1 {
             margin-bottom: 1.5rem;
         }
+
+		#tagFilters {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+			margin-bottom: 1rem;
+		}
+		
+		.tag-button {
+			padding: 0.3rem 0.6rem;
+			border: 1px solid var(--borderColor-muted, #444);
+			border-radius: 5px;
+			background-color: var(--bgColor-muted, #222);
+			cursor: pointer;
+			font-size: 0.9rem;
+		}
+		
+		.tag-button.active {
+			background-color: var(--bgColor-accent, #555);
+			color: var(--fgColor-onEmphasis, white);
+		}
     </style>
 </head>
 
@@ -42,7 +63,9 @@
 
     <main>
         <h1>LTA Rail Civil Contracts List</h1>
-
+		
+		<div id="tagFilters"></div>
+		
         <div class="table-container">
             <table class="contracts-table" id="contractsTable">
                 <thead>
@@ -62,30 +85,81 @@
         </div>
     </main>
 
-    <script>
-        async function loadContracts() {
-          try {
-            const response = await fetch('lta-contracts-list.json');
-            const data = await response.json();
-    
-            const tbody = document.querySelector('#contractsTable tbody');
-            data.forEach(item => {
-              const row = document.createElement('tr');
-              row.innerHTML = `
-                <td>${item.contractNo || ''}</td>
-                <td>${item.title || ''}</td>
-                <td>${item.description || ''}</td>
-                <td>${item.applicationDate || ''}</td>
-                <td>${item.notes || ''}</td>
-              `;
-              tbody.appendChild(row);
-            });
-          } catch (error) {
-            console.error('Error loading contracts:', error);
-          }
+      <script>
+    let contractsData = [];
+    let activeTags = new Set();
+
+    async function loadContracts() {
+      try {
+		// Fetch JSON file
+        const response = await fetch('contracts.json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        contractsData = await response.json();
+
+        // Sort contracts by contractNo (case-insensitive, natural order)
+        contractsData.sort((a, b) =>
+          a.contractNo.localeCompare(b.contractNo, undefined, { numeric: true, sensitivity: 'base' })
+        );
+
+        renderTagFilters();
+        renderTable();
+      } catch (error) {
+        console.error('Error loading contracts:', error);
+      }
+    }
+
+    function renderTagFilters() {
+      const tagContainer = document.getElementById('tagFilters');
+      tagContainer.innerHTML = '';
+
+      // Collect all unique tags
+      const allTags = [...new Set(contractsData.flatMap(c => c.tags || []))];
+      allTags.sort();
+
+      allTags.forEach(tag => {
+        const button = document.createElement('button');
+        button.textContent = tag;
+        button.className = 'tag-button';
+        button.addEventListener('click', () => toggleTag(tag, button));
+        tagContainer.appendChild(button);
+      });
+    }
+
+    function toggleTag(tag, button) {
+      if (activeTags.has(tag)) {
+        activeTags.delete(tag);
+        button.classList.remove('active');
+      } else {
+        activeTags.add(tag);
+        button.classList.add('active');
+      }
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector('#contractsTable tbody');
+      tbody.innerHTML = '';
+
+      contractsData.forEach(item => {
+        if (activeTags.size > 0) {
+          const hasTag = item.tags && item.tags.some(tag => activeTags.has(tag));
+          if (!hasTag) return;
         }
-    
-        loadContracts();
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.contractNo || ''}</td>
+          <td>${item.title || ''}</td>
+          <td>${item.description || ''}</td>
+          <td>${item.applicationDate || ''}</td>
+          <td>${item.notes || ''}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    loadContracts();
+	  </script>
     </script>
 </body>
 
