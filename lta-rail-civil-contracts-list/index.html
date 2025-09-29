@@ -85,14 +85,14 @@
         </div>
     </main>
 
-      <script>
+      <script> // TODO: DISPLAY TAG INFO IN TABLE
     let contractsData = [];
     let activeTags = new Set();
 
     async function loadContracts() {
       try {
 		// Fetch JSON file
-        const response = await fetch('contracts.json');
+        const response = await fetch('lta-contracts-list.json');
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         contractsData = await response.json();
 
