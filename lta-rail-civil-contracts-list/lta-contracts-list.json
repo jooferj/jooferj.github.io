@@ -1,17 +1,17 @@
 [
   {
     "contractNo": "151",
-    "title": "Train",
+    "title": "First-generation trains for NSEWL (unofficial title)",
     "description": "",
-    "applicationDate": "",
+    "tenderer": "Consortium of Kawasaki Heavy Industries, with Nippon Sharyo, Tokyu Car Corp, and Kinki Sharyo",
     "notes": "",
     "tags": ["Train", "NSL", "EWL"]
   },
   {
     "contractNo": "651",
-    "title": "Train",
+    "title": "Second-generation trains for NSEWL (unofficial title)",
     "description": "",
-    "applicationDate": "",
+    "tenderer": "Siemens Aktiengesellschaft",
     "notes": "",
     "tags": ["Train", "NSL", "EWL"]
   }
