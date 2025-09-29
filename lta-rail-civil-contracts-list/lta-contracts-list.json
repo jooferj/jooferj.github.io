@@ -1,16 +1,18 @@
 [
   {
     "contractNo": "151",
-    "title": "NSEWL Train",
+    "title": "Train",
     "description": "",
     "applicationDate": "",
-    "notes": ""
+    "notes": "",
+    "tags": ["Train", "NSL", "EWL"]
   },
   {
-    "contractNo": "",
-    "title": "",
+    "contractNo": "651",
+    "title": "Train",
     "description": "",
     "applicationDate": "",
-    "notes": ""
+    "notes": "",
+    "tags": ["Train", "NSL", "EWL"]
   }
 ]
