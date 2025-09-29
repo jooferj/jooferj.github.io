@@ -7,10 +7,12 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
+  table-layout: fixed;
 }
 
 .contracts-table th,
 .contracts-table td {
+  width: 20%;
   border: 1px solid var(--borderColor-muted, #444);
   padding: 0.75rem;
   text-align: left;
@@ -20,7 +22,7 @@
 .contracts-table th {
   background-color: var(--bgColor-emphasis, #222);
   font-weight: 600;
-  font-size: 1.2rem
+  font-size: 1.2rem;
 }
 
 .contracts-table tr:nth-child(even) td {
