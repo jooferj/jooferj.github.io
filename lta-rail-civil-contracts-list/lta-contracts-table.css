@@ -20,6 +20,7 @@
 .contracts-table th {
   background-color: var(--bgColor-emphasis, #222);
   font-weight: 600;
+  font-size: 1.2rem
 }
 
 .contracts-table tr:nth-child(even) td {
