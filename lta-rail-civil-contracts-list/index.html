@@ -79,6 +79,7 @@
                         <th>Description</th>
                         <th>Successful Tenderer</th>
                         <th>Notes</th>
+						<th>Tags</th>
                     </tr>
                 </thead>
 				
@@ -157,6 +158,7 @@
           <td>${item.description || ''}</td>
           <td>${item.tenderer || ''}</td>
           <td>${item.notes || ''}</td>
+		  <td>${(item.tags || []).join(', ')}</td>
         `;
         tbody.appendChild(row);
       });
