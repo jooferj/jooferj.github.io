@@ -152,15 +152,17 @@
         }
 
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item.contractNo || ''}</td>
-          <td>${item.title || ''}</td>
-          <td>${item.description || ''}</td>
-          <td>${item.tenderer || ''}</td>
-          <td>${item.notes || ''}</td>
-		  <td>${(item.tags || []).join(', ')}</td>
-        `;
-        tbody.appendChild(row);
+		  if (item.contractNo !== "") {
+			  row.innerHTML = `
+			  <td>${item.contractNo || ''}</td>
+			  <td>${item.title || ''}</td>
+			  <td>${item.description || ''}</td>
+			  <td>${item.tenderer || ''}</td>
+			  <td>${item.notes || ''}</td>
+			  <td>${(item.tags || []).join(', ')}</td>
+			  `;
+			  tbody.appendChild(row);
+		  }
       });
     }
 
