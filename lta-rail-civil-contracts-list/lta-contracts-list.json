@@ -1537,5 +1537,16 @@
         "startDate": "",
         "endDate": "",
         "resultsDate": ""
+    },
+    {
+        "contractNo": "",
+        "title": "",
+        "description": "",
+        "tenderer": "",
+        "notes": "",
+        "tags": [],
+        "startDate": "",
+        "endDate": "",
+        "resultsDate": ""
     }
 ]
