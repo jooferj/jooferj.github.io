@@ -12,11 +12,12 @@
 
 .contracts-table th,
 .contracts-table td {
-  width: 20%;
+  width: 11.1%; /* 100% / 9 columns */
   border: 1px solid var(--borderColor-muted, #444);
   padding: 0.75rem;
   text-align: left;
   vertical-align: top;
+  word-wrap: break-word;
 }
 
 .contracts-table th {
@@ -28,6 +29,35 @@
 .contracts-table tr:nth-child(even) td {
   background-color: var(--bgColor-muted, #2a2a2a);
 }
+
+/* Table badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  margin: 0.1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Filter buttons */
+.tag-button {
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #fff;
+}
+
+.tag-button.active {
+  outline: 2px solid #fff;
+  outline-offset: 1px;
+}
+
+/* IF YOU ARE LOOKING FOR TAG COLOURS, SCROLL TO THE JS IN THE HTML FILE, COLOURS ARE IN A TABLE THERE */
 
 /* Responsive UI for narrow screens */
 @media (max-width: 600px) {
