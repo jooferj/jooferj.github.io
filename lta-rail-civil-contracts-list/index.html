@@ -126,7 +126,7 @@
           }
         
           async function loadContracts() {
-            const response = await fetch("contracts.json");
+            const response = await fetch("lta-contracts-list.json");
             contractsData = await response.json();
         
             // Sort contracts by contractNo
