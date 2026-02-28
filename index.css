@@ -58,7 +58,7 @@ div#header-right {
 	align-items: center;
 	text-align: center;
 	font-size: calc(2.5vw + 2.5vh);
-	width: 100vw;
+	width: 100%;
 	line-height: 1.1;
 	white-space: nowrap;
 	overflow: auto;
@@ -89,6 +89,6 @@ div#header-right {
 	font-size: 0.35em;
     margin-top: 0.2em;
     white-space: nowrap;
-	overflow: auto;
-	/*text-overflow: ellipsis;*/
+	display: inline-block;
+	min-width: 100%;
 }
