@@ -79,3 +79,10 @@ div#header-right {
 	padding-bottom: 1vw;
 	font-size: calc(1.1vw + 1.1vh);
 }
+
+.subspan {
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+	font-size: calc(1.1vw + 1.1vh);
+	display: block;
+}
