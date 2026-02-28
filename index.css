@@ -61,6 +61,7 @@ div#header-right {
 	width: 100vw;
 	line-height: 1.1;
 	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 
 #content>span {
@@ -87,4 +88,5 @@ div#header-right {
 	font-size: 0.35em;
     margin-top: 0.2em;
     white-space: nowrap;
+	text-overflow: ellipsis;
 }
