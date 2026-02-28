@@ -86,7 +86,5 @@ div#header-right {
 .smalltext {
 	font-size: 0.35em;
     margin-top: 0.2em;
-	/*display: inline-block;*/
     white-space: nowrap;
-	text-overflow: ellipsis;
 }
