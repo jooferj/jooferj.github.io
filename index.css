@@ -53,6 +53,7 @@ div#header-right {
 #content>a>span {
 	height: calc(7vw + 6vh);
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
