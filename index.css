@@ -35,7 +35,7 @@ div#header-right {
 }
 
 #content {
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 #content>a:nth-child(odd) {
