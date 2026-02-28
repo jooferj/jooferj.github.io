@@ -60,6 +60,7 @@ div#header-right {
 	font-size: calc(2.5vw + 2.5vh);
 	width: 100vw;
 	line-height: 1.1;
+	white-space: nowrap;
 }
 
 #content>span {
