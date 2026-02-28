@@ -55,7 +55,7 @@ div#header-right {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: stretch;
 	text-align: center;
 	font-size: calc(2.5vw + 2.5vh);
 	width: 100%;
