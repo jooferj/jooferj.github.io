@@ -65,6 +65,11 @@ div#header-right {
 	/*text-overflow: ellipsis;*/
 }
 
+#content>a>span > * {
+    text-align: center;
+    white-space: nowrap;
+}
+
 #content>span {
 	display: flex;
 	justify-content: center;
@@ -90,5 +95,4 @@ div#header-right {
     margin-top: 0.2em;
     white-space: nowrap;
 	display: inline-block;
-	min-width: 100%;
 }
