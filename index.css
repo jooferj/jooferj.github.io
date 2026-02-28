@@ -83,7 +83,7 @@ div#header-right {
 
 .smalltext {
 	padding-top: 1vw;
-	padding-bottom: 1vw;
+	padding-bottom: 0vw;
 	font-size: calc(1.1vw + 1.1vh);
 	display: block;
 }
