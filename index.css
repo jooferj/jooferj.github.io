@@ -1,5 +1,4 @@
-html,
-body {
+html, body {
 	margin: 0;
 	padding: 0;
 
@@ -100,6 +99,7 @@ div#header-right {
 #content > a > span.nostack {
     flex-direction: row;
 }
+
 #content > a > span > span.nostack {
     flex-direction: row;
 }
