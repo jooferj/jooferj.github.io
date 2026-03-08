@@ -20,7 +20,7 @@ div#header {
 	font-size: calc(1.5vw + 1.5vh);
 }
 
-div#header>span {
+div#header > span {
 	font-size: calc((100vw + 100vh) * 0.013);
 	margin: calc(1vw + 1vh);
 }
@@ -37,19 +37,19 @@ div#header-right {
 	overflow: hidden;
 }
 
-#content>a:nth-child(odd) {
+#content > a:nth-child(odd) {
 	display: flex;
 	align-items: center;
 	background-color: #2a2a2a;
 }
 
-#content>a:nth-child(even) {
+#content > a:nth-child(even) {
 	display: flex;
 	align-items: center;
 	background-color: #202020;
 }
 
-#content>a>span {
+#content > a > span {
 	height: calc(7vw + 6vh);
 	display: flex;
 	flex-direction: column;
@@ -64,7 +64,7 @@ div#header-right {
 	max-width: 100%;
 }
 
-#content>span {
+#content > span {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -89,7 +89,7 @@ div#header-right {
 	font-size: calc(1.1vw + 1.1vh);
 }
 
-#content > a > span > span.smalltext {
+.smalltext {
 	font-size: 0.35em;
     margin-top: 0.2em;
     white-space: nowrap;
