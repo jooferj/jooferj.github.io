@@ -91,6 +91,6 @@ div#header-right {
     white-space: nowrap;
 	text-overflow: ellipsis;
 }
-#content > a > span.nostack
+#content > a > span.nostack {
     flex-direction: row;
 }
