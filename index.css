@@ -91,3 +91,6 @@ div#header-right {
     white-space: nowrap;
 	text-overflow: ellipsis;
 }
+.nostack {
+    flex-direction: row;
+}
