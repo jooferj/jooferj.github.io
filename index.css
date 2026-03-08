@@ -88,7 +88,7 @@ div#header-right {
 	font-size: calc(1.1vw + 1.1vh);
 }
 
-.smalltext {
+#content > a > span > span.smalltext {
 	font-size: 0.35em;
     margin-top: 0.2em;
     white-space: nowrap;
@@ -98,3 +98,7 @@ div#header-right {
 #content > a > span.nostack {
     flex-direction: row;
 }
+#content > a > span > span.nostack {
+    flex-direction: row;
+}
+	
