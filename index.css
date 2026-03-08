@@ -93,5 +93,4 @@ div#header-right {
 }
 #content > a > span.nostack
     flex-direction: row;
-    gap: 2vw;
 }
