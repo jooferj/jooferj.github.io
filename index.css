@@ -77,11 +77,13 @@ div#header-right {
 	padding-top: 2vw;
 	padding-bottom: 2vw;
 	font-size: calc(2vw + 2vh);
-
+}
+	
 .body-text {
 	padding-bottom: 2vw;
 	font-size: calc(1.1vw + 1.1vh);
-
+}
+	
 .body-text-only {
 	padding-top: 2vw;
 	padding-bottom: 2vw;
