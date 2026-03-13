@@ -1,0 +1,67 @@
+/* Container for each audio entry */
+.audio-card {
+    background-color: #202020;
+    margin: 20px auto;
+    width: 90vw;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 5px solid #ff0000; /* Accent color matching your logo */
+}
+
+.audio-card:nth-child(odd) {
+    background-color: #2a2a2a;
+}
+
+.audio-title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.transcript {
+    font-style: italic;
+    color: #bbbbbb;
+    margin-bottom: 10px;
+}
+
+.notes {
+    font-size: 0.9rem;
+    color: #888888;
+}
+
+/* Custom Player UI */
+.custom-player {
+    margin-top: 15px;
+    background: #171717;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+button, .download-btn {
+    background: none;
+    border: 1px solid #ffffff;
+    color: white;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-family: 'Ubuntu';
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+button:hover, .download-btn:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    cursor: pointer;
+    accent-color: #ff0000;
+}
