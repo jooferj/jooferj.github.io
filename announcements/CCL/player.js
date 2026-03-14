@@ -6,7 +6,7 @@ const formatTime = (s) => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(
 
 async function init() {
     try {
-        const response = await fetch('../data.yaml');
+        const response = await fetch('data.yaml');
         const yamlText = await response.text();
         announcementData = js-yaml.load(yamlText);
         
