@@ -1,10 +1,10 @@
 [
   {
-    "title": "Stadium terminus transfer",
+    "title": "DAC",
     "transcript": "placeholder",
     "notes": "notes",
-    "tags": ["deftag", "CCL"],
-    "file": "audio/stadium.mp3",
+    "tags": ["deftag"],
+    "file": "audio/testing.mp3",
     "color": "var(--smrt-ccl)"
   }
 ]
