@@ -1,19 +1,29 @@
 let announcementData = [];
 let activeTag = "All";
 
-// Helper to format time
+// Define your image paths here
+const iconPaths = {
+    play: "../icons/play.svg",
+    pause: "../icons/pause.svg",
+    restart: "../icons/restart.svg",
+    download: "../icons/download.svg"
+};
+
 const formatTime = (s) => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
 
 async function init() {
     try {
-        const response = await fetch('data.yaml');
-        const yamlText = await response.text();
-        announcementData = js-yaml.load(yamlText);
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        announcementData = await response.json();
         
         renderTags();
         renderAnnouncements(announcementData);
     } catch (e) {
-        console.error("Error loading YAML:", e);
+        console.error("Error loading JSON:", e);
+        document.getElementById('announcement-list').innerHTML = 
+            `<p style="padding:20px; color:red;">Error: ${e.message}</p>`;
     }
 }
 
@@ -51,25 +61,31 @@ function renderAnnouncements(data) {
             </div>
             <div class="custom-player">
                 <div class="controls">
-                    <button class="play-btn"><img src="../icons/play.svg" class="ctrl-icon"></button>
-                    <button class="restart-btn"><img src="../icons/restart.svg" class="ctrl-icon"></button>
+                    <button class="play-btn">
+                        <img src="${iconPaths.play}" class="ctrl-icon" alt="Play">
+                    </button>
+                    <button class="restart-btn">
+                        <img src="${iconPaths.restart}" class="ctrl-icon" alt="Restart">
+                    </button>
                     <div class="player-mid">
                         <input type="range" class="progress-bar" value="0" max="100">
                         <span class="time-display">0:00 / 0:00</span>
                     </div>
-                    <a href="${item.file}" download class="download-btn"><img src="../icons/download.svg" class="ctrl-icon"></a>
+                    <a href="${item.file}" download class="download-btn">
+                        <img src="${iconPaths.download}" class="ctrl-icon" alt="Download">
+                    </a>
                 </div>
             </div>
         `;
-        setupAudio(card, item.file);
+        setupAudioLogic(card, item.file);
         list.appendChild(card);
     });
 }
 
-function setupAudio(card, src) {
+function setupAudioLogic(card, src) {
     const audio = new Audio(src);
     const playBtn = card.querySelector('.play-btn');
-    const playIcon = playBtn.querySelector('.ctrl-icon');
+    const playImg = playBtn.querySelector('img');
     const restartBtn = card.querySelector('.restart-btn');
     const progress = card.querySelector('.progress-bar');
     const timeDisp = card.querySelector('.time-display');
@@ -80,24 +96,23 @@ function setupAudio(card, src) {
 
     playBtn.addEventListener('click', () => {
         if (audio.paused) {
-            // Stop other playing audio
             document.querySelectorAll('audio').forEach(a => {
                 a.pause();
-                const otherIcon = a.parentElement?.querySelector('.play-btn .ctrl-icon');
-                if(otherIcon) otherIcon.src = "../icons/play.svg";
+                const otherImg = a.parentElement?.querySelector('.play-btn img');
+                if(otherImg) otherImg.src = iconPaths.play;
             });
             audio.play();
-            playIcon.src = "../icons/pause.svg";
+            playImg.src = iconPaths.pause;
         } else {
             audio.pause();
-            playIcon.src = "../icons/play.svg";
+            playImg.src = iconPaths.play;
         }
     });
 
     restartBtn.addEventListener('click', () => {
         audio.currentTime = 0;
         audio.play();
-        playIcon.src = "../icons/pause.svg";
+        playImg.src = iconPaths.pause;
     });
 
     audio.addEventListener('timeupdate', () => {
@@ -109,7 +124,9 @@ function setupAudio(card, src) {
         audio.currentTime = (progress.value / 100) * audio.duration;
     });
 
-    audio.addEventListener('ended', () => { playIcon.src = "../icons/play.svg"; });
+    audio.addEventListener('ended', () => { 
+        playImg.src = iconPaths.play; 
+    });
 }
 
 function handleSearch() {
