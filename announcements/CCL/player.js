@@ -52,6 +52,18 @@ function renderAnnouncements(data) {
     data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'audio-card';
+        
+        // Apply custom color if it exists, otherwise default to your red
+        if (item.color) {
+            // If the color string starts with 'var' or '#', apply as inline style
+            if (item.color.startsWith('var') || item.color.startsWith('#')) {
+                card.style.borderLeftColor = item.color;
+            } else {
+                // Otherwise, assume it's a class name from mrt-color.css
+                card.classList.add(item.color);
+            }
+        }
+
         card.innerHTML = `
             <div class="audio-info">
                 <h2 class="audio-title">${item.title}</h2>
