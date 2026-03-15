@@ -1,10 +1,10 @@
 [
   {
-    "title": "DAC",
-    "transcript": "placeholder",
-    "notes": "notes",
-    "tags": ["deftag"],
-    "file": "audio/testing.mp3",
+    "title": "Board train to HBF at PYL MT",
+    "transcript": "Attention please, if you are heading towards Serangoon, Bishan, or HarbourFront, please board the train at the middle platform. Thank you.",
+    "notes": "",
+    "tags": ["Station"],
+    "file": "https://drive.google.com/file/d/1pdeV5HaRsOKo9CHEKQe4yEpk8fa9TBbI/view?usp=drivesdk",
     "color": "var(--smrt-ccl)"
   }
 ]
