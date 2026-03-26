@@ -1,10 +1,18 @@
 [
   {
-    "title": "Board train to HBF at PYL MT",
-    "transcript": "Attention please, if you are heading towards Serangoon, Bishan, or HarbourFront, please board the train at the middle platform. Thank you.",
+    "title": "Cross over to opposite platform (C830)",
+    "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
     "notes": "",
-    "tags": ["Station"],
-    "file": "https://drive.google.com/uc?export=download&id=1pdeV5HaRsOKo9CHEKQe4yEpk8fa9TBbI",
+    "tags": ["C830", "HBF CCL6 Works 2024", "Special"],
+    "file": "https://dl.dropbox.com/scl/fi/w01lbf0npfayrd0ms3wk4/CCL_C830_CrossOverToOppPlat.mp3",
+    "color": "var(--smrt-ccl)"
+  },
+  {
+    "title": "Cross over to opposite platform (C830C)",
+    "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
+    "notes": "",
+    "tags": ["C830C", "HBF CCL6 Works 2024", "Special"],
+    "file": "https://dl.dropbox.com/scl/fi/shgl284j928xu7mj2nrr0/CCL_C830C_CrossOverToOppPlat.mp3",
     "color": "var(--smrt-ccl)"
   }
 ]
