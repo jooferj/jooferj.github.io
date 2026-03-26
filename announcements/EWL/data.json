@@ -1,18 +1,26 @@
 [
   {
-    "title": "Cross over to opposite platform (C830)",
-    "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
+    "title": "End at Aljunied",
+    "transcript": "This train service will end at Aljunied.",
     "notes": "",
-    "tags": ["C830", "HBF CCL6 Works 2024", "Special"],
-    "file": "https://dl.dropbox.com/scl/fi/w01lbf0npfayrd0ms3wk4/CCL_C830_CrossOverToOppPlat.mp3",
-    "color": "var(--smrt-ccl)"
+    "tags": ["Destination"],
+    "file": "https://www.dropbox.com/scl/fi/cmfw1vmmnq8d2kggfvw66/EWL_EndAtALJ.mp3?rlkey=8hrwu45g2w9tr5ej5cqb5diut&st=62wi349t&dl=1",
+    "color": "var(--smrt-ewl)"
   },
   {
-    "title": "Cross over to opposite platform (C830C)",
-    "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
+    "title": "End at Tanah Merah",
+    "transcript": "This train service will end at Tanah Merah.",
     "notes": "",
-    "tags": ["C830C", "HBF CCL6 Works 2024", "Special"],
-    "file": "https://dl.dropbox.com/scl/fi/shgl284j928xu7mj2nrr0/CCL_C830C_CrossOverToOppPlat.mp3",
-    "color": "var(--smrt-ccl)"
-  }
+    "tags": ["Destination"],
+    "file": "https://www.dropbox.com/scl/fi/svgjgppkn0htl1pazsxyc/EWL_EndAtTNM.mp3?rlkey=3hzf7zmn4yvkvmazqpq362ltq&st=fd4nl2dx&dl=1",
+    "color": "var(--smrt-ewl)"
+  },
+  {
+    "title": "Stopped for short while",
+    "transcript": "This train has stopped here for a short while because the train ahead is still at the next station. We apologise for the inconvenience.",
+    "notes": "",
+    "tags": [],
+    "file": "https://www.dropbox.com/scl/fi/jac8112e3vvbihyj9x0na/NSEWL_TrainAhead.mp3?rlkey=y9qg6kpwgtubjirshelel8pfz&st=n9ghwkbz&dl=1",
+    "color": "var(--smrt-ewl)"
+  },
 ]
