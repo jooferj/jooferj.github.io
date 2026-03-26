@@ -1,7 +1,6 @@
 let announcementData = [];
 let activeTag = "All";
 
-// Define your image paths here
 const iconPaths = {
     play: "../icons/play.svg",
     pause: "../icons/pause.svg",
@@ -53,13 +52,13 @@ function renderAnnouncements(data) {
         const card = document.createElement('div');
         card.className = 'audio-card';
         
-        // Apply custom color if it exists, otherwise default to your red
+        // apply custom color if it exists, otherwise default to red
         if (item.color) {
-            // If the color string starts with 'var' or '#', apply as inline style
+            // if the color string starts with 'var' or '#', apply as inline style
             if (item.color.startsWith('var') || item.color.startsWith('#')) {
                 card.style.borderLeftColor = item.color;
             } else {
-                // Otherwise, assume it's a class name from mrt-color.css
+                // assume it's a class name from mrt-color.css
                 card.classList.add(item.color);
             }
         }
@@ -95,12 +94,24 @@ function renderAnnouncements(data) {
 }
 
 function setupAudioLogic(card, src) {
-    const audio = new Audio(src);
+    const audio = new Audio();
+    audio.src = src;
+    audio.preload = "metadata";
+
     const playBtn = card.querySelector('.play-btn');
     const playImg = playBtn.querySelector('img');
     const restartBtn = card.querySelector('.restart-btn');
     const progress = card.querySelector('.progress-bar');
     const timeDisp = card.querySelector('.time-display');
+
+    audio.addEventListener('error', (e) => {
+        const error = audio.error;
+        console.error("Audio Error Code:", error.code);
+        if (error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
+            timeDisp.innerText = "Audio fetch failed.";
+            timeDisp.style.color = "red";
+        }
+    });
 
     audio.addEventListener('loadedmetadata', () => {
         timeDisp.innerText = `0:00 / ${formatTime(audio.duration)}`;
