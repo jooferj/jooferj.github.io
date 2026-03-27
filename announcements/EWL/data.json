@@ -5,7 +5,7 @@
     "notes": "",
     "tags": ["Destination"],
     "file": "https://www.dropbox.com/scl/fi/cmfw1vmmnq8d2kggfvw66/EWL_EndAtALJ.mp3?rlkey=8hrwu45g2w9tr5ej5cqb5diut&st=62wi349t&dl=1",
-    "color": "var(--smrt-ewl)",
+    "color": "var(--smrt-ewl)"
   },
   {
     "title": "End at Tanah Merah",
@@ -13,7 +13,7 @@
     "notes": "",
     "tags": ["Destination"],
     "file": "https://www.dropbox.com/scl/fi/svgjgppkn0htl1pazsxyc/EWL_EndAtTNM.mp3?rlkey=3hzf7zmn4yvkvmazqpq362ltq&st=fd4nl2dx&dl=1",
-    "color": "var(--smrt-ewl)",
+    "color": "var(--smrt-ewl)"
   },
   {
     "title": "Stopped for short while",
@@ -21,6 +21,6 @@
     "notes": "",
     "tags": [],
     "file": "https://www.dropbox.com/scl/fi/jac8112e3vvbihyj9x0na/NSEWL_TrainAhead.mp3?rlkey=y9qg6kpwgtubjirshelel8pfz&st=n9ghwkbz&dl=1",
-    "color": "var(--smrt-ewl)",
-  },
+    "color": "var(--smrt-ewl)"
+  }
 ]
