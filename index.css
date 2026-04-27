@@ -132,7 +132,7 @@ div#header-right {
 }
 
 .exam-title {
-    font-size: 0.7rem;
+    font-size: 1rem;
     color: #ffffff;
     margin-bottom: 5px;
     white-space: nowrap;
@@ -142,13 +142,13 @@ div#header-right {
 }
 
 .days-left {
-    font-size: calc(1.5vw + 1.5vh + 8px);
+    font-size: calc(1.75vw + 1.75vh + 8px);
     font-weight: 700;
     line-height: 1;
 }
 
 .days-label {
-    font-size: 0.45em;
+    font-size: 0.65em;
     color: #ffffff;
     margin-left: 2px;
 }
@@ -167,8 +167,8 @@ div#header-right {
 
 @media (max-width: 600px) {
     #exam-grid {
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 10px;
+        grid-template-columns: repeat(5, 1fr); 
+        gap: 8px;
     }
 
     .days-left {
