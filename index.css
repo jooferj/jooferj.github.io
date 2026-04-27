@@ -66,7 +66,7 @@ div#header-right {
 #exam-grid {
     display: grid;
     /* Strictly 5 columns regardless of screen size */
-    grid-template-columns: repeat(5, 1fr); 
+    grid-template-columns: repeat(6, 1fr); 
     gap: 1vw;
     padding: 1vw;
     background-color: #000000;
