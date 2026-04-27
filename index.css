@@ -65,7 +65,6 @@ div#header-right {
 
 #exam-grid {
     display: grid;
-    /* Strictly 5 columns regardless of screen size */
     grid-template-columns: repeat(6, 1fr); 
     gap: 1vw;
     padding: 1vw;
@@ -77,7 +76,6 @@ div#header-right {
 .exam-card {
     background-color: #1a1a1a;
     border-radius: 4px;
-    /* Force 16:9 aspect ratio */
     aspect-ratio: 16 / 9; 
     display: flex;
     flex-direction: column;
@@ -92,8 +90,7 @@ div#header-right {
 }
 
 .exam-title {
-    /* Scales font size based on viewport width to maintain card proportion */
-    font-size: calc(0.6vw + 0.6vh + 2px); 
+    font-size: clamp(0.6vw + 0.6vh + 2px); 
     color: #ffffff;
     margin-bottom: 0.2vw;
     white-space: nowrap;
@@ -106,7 +103,7 @@ div#header-right {
 
 .days-left {
     /* Large numbers that scale with the card */
-    font-size: calc(1.8vw + 1.8vh + 4px);
+    font-size: clamp(1.8vw + 1.8vh + 4px);
     font-weight: 700;
     line-height: 1;
     font-family: 'Ubuntu', sans-serif;
@@ -132,13 +129,5 @@ div#header-right {
     #exam-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 4px;
-    }
-
-    .days-left {
-        font-size: 1.8rem;
-    }
-
-    .exam-title {
-        font-size: 0.6rem;
-    }
+		padding: 8px;
 }
