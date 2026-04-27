@@ -90,7 +90,7 @@ div#header-right {
 }
 
 .exam-title {
-    font-size: clamp(0.6vw + 0.6vh + 2px); 
+    font-size: calc(0.6vw + 0.6vh + 2px); 
     color: #ffffff;
     margin-bottom: 0.2vw;
     white-space: nowrap;
@@ -103,7 +103,7 @@ div#header-right {
 
 .days-left {
     /* Large numbers that scale with the card */
-    font-size: clamp(1.8vw + 1.8vh + 4px);
+    font-size: calc(1.8vw + 1.8vh + 4px);
     font-weight: 700;
     line-height: 1;
     font-family: 'Ubuntu', sans-serif;
@@ -121,7 +121,7 @@ div#header-right {
 .color-blue { color: #3498db; }
 
 .show-more-card {
-    font-size: calc(0.8vw + 0.8vh);
+    font-size: calc(1.2vw + 1.2vh);
     font-weight: 500;
 }
 
