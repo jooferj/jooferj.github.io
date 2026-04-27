@@ -131,7 +131,7 @@ div#header-right {
 @media (max-width: 600px) {
     #exam-grid {
         grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        gap: 4px;
     }
 
     .days-left {
