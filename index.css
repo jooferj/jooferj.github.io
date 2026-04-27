@@ -124,26 +124,24 @@ div#header-right {
     align-items: center;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    overflow: hidden; 
     min-width: 0;
-    padding: 0.5vw;
-    text-decoration: none;
-    color: #ffffff;
+	padding: 4px 2px; 
+    box-sizing: border-box;
 }
 
 .exam-title {
-    font-size: calc(0.6vw + 0.6vh + 2px); 
+    font-size: clamp(8px, 0.7vw + 0.5vh, 12px);
     color: #ffffff;
-    margin-bottom: 0.2vw;
+    margin-bottom: 1px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 90%;
-    font-weight: 500;
-    font-family: 'Ubuntu', sans-serif;
+    width: 95%; 
+    display: block;
 }
 
 .days-left {
-    /* Large numbers that scale with the card */
     font-size: calc(1.8vw + 1.8vh + 4px);
     font-weight: 700;
     line-height: 1;
