@@ -115,7 +115,7 @@ div#header-right {
 
 .exam-card {
     background-color: #1a1a1a;
-    padding: 2px 2px;
+    padding: 0.1vh 0.1vw;
     text-align: center;
     aspect-ratio: 16 / 9;
     display: flex;
@@ -132,7 +132,7 @@ div#header-right {
 .exam-title {
     font-size: 1rem;
     color: #ffffff;
-    margin-bottom: 5px;
+    margin-bottom: 0.3vh;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -148,7 +148,7 @@ div#header-right {
 .days-label {
     font-size: 0.65em;
     color: #ffffff;
-    margin-left: 2px;
+    margin-left: 0.1vw;
 }
 
 .color-red { color: #ff4d4d; }
