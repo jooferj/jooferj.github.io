@@ -115,11 +115,9 @@ div#header-right {
 
 .exam-card {
     background-color: #1a1a1a;
-    border-radius: 8px;
-    padding: 8px 8px;
+    padding: 2px 2px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     display: flex;
     flex-direction: column;
     justify-content: center;
