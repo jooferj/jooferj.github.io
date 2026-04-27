@@ -127,3 +127,18 @@ div#header-right {
     font-size: calc(0.8vw + 0.8vh);
     font-weight: 500;
 }
+
+@media (max-width: 800px) {
+    #exam-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .days-left {
+        font-size: 1.8rem;
+    }
+
+    .exam-title {
+        font-size: 0.6rem;
+    }
+}
