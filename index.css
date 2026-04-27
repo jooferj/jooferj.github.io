@@ -130,4 +130,13 @@ div#header-right {
         grid-template-columns: repeat(4, 1fr);
         gap: 4px;
 		padding: 8px;
+	}
+
+    .days-left {
+        font-size: 1.8rem;
+    }
+
+    .exam-title {
+        font-size: 0.6rem;
+	}
 }
