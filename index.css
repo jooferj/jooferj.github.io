@@ -128,7 +128,7 @@ div#header-right {
     font-weight: 500;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
     #exam-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 8px;
