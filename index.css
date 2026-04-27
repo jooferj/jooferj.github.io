@@ -1,6 +1,7 @@
 html, body {
 	margin: 0;
 	padding: 0;
+
 	color: #ffffff;
 	background-color: #000000;
 }
@@ -61,6 +62,46 @@ div#header-right {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	max-width: 100%;
+}
+
+#content > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100vw;
+}
+
+.title-text {
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+	font-size: calc(2vw + 2vh);
+}
+
+.body-text {
+	padding-bottom: 2vw;
+	font-size: calc(1.1vw + 1.1vh);
+}
+
+.body-text-only {
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+	font-size: calc(1.1vw + 1.1vh);
+}
+
+.smalltext {
+	font-size: 0.35em;
+    margin-top: 0.2em;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#content > a > span.nostack {
+    flex-direction: row;
+}
+
+#content > a > span > span.nostack {
+    flex-direction: row;
 }
 
 #exam-grid {
