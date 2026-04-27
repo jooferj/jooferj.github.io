@@ -61,7 +61,7 @@ const response = await fetch('exams.json');
 
         exams.sort((a, b) => new Date(a.date) - new Date(b.date));
         const futureExams = exams.filter(exam => new Date(exam.date) > now);
-        const displayedExams = futureExams.slice(0, 9);
+        const displayedExams = futureExams.slice(0, 11);
 
         displayedExams.forEach(exam => {
             const examDate = new Date(exam.date);
@@ -83,7 +83,7 @@ const response = await fetch('exams.json');
         });
 
         // Add the "Show More" card as the 10th item if there are more exams
-        if (futureExams.length > 9) {
+        if (futureExams.length > 11) {
             const moreCard = document.createElement('a');
             moreCard.className = 'exam-card show-more-card';
             moreCard.href = '/full-schedule'; // Replace with your target URL
