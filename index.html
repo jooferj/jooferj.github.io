@@ -54,17 +54,17 @@
 
 		<script>
 			async function loadExams() {
-                try {
-const response = await fetch('exams.json');
-        const exams = await response.json();
-        const grid = document.getElementById('exam-grid');
-        const now = new Date();
+	try {
+		const response = await fetch('exams.json');
+		const exams = await response.json();
+		const grid = document.getElementById('exam-grid');
+		const now = new Date();
 
-        exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const futureExams = exams.filter(exam => new Date(exam.date) > now);
-        const displayedExams = futureExams.slice(0, 11);
+		exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+		const futureExams = exams.filter(exam => new Date(exam.date) > now);
+		const displayedExams = futureExams.slice(0, 11);
 
-        displayedExams.forEach(exam => {
+		displayedExams.forEach(exam => {
     const examDate = new Date(exam.date);
     const diffTime = examDate - now;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -77,35 +77,38 @@ const response = await fetch('exams.json');
     const card = document.createElement('div');
     card.className = 'exam-card';
     
-    // Wrap the name in a span to allow width detection
     card.innerHTML = `
         <div class="exam-title"><span>${exam.name}</span></div>
         <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
     `;
     grid.appendChild(card);
 
-    // Detect if text overflows and trigger scrolling
-    const titleContainer = card.querySelector('.exam-title');
-    const titleSpan = titleContainer.querySelector('span');
+    // We use a tiny timeout to let the browser render the card first
+    setTimeout(() => {
+        const titleContainer = card.querySelector('.exam-title');
+        const titleSpan = titleContainer.querySelector('span');
 
-    // Compare the physical width of the text vs the container
-    if (titleSpan.offsetWidth > titleContainer.offsetWidth) {
-        titleContainer.classList.add('scrolling');
-        // Duplicate the text inside the span for a seamless loop
-        titleSpan.innerHTML += ` &nbsp;&nbsp;&nbsp;&nbsp; ${exam.name}`;
-    }
+        // Check if the text width is greater than the container width
+        if (titleSpan.scrollWidth > titleContainer.clientWidth) {
+            titleContainer.classList.add('scrolling');
+            
+            // Duplicate the text with spacing for a continuous loop effect
+            const originalText = titleSpan.innerText;
+            titleSpan.innerHTML = `${originalText} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${originalText}`;
+        }
+    }, 50); 
 });
 
-        if (futureExams.length > 11) {
-            const moreCard = document.createElement('a');
-            moreCard.className = 'exam-card show-more-card';
-            moreCard.href = '/exam-schedule'; // Replace with your target URL
-            moreCard.innerText = 'Show More';
-            grid.appendChild(moreCard);
-        }
-    } catch (error) {
-        console.error('Error loading exam data:', error);
-    }
+		if (futureExams.length > 11) {
+			const moreCard = document.createElement('a');
+			moreCard.className = 'exam-card show-more-card';
+			moreCard.href = '/exam-schedule'; // Replace with your target URL
+			moreCard.innerText = 'Show More';
+			grid.appendChild(moreCard);
+		}
+	} catch (error) {
+		console.error('Error loading exam data:', error);
+	}
 }
 
 loadExams();
