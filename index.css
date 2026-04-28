@@ -1,7 +1,7 @@
+/* Reverted index.css */
 html, body {
 	margin: 0;
 	padding: 0;
-
 	color: #ffffff;
 	background-color: #000000;
 }
@@ -37,73 +37,7 @@ div#header-right {
 	overflow: hidden;
 }
 
-#content > a:nth-child(odd) {
-	display: flex;
-	align-items: center;
-	background-color: #2a2a2a;
-}
-
-#content > a:nth-child(even) {
-	display: flex;
-	align-items: center;
-	background-color: #202020;
-}
-
-#content > a > span {
-	height: calc(7vw + 6vh);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	font-size: calc(2.5vw + 2.5vh);
-	width: 100vw;
-	line-height: 1.1;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	max-width: 100%;
-}
-
-#content > span {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	width: 100vw;
-}
-
-.title-text {
-	padding-top: 2vw;
-	padding-bottom: 2vw;
-	font-size: calc(2vw + 2vh);
-}
-
-.body-text {
-	padding-bottom: 2vw;
-	font-size: calc(1.1vw + 1.1vh);
-}
-
-.body-text-only {
-	padding-top: 2vw;
-	padding-bottom: 2vw;
-	font-size: calc(1.1vw + 1.1vh);
-}
-
-.smalltext {
-	font-size: 0.35em;
-    margin-top: 0.2em;
-    white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-#content > a > span.nostack {
-    flex-direction: row;
-}
-
-#content > a > span > span.nostack {
-    flex-direction: row;
-}
-
+/* Homepage Grid */
 #exam-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr); 
@@ -159,29 +93,7 @@ div#header-right {
 .color-green { color: #2ecc71; }
 .color-blue { color: #3498db; }
 
-.show-more-card {
-    font-size: calc(1.2vw + 1.2vh);
-    font-weight: 500;
-}
-
-@media (max-width: 600px) {
-    #exam-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 4px;
-		padding: 8px;
-	}
-
-    .days-left {
-        font-size: 1.8rem;
-    }
-
-    .exam-title {
-        font-size: 0.6rem;
-	}
-}
-
-
-
+/* Show More Page Grid */
 #schedule-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -205,7 +117,7 @@ div#header-right {
     display: flex;
     justify-content: space-between;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 400;
     margin-bottom: 10px;
     color: #aaaaaa;
 }
@@ -214,14 +126,15 @@ div#header-right {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    overflow: hidden;
 }
 
-.exam-name-scroll {
+.exam-name-static {
     font-size: 1.2rem;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
-    position: relative;
+    text-overflow: ellipsis;
 }
 
 .date-row {
@@ -235,19 +148,9 @@ div#header-right {
     margin-top: 5px;
 }
 
-/* Responsive Breakpoint: 2 columns for mobile */
 @media (max-width: 768px) {
-    #schedule-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .exam-name-scroll {
-        font-size: 1rem;
-    }
-
-    .countdown-row {
-        font-size: 1.5rem;
-    }
+    #exam-grid { grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 8px; }
+    #schedule-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
+    .exam-name-static { font-size: 1rem; }
+    .countdown-row { font-size: 1.5rem; }
 }
