@@ -54,59 +54,48 @@
 
 		<script>
 			async function loadExams() {
-	try {
-		const response = await fetch('exams.json');
-		const exams = await response.json();
-		const grid = document.getElementById('exam-grid');
-		const now = new Date();
+    try {
+        const response = await fetch('exams.json');
+        const exams = await response.json();
+        const grid = document.getElementById('exam-grid');
+        const now = new Date();
 
-		exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-		const futureExams = exams.filter(exam => new Date(exam.date) > now);
-		const displayedExams = futureExams.slice(0, 11);
+        exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+        const futureExams = exams.filter(exam => new Date(exam.date) > now);
+        const displayedExams = futureExams.slice(0, 11);
 
-		displayedExams.forEach(exam => {
-    const examDate = new Date(exam.date);
-    const diffTime = examDate - now;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        displayedExams.forEach(exam => {
+            const examDate = new Date(exam.date);
+            const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
 
-    let colorClass = 'color-blue';
-    if (diffDays <= 30) colorClass = 'color-red';
-    else if (diffDays <= 60) colorClass = 'color-orange';
-    else if (diffDays <= 90) colorClass = 'color-green';
+            let colorClass = 'color-blue';
+            if (diffDays <= 30) colorClass = 'color-red';
+            else if (diffDays <= 60) colorClass = 'color-orange';
+            else if (diffDays <= 90) colorClass = 'color-green';
 
-    const card = document.createElement('div');
-    card.className = 'exam-card';
-    
-    card.innerHTML = `
-        <div class="exam-title"><span>${exam.name}</span></div>
-        <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
-    `;
-    grid.appendChild(card);
+            const card = document.createElement('div');
+            card.className = 'exam-card';
+            card.innerHTML = `
+                <div class="exam-title">${exam.name}</div>
+                <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
+            `;
+            grid.appendChild(card);
+        });
 
-    // We use a tiny timeout to let the browser render the card first
-    setTimeout(() => {
-        const titleContainer = card.querySelector('.exam-title');
-        const titleSpan = titleContainer.querySelector('span');
-
-        // Check if the text width is greater than the container width
-        if (titleSpan.scrollWidth > titleContainer.clientWidth) {
-            titleContainer.classList.add('scrolling');
-            
-    }, 50); 
-});
-
-		if (futureExams.length > 11) {
-			const moreCard = document.createElement('a');
-			moreCard.className = 'exam-card show-more-card';
-			moreCard.href = '/exam-schedule'; // Replace with your target URL
-			moreCard.innerText = 'Show More';
-			grid.appendChild(moreCard);
-		}
-	} catch (error) {
-		console.error('Error loading exam data:', error);
-	}
+        if (futureExams.length > 11) {
+            const moreCard = document.createElement('a');
+            moreCard.className = 'exam-card show-more-card';
+            moreCard.style.display = "flex";
+            moreCard.style.justifyContent = "center";
+            moreCard.style.alignItems = "center";
+            moreCard.href = '/full-schedule.html'; 
+            moreCard.innerText = 'Show More';
+            grid.appendChild(moreCard);
+        }
+    } catch (error) {
+        console.error('Error loading exam data:', error);
+    }
 }
-
 loadExams();
 		</script>
 	</body>
