@@ -139,10 +139,13 @@ div#header-right {
     text-overflow: ellipsis;
     width: 95%; 
     display: block;
+	position: relative;
 }
 
 .exam-title span {
     display: inline-block;
+    white-space: nowrap;
+    padding-right: 0;
 }
 
 .exam-title.scrolling span {
