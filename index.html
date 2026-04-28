@@ -92,10 +92,6 @@
         if (titleSpan.scrollWidth > titleContainer.clientWidth) {
             titleContainer.classList.add('scrolling');
             
-            // Duplicate the text with spacing for a continuous loop effect
-            const originalText = titleSpan.innerText;
-            titleSpan.innerHTML = `${originalText} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${originalText}`;
-        }
     }, 50); 
 });
 
