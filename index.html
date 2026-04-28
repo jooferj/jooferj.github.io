@@ -65,25 +65,37 @@ const response = await fetch('exams.json');
         const displayedExams = futureExams.slice(0, 11);
 
         displayedExams.forEach(exam => {
-            const examDate = new Date(exam.date);
-            const diffTime = examDate - now;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const examDate = new Date(exam.date);
+    const diffTime = examDate - now;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-            let colorClass = 'color-blue';
-            if (diffDays <= 30) colorClass = 'color-red';
-            else if (diffDays <= 60) colorClass = 'color-orange';
-            else if (diffDays <= 90) colorClass = 'color-green';
+    let colorClass = 'color-blue';
+    if (diffDays <= 30) colorClass = 'color-red';
+    else if (diffDays <= 60) colorClass = 'color-orange';
+    else if (diffDays <= 90) colorClass = 'color-green';
 
-            const card = document.createElement('div');
-            card.className = 'exam-card';
-            card.innerHTML = `
-                <span class="exam-title">${exam.name}</span>
-                <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
-            `;
-            grid.appendChild(card);
-        });
+    const card = document.createElement('div');
+    card.className = 'exam-card';
+    
+    // Wrap the name in a span to allow width detection
+    card.innerHTML = `
+        <div class="exam-title"><span>${exam.name}</span></div>
+        <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
+    `;
+    grid.appendChild(card);
 
-        // Add the "Show More" card as the 10th item if there are more exams
+    // Detect if text overflows and trigger scrolling
+    const titleContainer = card.querySelector('.exam-title');
+    const titleSpan = titleContainer.querySelector('span');
+
+    // Compare the physical width of the text vs the container
+    if (titleSpan.offsetWidth > titleContainer.offsetWidth) {
+        titleContainer.classList.add('scrolling');
+        // Duplicate the text inside the span for a seamless loop
+        titleSpan.innerHTML += ` &nbsp;&nbsp;&nbsp;&nbsp; ${exam.name}`;
+    }
+});
+
         if (futureExams.length > 11) {
             const moreCard = document.createElement('a');
             moreCard.className = 'exam-card show-more-card';
