@@ -37,65 +37,47 @@
 
     <script>
         async function renderSchedule() {
-            const grid = document.getElementById('schedule-grid');
-            try {
-                const response = await fetch('../exams.json');
-                const exams = await response.json();
-                const now = new Date();
+    const grid = document.getElementById('schedule-grid');
+    try {
+        const response = await fetch('exams.json');
+        const exams = await response.json();
+        const now = new Date();
 
-                // Sort and filter for future exams
-                const upcoming = exams
-                    .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
-                    .filter(exam => exam.dateObj > now)
-                    .sort((a, b) => a.dateObj - b.dateObj);
+        const upcoming = exams
+            .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
+            .filter(exam => exam.dateObj > now)
+            .sort((a, b) => a.dateObj - b.dateObj);
 
-                upcoming.forEach(exam => {
-                    const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
-                    
-                    // Auto-detect day of the week
-                    const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
-                    const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+        upcoming.forEach(exam => {
+            const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
+            const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+            const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-                    // Color thresholds
-                    let colorClass = 'color-blue';
-                    if (diffDays <= 30) colorClass = 'color-red';
-                    else if (diffDays <= 60) colorClass = 'color-orange';
-                    else if (diffDays <= 90) colorClass = 'color-green';
+            let colorClass = 'color-blue';
+            if (diffDays <= 30) colorClass = 'color-red';
+            else if (diffDays <= 60) colorClass = 'color-orange';
+            else if (diffDays <= 90) colorClass = 'color-green';
 
-                    const card = document.createElement('div');
-                    card.className = 'schedule-card';
-                    
-                    card.innerHTML = `
-                        <div class="card-header">
-                            <span>${exam.week || ''}</span>
-                            <span>${dayName}</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="exam-name-scroll" id="scroll-${exam.name.replace(/\s+/g, '')}">
-                                <span>${exam.name}</span>
-                            </div>
-                            <div class="date-row">${formattedDate}</div>
-                            <div class="countdown-row ${colorClass}">
-                                ${diffDays}<span class="days-label">d</span>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-
-                    // Check if scrolling is needed
-                    const scrollContainer = card.querySelector('.exam-name-scroll');
-                    const scrollSpan = scrollContainer.querySelector('span');
-                    if (scrollSpan.offsetWidth > scrollContainer.offsetWidth) {
-                        scrollContainer.classList.add('scrolling');
-                        // Duplicate text for seamless loop
-                        scrollSpan.innerHTML += ` &nbsp;&nbsp; ${exam.name}`;
-                    }
-                });
-            } catch (e) {
-                console.error("Schedule Error:", e);
-            }
-        }
-        renderSchedule();
+            const card = document.createElement('div');
+            card.className = 'schedule-card';
+            card.innerHTML = `
+                <div class="card-header">
+                    <span>${exam.week || ''}</span>
+                    <span>${dayName}</span>
+                </div>
+                <div class="card-body">
+                    <div class="exam-name-static">${exam.name}</div>
+                    <div class="date-row">${formattedDate}</div>
+                    <div class="countdown-row ${colorClass}">${diffDays}<span class="days-label">d</span></div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    } catch (e) {
+        console.error("Schedule Error:", e);
+    }
+}
+renderSchedule();
     </script>
 </body>	
 
