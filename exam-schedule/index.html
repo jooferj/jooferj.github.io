@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en-GB">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="../index.css">
+
+		<link rel="icon" type="image/svg+xml" href="../logo-red.svg">
+		<title>joofer.j/exam-schedule</title>
+		
+		<style type="text/css">
+			html {
+				background: #000000;
+				font-family: Ubuntu;
+				font-weight: 500;
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+  
+  <body>
+    <div id="header">
+        <span>joofer.j/exam-schedule</span>
+        <div id="header-right">
+            <a id="home" href="/">Back to Menu</a>
+        </div>
+    </div>
+
+    <div id="content">
+        <div id="schedule-grid">
+        </div>
+    </div>
+
+    <script>
+        async function renderSchedule() {
+            const grid = document.getElementById('schedule-grid');
+            try {
+                const response = await fetch('exams.json');
+                const exams = await response.json();
+                const now = new Date();
+
+                // Sort and filter for future exams
+                const upcoming = exams
+                    .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
+                    .filter(exam => exam.dateObj > now)
+                    .sort((a, b) => a.dateObj - b.dateObj);
+
+                upcoming.forEach(exam => {
+                    const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
+                    
+                    // Auto-detect day of the week
+                    const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+                    const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+
+                    // Color thresholds
+                    let colorClass = 'color-blue';
+                    if (diffDays <= 30) colorClass = 'color-red';
+                    else if (diffDays <= 60) colorClass = 'color-orange';
+                    else if (diffDays <= 90) colorClass = 'color-green';
+
+                    const card = document.createElement('div');
+                    card.className = 'schedule-card';
+                    
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <span>${exam.weekCode || ''}</span>
+                            <span>${dayName}</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="exam-name-scroll" id="scroll-${exam.name.replace(/\s+/g, '')}">
+                                <span>${exam.name}</span>
+                            </div>
+                            <div class="date-row">${formattedDate}</div>
+                            <div class="countdown-row ${colorClass}">
+                                ${diffDays}<span class="days-label">d</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+
+                    // Check if scrolling is needed
+                    const scrollContainer = card.querySelector('.exam-name-scroll');
+                    const scrollSpan = scrollContainer.querySelector('span');
+                    if (scrollSpan.offsetWidth > scrollContainer.offsetWidth) {
+                        scrollContainer.classList.add('scrolling');
+                        // Duplicate text for seamless loop
+                        scrollSpan.innerHTML += ` &nbsp;&nbsp; ${exam.name}`;
+                    }
+                });
+            } catch (e) {
+                console.error("Schedule Error:", e);
+            }
+        }
+        renderSchedule();
+    </script>
+</body>	
+
+</html>
