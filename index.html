@@ -87,7 +87,7 @@ const response = await fetch('exams.json');
         if (futureExams.length > 11) {
             const moreCard = document.createElement('a');
             moreCard.className = 'exam-card show-more-card';
-            moreCard.href = '/full-schedule'; // Replace with your target URL
+            moreCard.href = '/exam-schedule'; // Replace with your target URL
             moreCard.innerText = 'Show More';
             grid.appendChild(moreCard);
         }
