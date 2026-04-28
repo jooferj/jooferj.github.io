@@ -1,7 +1,7 @@
-/* Reverted index.css */
 html, body {
 	margin: 0;
 	padding: 0;
+
 	color: #ffffff;
 	background-color: #000000;
 }
@@ -35,6 +35,73 @@ div#header-right {
 
 #content {
 	overflow: hidden;
+}
+
+#content > a:nth-child(odd) {
+	display: flex;
+	align-items: center;
+	background-color: #2a2a2a;
+}
+
+#content > a:nth-child(even) {
+	display: flex;
+	align-items: center;
+	background-color: #202020;
+}
+
+#content > a > span {
+	height: calc(7vw + 6vh);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: calc(2.5vw + 2.5vh);
+	width: 100vw;
+	line-height: 1.1;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}
+
+#content > span {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100vw;
+}
+
+.title-text {
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+	font-size: calc(2vw + 2vh);
+}
+
+.body-text {
+	padding-bottom: 2vw;
+	font-size: calc(1.1vw + 1.1vh);
+}
+
+.body-text-only {
+	padding-top: 2vw;
+	padding-bottom: 2vw;
+	font-size: calc(1.1vw + 1.1vh);
+}
+
+.smalltext {
+	font-size: 0.35em;
+    margin-top: 0.2em;
+    white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#content > a > span.nostack {
+    flex-direction: row;
+}
+
+#content > a > span > span.nostack {
+    flex-direction: row;
 }
 
 /* Homepage Grid */
