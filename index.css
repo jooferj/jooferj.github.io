@@ -149,7 +149,7 @@ div#header-right {
 }
 
 .exam-title.scrolling span {
-    animation: home-scroll-text 8s linear infinite;
+    animation: home-scroll-text 12s linear infinite;
     padding-right: 50px;
 }
 
