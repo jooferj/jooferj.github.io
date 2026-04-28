@@ -39,7 +39,7 @@
         async function renderSchedule() {
     const grid = document.getElementById('schedule-grid');
     try {
-        const response = await fetch('exams.json');
+        const response = await fetch('../exams.json');
         const exams = await response.json();
         const now = new Date();
 
