@@ -141,6 +141,22 @@ div#header-right {
     display: block;
 }
 
+.exam-title span {
+    display: inline-block;
+}
+
+.exam-title.scrolling span {
+    animation: home-scroll-text 8s linear infinite;
+    padding-right: 50px;
+}
+
+@keyframes home-scroll-text {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(0); } /* Initial pause */
+    90% { transform: translateX(-100%); } /* Scroll distance */
+    100% { transform: translateX(-100%); }
+}
+
 .days-left {
     font-size: calc(1.8vw + 1.8vh + 4px);
     font-weight: 700;
