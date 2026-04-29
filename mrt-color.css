@@ -1,3 +1,16 @@
+:root{
+    --smrt-nsl-color: #DF2827;
+    --smrt-ewl-color: #009645;
+    --smrt-nel-color: #9900AB;
+    --smrt-ccl-color: #FA9E0D;
+    --smrt-dtl-color: #0055B8;
+    --smrt-tel-color: #9D5918;
+    --smrt-jrl-color: #00ADBB;
+    --smrt-crl-color: #93D500;
+    --smrt-sll-color: #F266B5;
+    --smrt-lrt-color: #708270;
+}
+
 .smrt-nsl {
     background-color: #DF2827;
     color: white;
