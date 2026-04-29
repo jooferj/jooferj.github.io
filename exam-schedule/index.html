@@ -69,8 +69,8 @@
                     <span>${dayName}</span>
                 </div>
                 <div class="card-body">
-                    <div class="exam-name-static">${exam.name}</div>
-                    <div class="date-row">${formattedDate}</div>
+                    <div class="exam-name-static ${todayClass}">${exam.name}</div>
+					<div class="date-row ${todayClass}">${formattedDate}</div>
                     <div class="countdown-row ${colorClass}">${diffDays}<span class="days-label">d</span></div>
                 </div>
             `;
