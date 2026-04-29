@@ -19,11 +19,11 @@ async function initPlayer(lineConfig) {
                         <button class="show-more" onclick="openAnnouncementModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">Show more</button>
                         <div class="player-controls">
                             <button class="play-btn" onclick="playAudio('${item.audioUrl}', this)">
-                                <img src="/play.svg" alt="Play">
+                                <img src="icons/play.svg" alt="Play">
                             </button>
                             <input type="range" class="seek-bar" value="0" max="100">
                             <a href="${item.audioUrl}" download class="download-btn">
-                                <img src="/download.svg" alt="Download">
+                                <img src="icons/download.svg" alt="Download">
                             </a>
                         </div>
                     </div>
