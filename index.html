@@ -69,6 +69,8 @@
             const examDate = new Date(exam.date);
             const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
 
+			const todayClass = diffDays === 0 ? 'is-today' : '';
+
             let colorClass = 'color-blue';
             if (diffDays <= 30) colorClass = 'color-red';
             else if (diffDays <= 60) colorClass = 'color-orange';
