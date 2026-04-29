@@ -221,3 +221,14 @@ div#header-right {
     .exam-name-static { font-size: 1rem; }
     .countdown-row { font-size: 1.5rem; }
 }
+
+@keyframes flash-yellow {
+    0% { color: #ffffff; }
+    50% { color: #ffff00; text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
+    100% { color: #ffffff; }
+}
+
+.is-today {
+    animation: flash-yellow 1.5s infinite;
+    font-weight: 700;
+}
