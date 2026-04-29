@@ -231,13 +231,29 @@ div#header-right {
     animation: flash-yellow 2s steps(1) infinite;
 }
 
-/* Announcement Grid */
-/* Announcement Card Styling */
+/* Update the grid to have exactly 2 columns */
+#announcement-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Forces two cards per row  */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Ensure the card has a dark grey background, not the line color [cite: 43, 44] */
 .announcement-card {
-    background-color: #1a1a1a;
-    border-top: 4px solid var(--line-color, #333); /* Subtle accent line */
+    background-color: #1a1a1a; /* Dark grey background [cite: 25, 43] */
+    border-top: 4px solid var(--line-color, #333); /* Keeps line color as a top accent  */
     border-radius: 8px;
     padding: 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 150px; /* Adjust based on your mockup needs */
+}
+
+/* Ensure the body text is white and not inheriting line colors [cite: 13, 27] */
+.announcement-card h3 {
+    color: #ffffff;
+    margin-top: 0;
 }
 
 /* "Show More" Button - uses line color */
