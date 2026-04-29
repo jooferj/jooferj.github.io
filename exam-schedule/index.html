@@ -52,6 +52,7 @@
 
         upcoming.forEach(exam => {
             const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
+			const todayClass = diffDays === 0 ? 'is-today' : '';
             const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
             const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
