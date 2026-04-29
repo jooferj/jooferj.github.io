@@ -1,54 +1,76 @@
 .smrt-nsl {
     background-color: #DF2827;
     color: white;
+    --line-color: #DF2827;
+    --line-text: white;
 }
 
 .smrt-ewl {
     background-color: #009645;
     color: white;
+    --line-color: #009645;
+    --line-text: white;
 }
 
 .smrt-nel {
     background-color: #9900AB;
     color: white;
+    --line-color: #9900AB;
+    --line-text: white;
 }
 
 .smrt-ccl {
     background-color: #FA9E0D;
     color: #2E2A25;
+    --line-color: #FA9E0D;
+    --line-text: #2E2A25;
 }
 
 .smrt-dtl {
     background-color: #0055B8;
     color: white;
+    --line-color: #0055B8;
+    --line-text: white;
 }
 
 .smrt-tel {
     background-color: #9D5918;
     color: white;
+    --line-color: #9D5918;
+    --line-text: white;
 }
 
 .smrt-jrl {
     background-color: #00ADBB;
     color: white;
+    --line-color: #00ADBB;
+    --line-text: white;
 }
 
 .smrt-crl {
     background-color: #93D500;
     color: #2E2A25;
+    --line-color: #93D500;
+    --line-text: #2E2A25;
 }
 
 .smrt-sll {
     background-color: #F266B5;
     color: white;
+    --line-color: #F266B5;
+    --line-text: white;
 }
 
 .smrt-lrt {
     background-color: #708270;
     color: white;
+    --line-color: #708270;
+    --line-text: white;
 }
 
 .smrt-default {
     background-color: #01474F;
     color: #FFD004;
+    --line-color: #01474F;
+    --line-text: #FFD004;
 }
