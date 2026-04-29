@@ -47,7 +47,7 @@
 
         const upcoming = exams
             .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
-            .filter(exam => exam.dateObj => today)
+            .filter(exam => exam.dateObj >= today)
             .sort((a, b) => a.dateObj - b.dateObj);
 
         upcoming.forEach(exam => {
