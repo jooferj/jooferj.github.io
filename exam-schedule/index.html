@@ -43,10 +43,11 @@
         const response = await fetch('../exams.json');
         const exams = await response.json();
         const now = new Date();
+		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
         const upcoming = exams
             .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
-            .filter(exam => exam.dateObj => now)
+            .filter(exam => exam.dateObj => today)
             .sort((a, b) => a.dateObj - b.dateObj);
 
         upcoming.forEach(exam => {
