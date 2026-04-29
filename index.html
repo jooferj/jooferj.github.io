@@ -79,7 +79,7 @@
             const card = document.createElement('div');
             card.className = 'exam-card';
             card.innerHTML = `
-                <div class="exam-title">${exam.name}</div>
+                <div class="exam-title ${todayClass}">${exam.name}</div>
                 <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
             `;
             grid.appendChild(card);
