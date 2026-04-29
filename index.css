@@ -232,25 +232,37 @@ div#header-right {
 }
 
 /* Announcement Grid */
-#announcement-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
+/* Announcement Card Styling */
 .announcement-card {
     background-color: #1a1a1a;
+    border-top: 4px solid var(--line-color, #333); /* Subtle accent line */
     border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Reusing exam card shadow style [cite: 55] */
+    padding: 15px;
 }
 
-.player-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
+/* "Show More" Button - uses line color */
+.show-more {
+    background: none;
+    border: 1px solid var(--line-color);
+    color: var(--line-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.show-more:hover {
+    background-color: var(--line-color);
+    color: var(--line-text);
+}
+
+/* Player Seek Bar */
+.seek-bar {
+    accent-color: var(--line-color);
+}
+
+/* Modal Title - uses line color */
+#modalTitle {
+    color: var(--line-color);
 }
 
 /* Modal Styling */
