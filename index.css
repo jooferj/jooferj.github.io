@@ -273,8 +273,3 @@ div#header-right {
     max-width: 600px;
     border-radius: 12px;
 }
-
-/* Use mrt-color for specific elements */
-.smrt-ewl .play-btn, .smrt-ewl .seek-bar {
-    accent-color: #009645; /* Inherited from mrt-color.css [cite: 79] */
-}
