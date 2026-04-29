@@ -222,18 +222,6 @@ div#header-right {
     .countdown-row { font-size: 1.5rem; }
 }
 
-/*
-@keyframes flash-yellow {
-    0% { color: #ffffff; }
-    50% { color: #ffff00; text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); }
-    100% { color: #ffffff; }
-}
-
-.is-today {
-    animation: flash-yellow 1.5s infinite;
-}
-*/
-
 @keyframes flash-yellow {
     0%, 100% { color: #ffffff; }
     50% { color: #ffff00; }
@@ -241,4 +229,52 @@ div#header-right {
 
 .is-today {
     animation: flash-yellow 2s steps(1) infinite;
+}
+
+/* Announcement Grid */
+#announcement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.announcement-card {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Reusing exam card shadow style [cite: 55] */
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background-color: #2a2a2a; /* Consistent with header [cite: 47] */
+    margin: 10% auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 12px;
+}
+
+/* Use mrt-color for specific elements */
+.smrt-ewl .play-btn, .smrt-ewl .seek-bar {
+    accent-color: #009645; /* Inherited from mrt-color.css [cite: 79] */
 }
