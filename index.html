@@ -61,7 +61,7 @@
         const now = new Date();
 
         exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const futureExams = exams.filter(exam => new Date(exam.date) > now);
+        const futureExams = exams.filter(exam => new Date(exam.date) >= now);
         const displayedExams = futureExams.slice(0, 11);
 
         displayedExams.forEach(exam => {
