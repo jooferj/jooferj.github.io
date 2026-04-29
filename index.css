@@ -240,6 +240,5 @@ div#header-right {
 }
 
 .is-today {
-    /* 'steps(1)' removes the fade/interpolation between colors */
     animation: flash-yellow 1s steps(1) infinite;
 }
