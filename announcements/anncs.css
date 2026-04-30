@@ -105,7 +105,9 @@ button, .download-btn {
     transition: 0.2s;
 }
 
-button:hover, .download-btn:hover { background: #fff; }
+button:hover, .download-btn:hover {
+    background: #fff;
+}
 
 .ctrl-icon {
     width: 18px;
