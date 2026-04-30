@@ -55,8 +55,6 @@ function renderAnnouncements(data) {
         card.innerHTML = `
             <div class="audio-info">
                 <h2 class="audio-title">${item.title}</h2>
-                <p class="transcript">"${item.transcript}"</p>
-                <p class="notes">${item.notes}</p>
                 <div>${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
             </div>
             <div class="custom-player">
