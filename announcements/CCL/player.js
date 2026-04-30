@@ -92,6 +92,11 @@ function setupAudioLogic(card, src) {
     const timeDisp = card.querySelector('.time-display');
 
     audio.addEventListener('error', (e) => {
+        if (audio.duration > 120000) {
+            timeDisp.innerText = "Audio fetch blocked.";
+            timeDisp.style.color = "red";
+        }
+        
         const error = audio.error;
         console.error("Audio Error Code:", error.code);
         if (error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
