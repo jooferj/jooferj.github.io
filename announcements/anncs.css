@@ -119,5 +119,4 @@ button:hover .ctrl-icon { filter: invert(0); }
 .progress-bar {
     width: 100%;
     cursor: pointer;
-    accent-color: #ff0000;
 }
