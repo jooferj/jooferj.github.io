@@ -65,7 +65,7 @@ function renderAnnouncements(data) {
                     <button class="restart-btn">
                         <img src="${iconPaths.restart}" class="ctrl-icon" alt="Restart">
                     </button>
-                    <div class="player-mid">
+                    <div class="player-mid style="accent-color: var(--smrt-ccl-color);">
                         <input type="range" class="progress-bar" value="0" max="100">
                         <span class="time-display">0:00 / 0:00</span>
                     </div>
