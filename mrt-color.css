@@ -9,6 +9,7 @@
     --smrt-crl-color: #93D500;
     --smrt-sll-color: #F266B5;
     --smrt-lrt-color: #708270;
+    --smrt-rts-color! #87CEFA;
 }
 
 .smrt-nsl {
@@ -64,4 +65,9 @@
 .smrt-default {
     background-color: #01474F;
     color: #FFD004;
+}
+
+.smrt-rts {
+    background-color: #87CEFA;
+    color: #2E2A25;
 }
