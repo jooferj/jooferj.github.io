@@ -8,14 +8,13 @@
 }
 
 #search-input {
-    width: 95%;
-    /* padding: 12px; */
+    width: calc(100% - 24px);
+    padding: 12px;
     background: #000;
     border: 1px solid #444;
     color: white;
     font-family: 'Ubuntu';
     border-radius: 4px;
-    margin: auto;
     margin-bottom: 15px;
 }
 
