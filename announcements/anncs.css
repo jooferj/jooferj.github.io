@@ -148,3 +148,67 @@ button:hover .ctrl-icon { filter: invert(0); }
 .tags-row {
     margin-bottom: 5px;
 }
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Translucent background */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #202020;
+    margin: 5% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    position: relative;
+    color: white;
+}
+
+.modal-tabs {
+    display: flex;
+    gap: 2px;
+    margin-top: 15px;
+    border-bottom: 2px solid #333;
+}
+
+.tab-button {
+    background: #333;
+    border: none;
+    color: #888;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Ubuntu';
+    border-radius: 4px 4px 0 0;
+    width: auto !important; /* Overriding global button width */
+}
+
+.tab-button.active {
+    background: var(--smrt-ccl-color); /* Accent color */
+    color: white;
+}
+
+.tab-pane {
+    background: #171717;
+    padding: 20px;
+    min-height: 150px;
+    margin-bottom: 20px;
+}
+
+.modal-player {
+    background: #111;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.modal-progress-bar {
+    accent-color: var(--smrt-ccl-color);
+}
