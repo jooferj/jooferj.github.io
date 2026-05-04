@@ -69,6 +69,10 @@ function renderAnnouncements(data) {
                         <input type="range" class="progress-bar" value="0" max="100">
                         <span class="time-display">0:00 / 0:00</span>
                     </div>
+                    <div class="player-mid">
+                        <input type="range" class="progress-bar" value="0" max="100" style="accent-color: var(--smrt-ccl-color);">
+                        <span class="time-display">0:00 / 0:00</span>
+                    </div>
                     <a href="${item.file}" download class="download-btn">
                         <img src="${iconPaths.download}" class="ctrl-icon" alt="Download">
                     </a>
