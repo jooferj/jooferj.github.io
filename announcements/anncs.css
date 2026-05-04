@@ -191,11 +191,6 @@ button:hover .ctrl-icon { filter: invert(0); }
     width: auto !important; /* Overriding global button width */
 }
 
-.tab-button.active {
-    background: var(--smrt-ccl-color); /* Accent color */
-    color: white;
-}
-
 .tab-pane {
     background: #171717;
     padding: 20px;
@@ -207,8 +202,4 @@ button:hover .ctrl-icon { filter: invert(0); }
     background: #111;
     padding: 15px;
     border-radius: 8px;
-}
-
-.modal-progress-bar {
-    accent-color: var(--smrt-ccl-color);
 }
