@@ -22,6 +22,15 @@
             font-weight: 500;
             color: #FFFFFF;
         }
+
+        .tab-button.active {
+            background: var(--smrt-ccl-color); /* Accent color */
+            color: white;
+        }
+
+        .modal-progress-bar {
+            accent-color: var(--smrt-ccl-color);
+        }
     </style>
 </head>
   
@@ -50,6 +59,38 @@
             <span class="body-text-only">Loading announcements...</span>
         </div>
     </div>
+
+    <div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <div id="modalTags" class="tags-row"></div>
+        
+        <div class="modal-tabs">
+            <button class="tab-btn active" onclick="switchTab('Description')">Description</button>
+            <button class="tab-btn" onclick="switchTab('Transcript')">Transcript</button>
+        </div>
+        
+        <div class="tab-pane">
+            <div id="modalBodyText"></div>
+        </div>
+
+        <div class="modal-player">
+            <div class="controls">
+                <button class="play-btn-modal" id="modalPlayBtn">
+                    <img src="../icons/play.svg" class="ctrl-icon" alt="Play">
+                </button>
+                <div class="player-mid">
+                    <input type="range" class="modal-progress-bar" value="0" max="100">
+                    <span class="modal-time-display">0:00 / 0:00</span>
+                </div>
+                <a id="modalDownload" href="#" download class="download-btn">
+                    <img src="../icons/download.svg" class="ctrl-icon" alt="Download">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="player.js"></script>
 </body>
