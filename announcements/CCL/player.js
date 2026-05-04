@@ -57,7 +57,7 @@ function renderAnnouncements(data) {
                 <h2 class="audio-title">${item.title}</h2>
                 <div>${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
             </div>
-            <button class="show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+            <button class="annc-show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
                 Show More
             </button>
             <div class="custom-player">
@@ -157,6 +157,13 @@ function handleSearch() {
         return matchTag && matchText;
     });
     renderAnnouncements(filtered);
+}
+
+function openModal(item) {
+    const modal = document.getElementById('infoModal');
+    document.getElementById('modalTitle').innerText = item.title;
+    // Update other modal fields as necessary (Description, Transcript, etc.)
+    modal.style.display = 'block';
 }
 
 document.getElementById('search-input').addEventListener('input', handleSearch);
