@@ -123,7 +123,7 @@ button:hover .ctrl-icon { filter: invert(0); }
 }
 
 /* Show More */
-.show-more-btn {
+.annc-show-more {
     display: block;
     width: auto !important;
     height: auto !important;
@@ -140,7 +140,7 @@ button:hover .ctrl-icon { filter: invert(0); }
     transition: 0.2s;
 }
 
-.show-more-btn:hover {
+.annc-show-more:hover {
     background-color: var(--line-color, #ffffff) !important;
     color: #000 !important;
 }
