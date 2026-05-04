@@ -159,12 +159,51 @@ function handleSearch() {
     renderAnnouncements(filtered);
 }
 
+let currentModalItem = null;
+
 function openModal(item) {
+    currentModalItem = item;
     const modal = document.getElementById('infoModal');
+    
+    // Set text content
     document.getElementById('modalTitle').innerText = item.title;
-    // Update other modal fields as necessary (Description, Transcript, etc.)
+    document.getElementById('modalTags').innerHTML = item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('');
+    
+    // Reset to Description tab
+    switchTab('Description');
+    
+    // Setup Modal Player
+    const downloadLink = document.getElementById('modalDownload');
+    downloadLink.href = item.file;
+    
+    // Trigger modal visibility
     modal.style.display = 'block';
 }
+
+function switchTab(type) {
+    const btns = document.querySelectorAll('.tab-button');
+    const body = document.getElementById('modalBodyText');
+    
+    btns.forEach(btn => btn.classList.remove('active'));
+    
+    if (type === 'Description') {
+        btns[0].classList.add('active');
+        body.innerText = currentModalItem.description || "No description available.";
+    } else {
+        btns[1].classList.add('active');
+        body.innerText = currentModalItem.transcript;
+    }
+}
+
+// Close modal when clicking (x) or outside the box
+document.querySelector('.close-button').onclick = () => {
+    document.getElementById('infoModal').style.display = 'none';
+};
+
+window.onclick = (event) => {
+    const modal = document.getElementById('infoModal');
+    if (event.target == modal) modal.style.display = 'none';
+};
 
 document.getElementById('search-input').addEventListener('input', handleSearch);
 document.querySelectorAll('input[name="search-type"]').forEach(r => r.addEventListener('change', handleSearch));
