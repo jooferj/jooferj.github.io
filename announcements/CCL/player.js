@@ -57,6 +57,9 @@ function renderAnnouncements(data) {
                 <h2 class="audio-title">${item.title}</h2>
                 <div>${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
             </div>
+            <button class="show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                Show More
+            </button>
             <div class="custom-player">
                 <div class="controls">
                     <button class="play-btn">
