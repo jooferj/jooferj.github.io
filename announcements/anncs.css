@@ -121,3 +121,30 @@ button:hover .ctrl-icon { filter: invert(0); }
     width: 100%;
     cursor: pointer;
 }
+
+/* Show More */
+.show-more-btn {
+    display: block;
+    width: auto !important;
+    height: auto !important;
+    margin: 12px 0 5px 0;
+    padding: 6px 16px;
+    background: none;
+    border: 1px solid var(--line-color, #ffffff) !important;
+    color: var(--line-color, #ffffff) !important;
+    font-family: 'Ubuntu';
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.show-more-btn:hover {
+    background-color: var(--line-color, #ffffff) !important;
+    color: #000 !important;
+}
+
+.tags-row {
+    margin-bottom: 5px;
+}
