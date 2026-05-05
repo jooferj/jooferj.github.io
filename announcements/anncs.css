@@ -120,6 +120,7 @@ button:hover .ctrl-icon { filter: invert(0); }
 .progress-bar {
     width: 100%;
     cursor: pointer;
+    accent-color: var(--line-color);
 }
 
 /* Show More */
@@ -203,4 +204,8 @@ button:hover .ctrl-icon { filter: invert(0); }
     background: #111;
     padding: 15px;
     border-radius: 8px;
+}
+
+.modal-progress-bar {
+    accent-color: var(--line-color);
 }
