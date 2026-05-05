@@ -1,9 +1,5 @@
 let announcementData = [];
 let activeTag = "All";
-let activeAudio = null;
-let activePlayImg = null;
-let modalAudioInstance = null;
-let currentModalItem = null;
 
 const iconPaths = {
     play: "../icons/play.svg",
@@ -12,7 +8,7 @@ const iconPaths = {
     download: "../icons/download.svg"
 };
 
-const formatTime = (s) => isNaN(s) || !isFinite(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
+const formatTime = (s) => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
 
 async function init() {
     try {
@@ -30,152 +26,6 @@ async function init() {
     }
 }
 
-// --- SHARED PLAYBACK ENGINE ---
-function attachPlayback(container, audioSrc) {
-    const audio = new Audio(audioSrc);
-    // Finds either main page combined btn or modal btn
-    const playBtn = container.querySelector('.play-btn-combined, .play-btn-modal');
-    const playImg = playBtn.querySelector('img');
-    const progress = container.querySelector('.progress-bar, .modal-progress-bar');
-    const timeDisp = container.querySelector('.time-display, .modal-time-display');
-
-    playBtn.onclick = () => {
-        // RESTART Logic: If this specific audio is already playing, restart it
-        if (activeAudio === audio && !audio.paused) {
-            audio.currentTime = 0;
-            return;
-        }
-
-        // Global Stop: Pause any other audio currently playing elsewhere
-        if (activeAudio && activeAudio !== audio) {
-            activeAudio.pause();
-            if (activePlayImg) activePlayImg.src = iconPaths.play;
-        }
-
-        // Toggle Play/Pause
-        if (audio.paused) {
-            audio.play();
-            playImg.src = iconPaths.pause;
-            activeAudio = audio;
-            activePlayImg = playImg;
-        } else {
-            audio.pause();
-            playImg.src = iconPaths.play;
-        }
-    };
-
-    audio.addEventListener('timeupdate', () => {
-        const curr = audio.currentTime;
-        const dur = audio.duration;
-        progress.value = (curr / dur) * 100 || 0;
-        timeDisp.innerText = `${formatTime(curr)} / ${formatTime(dur)}`;
-    });
-
-    progress.oninput = () => {
-        if (audio.duration) {
-            audio.currentTime = (progress.value / 100) * audio.duration;
-        }
-    };
-
-    audio.addEventListener('ended', () => {
-        playImg.src = iconPaths.play;
-    });
-
-    return audio;
-}
-
-// --- MAIN PAGE RENDERING ---
-function renderAnnouncements(data) {
-    const list = document.getElementById('announcement-list');
-    list.innerHTML = data.length ? '' : '<p style="padding: 20px;">No results found.</p>';
-
-    data.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'audio-card';
-
-        card.innerHTML = `
-            <div class="audio-info">
-                <h2 class="audio-title">${item.title}</h2>
-                <div class="tags-row">${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
-            </div>
-            
-            <button class="annc-show-more" onclick='openModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
-                Show More
-            </button>
-
-            <div class="custom-player">
-                <div class="controls">
-                    <button class="play-btn-combined">
-                        <img src="${iconPaths.play}" class="ctrl-icon" alt="Play/Restart">
-                    </button>
-                    <div class="player-mid">
-                        <input type="range" class="progress-bar" value="0" max="100" style="accent-color: var(--smrt-ccl-color);">
-                        <span class="time-display">0:00 / 0:00</span>
-                    </div>
-                    <a href="${item.file}" download class="download-btn">
-                        <img src="${iconPaths.download}" class="ctrl-icon" alt="Download">
-                    </a>
-                </div>
-            </div>
-        `;
-        attachPlayback(card, item.file);
-        list.appendChild(card);
-    });
-}
-
-// --- MODAL LOGIC ---
-function openModal(item) {
-    currentModalItem = item;
-    const modal = document.getElementById('infoModal');
-    
-    document.getElementById('modalTitle').innerText = item.title;
-    document.getElementById('modalTags').innerHTML = item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('');
-    document.getElementById('modalDownload').href = item.file;
-    
-    switchTab('Description');
-
-    // Clean up previous modal audio if it exists
-    if (modalAudioInstance) {
-        modalAudioInstance.pause();
-        modalAudioInstance = null;
-    }
-
-    // Reuse the playback engine for the modal
-    modalAudioInstance = attachPlayback(modal, item.file);
-
-    modal.style.display = 'block';
-
-    // Close logic
-    const closeBtn = modal.querySelector('.close-button');
-    const closeModal = () => {
-        modal.style.display = 'none';
-        if (modalAudioInstance) {
-            modalAudioInstance.pause();
-            modalAudioInstance = null;
-        }
-        if (activeAudio === modalAudioInstance) activeAudio = null;
-    };
-
-    closeBtn.onclick = closeModal;
-    window.onclick = (event) => { if (event.target == modal) closeModal(); };
-}
-
-function switchTab(type) {
-    const btns = document.querySelectorAll('.tab-button');
-    const body = document.getElementById('modalBodyText');
-    
-    btns.forEach(btn => btn.classList.remove('active'));
-    
-    if (type === 'Description') {
-        btns[0].classList.add('active');
-        body.innerText = currentModalItem.description || "No description available.";
-    } else {
-        btns[1].classList.add('active');
-        body.innerText = currentModalItem.transcript;
-    }
-}
-
-// --- SEARCH & FILTERS ---
 function renderTags() {
     const tagContainer = document.getElementById('filter-tags');
     const allTags = new Set(["All"]);
@@ -194,6 +44,109 @@ function renderTags() {
     });
 }
 
+function renderAnnouncements(data) {
+    const list = document.getElementById('announcement-list');
+    list.innerHTML = data.length ? '' : '<p style="padding: 20px;">No results found.</p>';
+
+    data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'audio-card';
+
+        card.innerHTML = `
+            <div class="audio-info">
+                <h2 class="audio-title">${item.title}</h2>
+                <div>${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
+            </div>
+            <button class="annc-show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+                Show More
+            </button>
+            <div class="custom-player">
+                <div class="controls">
+                    <button class="play-btn">
+                        <img src="${iconPaths.play}" class="ctrl-icon" alt="Play">
+                    </button>
+                    <button class="restart-btn">
+                        <img src="${iconPaths.restart}" class="ctrl-icon" alt="Restart">
+                    </button>
+                    <div class="player-mid">
+                        <input type="range" class="progress-bar" value="0" max="100" style="accent-color: var(--smrt-ccl-color);">
+                        <span class="time-display">0:00 / 0:00</span>
+                    </div>
+                    <a href="${item.file}" download class="download-btn">
+                        <img src="${iconPaths.download}" class="ctrl-icon" alt="Download">
+                    </a>
+                </div>
+            </div>
+        `;
+        setupAudioLogic(card, item.file);
+        list.appendChild(card);
+    });
+}
+
+function setupAudioLogic(card, src) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.preload = "metadata";
+
+    const playBtn = card.querySelector('.play-btn');
+    const playImg = playBtn.querySelector('img');
+    const restartBtn = card.querySelector('.restart-btn');
+    const progress = card.querySelector('.progress-bar');
+    const timeDisp = card.querySelector('.time-display');
+
+    audio.addEventListener('error', (e) => {
+        if (audio.duration > 120000) {
+            timeDisp.innerText = "Audio fetch blocked.";
+            timeDisp.style.color = "red";
+        }
+        
+        const error = audio.error;
+        console.error("Audio Error Code:", error.code);
+        if (error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
+            timeDisp.innerText = "Audio fetch failed.";
+            timeDisp.style.color = "red";
+        }
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+        timeDisp.innerText = `0:00 / ${formatTime(audio.duration)}`;
+    });
+
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            document.querySelectorAll('audio').forEach(a => {
+                a.pause();
+                const otherImg = a.parentElement?.querySelector('.play-btn img');
+                if(otherImg) otherImg.src = iconPaths.play;
+            });
+            audio.play();
+            playImg.src = iconPaths.pause;
+        } else {
+            audio.pause();
+            playImg.src = iconPaths.play;
+        }
+    });
+
+    restartBtn.addEventListener('click', () => {
+        audio.currentTime = 0;
+        audio.play();
+        playImg.src = iconPaths.pause;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+        progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+        timeDisp.innerText = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+    });
+
+    progress.addEventListener('input', () => {
+        audio.currentTime = (progress.value / 100) * audio.duration;
+    });
+
+    audio.addEventListener('ended', () => { 
+        playImg.src = iconPaths.play; 
+    });
+}
+
 function handleSearch() {
     const query = document.getElementById('search-input').value.toLowerCase();
     const type = document.querySelector('input[name="search-type"]:checked').value;
@@ -205,6 +158,52 @@ function handleSearch() {
     });
     renderAnnouncements(filtered);
 }
+
+let currentModalItem = null;
+
+function openModal(item) {
+    currentModalItem = item;
+    const modal = document.getElementById('infoModal');
+    
+    // Set text content
+    document.getElementById('modalTitle').innerText = item.title;
+    document.getElementById('modalTags').innerHTML = item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('');
+    
+    // Reset to Description tab
+    switchTab('Description');
+    
+    // Setup Modal Player
+    const downloadLink = document.getElementById('modalDownload');
+    downloadLink.href = item.file;
+    
+    // Trigger modal visibility
+    modal.style.display = 'block';
+}
+
+function switchTab(type) {
+    const btns = document.querySelectorAll('.tab-button');
+    const body = document.getElementById('modalBodyText');
+    
+    btns.forEach(btn => btn.classList.remove('active'));
+    
+    if (type === 'Description') {
+        btns[0].classList.add('active');
+        body.innerText = currentModalItem.description || "No description available.";
+    } else {
+        btns[1].classList.add('active');
+        body.innerText = currentModalItem.transcript;
+    }
+}
+
+// Close modal when clicking (x) or outside the box
+document.querySelector('.close-button').onclick = () => {
+    document.getElementById('infoModal').style.display = 'none';
+};
+
+window.onclick = (event) => {
+    const modal = document.getElementById('infoModal');
+    if (event.target == modal) modal.style.display = 'none';
+};
 
 document.getElementById('search-input').addEventListener('input', handleSearch);
 document.querySelectorAll('input[name="search-type"]').forEach(r => r.addEventListener('change', handleSearch));
