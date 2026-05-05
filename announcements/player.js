@@ -49,6 +49,10 @@ function renderAnnouncements(data) {
     list.innerHTML = data.length ? '' : '<p style="padding: 20px;">No results found.</p>';
 
     data.forEach(item => {
+        if (!item.title || item.title.trim() === "") {
+            return; 
+        }
+        
         const card = document.createElement('div');
         card.className = 'audio-card';
 
