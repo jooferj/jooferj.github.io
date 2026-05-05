@@ -1,5 +1,7 @@
 let announcementData = [];
 let activeTag = "All";
+let activeAudio = null;
+let activePlayImg = null;
 
 const iconPaths = {
     play: "../icons/play.svg",
@@ -55,18 +57,17 @@ function renderAnnouncements(data) {
         card.innerHTML = `
             <div class="audio-info">
                 <h2 class="audio-title">${item.title}</h2>
-                <div>${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
+                <div class="tags-row">${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
             </div>
+            
             <button class="annc-show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
                 Show More
             </button>
+
             <div class="custom-player">
                 <div class="controls">
-                    <button class="play-btn">
-                        <img src="${iconPaths.play}" class="ctrl-icon" alt="Play">
-                    </button>
-                    <button class="restart-btn">
-                        <img src="${iconPaths.restart}" class="ctrl-icon" alt="Restart">
+                    <button class="play-btn-combined">
+                        <img src="${iconPaths.play}" class="ctrl-icon" alt="Play/Restart">
                     </button>
                     <div class="player-mid">
                         <input type="range" class="progress-bar" value="0" max="100" style="accent-color: var(--smrt-ccl-color);">
@@ -84,53 +85,30 @@ function renderAnnouncements(data) {
 }
 
 function setupAudioLogic(card, src) {
-    const audio = new Audio();
-    audio.src = src;
-    audio.preload = "metadata";
-
-    const playBtn = card.querySelector('.play-btn');
+    const audio = new Audio(src);
+    const playBtn = card.querySelector('.play-btn-combined');
     const playImg = playBtn.querySelector('img');
-    const restartBtn = card.querySelector('.restart-btn');
     const progress = card.querySelector('.progress-bar');
     const timeDisp = card.querySelector('.time-display');
 
-    audio.addEventListener('error', (e) => {
-        if (audio.duration > 120000) {
-            timeDisp.innerText = "Audio fetch blocked.";
-            timeDisp.style.color = "red";
-        }
-        
-        const error = audio.error;
-        console.error("Audio Error Code:", error.code);
-        if (error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
-            timeDisp.innerText = "Audio fetch failed.";
-            timeDisp.style.color = "red";
-        }
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-        timeDisp.innerText = `0:00 / ${formatTime(audio.duration)}`;
-    });
-
     playBtn.addEventListener('click', () => {
-        if (audio.paused) {
-            document.querySelectorAll('audio').forEach(a => {
-                a.pause();
-                const otherImg = a.parentElement?.querySelector('.play-btn img');
-                if(otherImg) otherImg.src = iconPaths.play;
-            });
-            audio.play();
-            playImg.src = iconPaths.pause;
-        } else {
-            audio.pause();
-            playImg.src = iconPaths.play;
+        // If this specific audio is already playing, RESTART it
+        if (activeAudio === audio && !audio.paused) {
+            audio.currentTime = 0;
+            return;
         }
-    });
 
-    restartBtn.addEventListener('click', () => {
-        audio.currentTime = 0;
+        // Stop any other audio currently playing on the page
+        if (activeAudio) {
+            activeAudio.pause();
+            if (activePlayImg) activePlayImg.src = iconPaths.play;
+        }
+
+        // Play this audio
         audio.play();
         playImg.src = iconPaths.pause;
+        activeAudio = audio;
+        activePlayImg = playImg;
     });
 
     audio.addEventListener('timeupdate', () => {
@@ -142,8 +120,8 @@ function setupAudioLogic(card, src) {
         audio.currentTime = (progress.value / 100) * audio.duration;
     });
 
-    audio.addEventListener('ended', () => { 
-        playImg.src = iconPaths.play; 
+    audio.addEventListener('ended', () => {
+        playImg.src = iconPaths.play;
     });
 }
 
@@ -165,18 +143,57 @@ function openModal(item) {
     currentModalItem = item;
     const modal = document.getElementById('infoModal');
     
-    // Set text content
     document.getElementById('modalTitle').innerText = item.title;
     document.getElementById('modalTags').innerHTML = item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('');
     
-    // Reset to Description tab
     switchTab('Description');
     
-    // Setup Modal Player
     const downloadLink = document.getElementById('modalDownload');
     downloadLink.href = item.file;
-    
-    // Trigger modal visibility
+
+    // Attach playback logic to the modal's specific elements
+    const modalPlayBtn = document.getElementById('modalPlayBtn');
+    const modalPlayImg = modalPlayBtn.querySelector('img');
+    const modalProgress = modal.querySelector('.modal-progress-bar');
+    const modalTime = modal.querySelector('.modal-time-display');
+
+    // Create a new audio instance for the modal
+    const modalAudio = new Audio(item.file);
+
+    modalPlayBtn.onclick = () => {
+        if (activeAudio) {
+            activeAudio.pause();
+            if (activePlayImg) activePlayImg.src = iconPaths.play;
+        }
+
+        if (modalAudio.paused) {
+            modalAudio.play();
+            modalPlayImg.src = iconPaths.pause;
+            activeAudio = modalAudio;
+            activePlayImg = modalPlayImg;
+        } else {
+            modalAudio.pause();
+            modalPlayImg.src = iconPaths.play;
+        }
+    };
+
+    modalAudio.addEventListener('timeupdate', () => {
+        modalProgress.value = (modalAudio.currentTime / modalAudio.duration) * 100 || 0;
+        modalTime.innerText = `${formatTime(modalAudio.currentTime)} / ${formatTime(modalAudio.duration)}`;
+    });
+
+    modalProgress.oninput = () => {
+        modalAudio.currentTime = (modalProgress.value / 100) * modalAudio.duration;
+    };
+
+    // Stop audio when modal closes
+    const closeModal = () => {
+        modal.style.display = 'none';
+        modalAudio.pause();
+        if (activeAudio === modalAudio) activeAudio = null;
+    };
+
+    document.querySelector('.close-button').onclick = closeModal;
     modal.style.display = 'block';
 }
 
