@@ -2,6 +2,8 @@ let announcementData = [];
 let activeTag = "All";
 let activeAudio = null;
 let activePlayImg = null;
+let modalAudioInstance = null;
+let currentModalItem = null;
 
 const iconPaths = {
     play: "../icons/play.svg",
@@ -10,7 +12,7 @@ const iconPaths = {
     download: "../icons/download.svg"
 };
 
-const formatTime = (s) => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
+const formatTime = (s) => isNaN(s) || !isFinite(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
 
 async function init() {
     try {
@@ -28,24 +30,61 @@ async function init() {
     }
 }
 
-function renderTags() {
-    const tagContainer = document.getElementById('filter-tags');
-    const allTags = new Set(["All"]);
-    announcementData.forEach(item => item.tags.forEach(t => allTags.add(t)));
-    
-    tagContainer.innerHTML = Array.from(allTags).map(tag => 
-        `<span style="border-color: var(--smrt-ccl-color);" class="tag-filter ${tag === activeTag ? 'smrt-ccl' : ''}" data-tag="${tag}">${tag}</span>`
-    ).join('');
+// --- SHARED PLAYBACK ENGINE ---
+function attachPlayback(container, audioSrc) {
+    const audio = new Audio(audioSrc);
+    // Finds either main page combined btn or modal btn
+    const playBtn = container.querySelector('.play-btn-combined, .play-btn-modal');
+    const playImg = playBtn.querySelector('img');
+    const progress = container.querySelector('.progress-bar, .modal-progress-bar');
+    const timeDisp = container.querySelector('.time-display, .modal-time-display');
 
-    tagContainer.querySelectorAll('.tag-filter').forEach(el => {
-        el.addEventListener('click', () => {
-            activeTag = el.dataset.tag;
-            renderTags();
-            handleSearch();
-        });
+    playBtn.onclick = () => {
+        // RESTART Logic: If this specific audio is already playing, restart it
+        if (activeAudio === audio && !audio.paused) {
+            audio.currentTime = 0;
+            return;
+        }
+
+        // Global Stop: Pause any other audio currently playing elsewhere
+        if (activeAudio && activeAudio !== audio) {
+            activeAudio.pause();
+            if (activePlayImg) activePlayImg.src = iconPaths.play;
+        }
+
+        // Toggle Play/Pause
+        if (audio.paused) {
+            audio.play();
+            playImg.src = iconPaths.pause;
+            activeAudio = audio;
+            activePlayImg = playImg;
+        } else {
+            audio.pause();
+            playImg.src = iconPaths.play;
+        }
+    };
+
+    audio.addEventListener('timeupdate', () => {
+        const curr = audio.currentTime;
+        const dur = audio.duration;
+        progress.value = (curr / dur) * 100 || 0;
+        timeDisp.innerText = `${formatTime(curr)} / ${formatTime(dur)}`;
     });
+
+    progress.oninput = () => {
+        if (audio.duration) {
+            audio.currentTime = (progress.value / 100) * audio.duration;
+        }
+    };
+
+    audio.addEventListener('ended', () => {
+        playImg.src = iconPaths.play;
+    });
+
+    return audio;
 }
 
+// --- MAIN PAGE RENDERING ---
 function renderAnnouncements(data) {
     const list = document.getElementById('announcement-list');
     list.innerHTML = data.length ? '' : '<p style="padding: 20px;">No results found.</p>';
@@ -60,7 +99,7 @@ function renderAnnouncements(data) {
                 <div class="tags-row">${item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('')}</div>
             </div>
             
-            <button class="annc-show-more" onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})">
+            <button class="annc-show-more" onclick='openModal(${JSON.stringify(item).replace(/'/g, "&apos;")})'>
                 Show More
             </button>
 
@@ -79,122 +118,46 @@ function renderAnnouncements(data) {
                 </div>
             </div>
         `;
-        setupAudioLogic(card, item.file);
+        attachPlayback(card, item.file);
         list.appendChild(card);
     });
 }
 
-function setupAudioLogic(card, src) {
-    const audio = new Audio(src);
-    const playBtn = card.querySelector('.play-btn-combined');
-    const playImg = playBtn.querySelector('img');
-    const progress = card.querySelector('.progress-bar');
-    const timeDisp = card.querySelector('.time-display');
-
-    playBtn.addEventListener('click', () => {
-        // If this specific audio is already playing, RESTART it
-        if (activeAudio === audio && !audio.paused) {
-            audio.currentTime = 0;
-            return;
-        }
-
-        // Stop any other audio currently playing on the page
-        if (activeAudio) {
-            activeAudio.pause();
-            if (activePlayImg) activePlayImg.src = iconPaths.play;
-        }
-
-        // Play this audio
-        audio.play();
-        playImg.src = iconPaths.pause;
-        activeAudio = audio;
-        activePlayImg = playImg;
-    });
-
-    audio.addEventListener('timeupdate', () => {
-        progress.value = (audio.currentTime / audio.duration) * 100 || 0;
-        timeDisp.innerText = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-    });
-
-    progress.addEventListener('input', () => {
-        audio.currentTime = (progress.value / 100) * audio.duration;
-    });
-
-    audio.addEventListener('ended', () => {
-        playImg.src = iconPaths.play;
-    });
-}
-
-function handleSearch() {
-    const query = document.getElementById('search-input').value.toLowerCase();
-    const type = document.querySelector('input[name="search-type"]:checked').value;
-    
-    const filtered = announcementData.filter(item => {
-        const matchTag = activeTag === "All" || item.tags.includes(activeTag);
-        const matchText = item[type].toLowerCase().includes(query);
-        return matchTag && matchText;
-    });
-    renderAnnouncements(filtered);
-}
-
-let currentModalItem = null;
-
+// --- MODAL LOGIC ---
 function openModal(item) {
     currentModalItem = item;
     const modal = document.getElementById('infoModal');
     
     document.getElementById('modalTitle').innerText = item.title;
     document.getElementById('modalTags').innerHTML = item.tags.map(t => `<span class="tag-mini">${t}</span>`).join('');
+    document.getElementById('modalDownload').href = item.file;
     
     switchTab('Description');
-    
-    const downloadLink = document.getElementById('modalDownload');
-    downloadLink.href = item.file;
 
-    // Attach playback logic to the modal's specific elements
-    const modalPlayBtn = document.getElementById('modalPlayBtn');
-    const modalPlayImg = modalPlayBtn.querySelector('img');
-    const modalProgress = modal.querySelector('.modal-progress-bar');
-    const modalTime = modal.querySelector('.modal-time-display');
+    // Clean up previous modal audio if it exists
+    if (modalAudioInstance) {
+        modalAudioInstance.pause();
+        modalAudioInstance = null;
+    }
 
-    // Create a new audio instance for the modal
-    const modalAudio = new Audio(item.file);
+    // Reuse the playback engine for the modal
+    modalAudioInstance = attachPlayback(modal, item.file);
 
-    modalPlayBtn.onclick = () => {
-        if (activeAudio) {
-            activeAudio.pause();
-            if (activePlayImg) activePlayImg.src = iconPaths.play;
-        }
+    modal.style.display = 'block';
 
-        if (modalAudio.paused) {
-            modalAudio.play();
-            modalPlayImg.src = iconPaths.pause;
-            activeAudio = modalAudio;
-            activePlayImg = modalPlayImg;
-        } else {
-            modalAudio.pause();
-            modalPlayImg.src = iconPaths.play;
-        }
-    };
-
-    modalAudio.addEventListener('timeupdate', () => {
-        modalProgress.value = (modalAudio.currentTime / modalAudio.duration) * 100 || 0;
-        modalTime.innerText = `${formatTime(modalAudio.currentTime)} / ${formatTime(modalAudio.duration)}`;
-    });
-
-    modalProgress.oninput = () => {
-        modalAudio.currentTime = (modalProgress.value / 100) * modalAudio.duration;
-    };
-
-    // Stop audio when modal closes
+    // Close logic
+    const closeBtn = modal.querySelector('.close-button');
     const closeModal = () => {
         modal.style.display = 'none';
-        modalAudio.pause();
-        if (activeAudio === modalAudio) activeAudio = null;
+        if (modalAudioInstance) {
+            modalAudioInstance.pause();
+            modalAudioInstance = null;
+        }
+        if (activeAudio === modalAudioInstance) activeAudio = null;
     };
 
-    document.querySelector('.close-button').onclick = closeModal;
-    modal.style.display = 'block';
+    closeBtn.onclick = closeModal;
+    window.onclick = (event) => { if (event.target == modal) closeModal(); };
 }
 
 function switchTab(type) {
@@ -212,15 +175,36 @@ function switchTab(type) {
     }
 }
 
-// Close modal when clicking (x) or outside the box
-document.querySelector('.close-button').onclick = () => {
-    document.getElementById('infoModal').style.display = 'none';
-};
+// --- SEARCH & FILTERS ---
+function renderTags() {
+    const tagContainer = document.getElementById('filter-tags');
+    const allTags = new Set(["All"]);
+    announcementData.forEach(item => item.tags.forEach(t => allTags.add(t)));
+    
+    tagContainer.innerHTML = Array.from(allTags).map(tag => 
+        `<span style="border-color: var(--smrt-ccl-color);" class="tag-filter ${tag === activeTag ? 'active' : ''}" data-tag="${tag}">${tag}</span>`
+    ).join('');
 
-window.onclick = (event) => {
-    const modal = document.getElementById('infoModal');
-    if (event.target == modal) modal.style.display = 'none';
-};
+    tagContainer.querySelectorAll('.tag-filter').forEach(el => {
+        el.addEventListener('click', () => {
+            activeTag = el.dataset.tag;
+            renderTags();
+            handleSearch();
+        });
+    });
+}
+
+function handleSearch() {
+    const query = document.getElementById('search-input').value.toLowerCase();
+    const type = document.querySelector('input[name="search-type"]:checked').value;
+    
+    const filtered = announcementData.filter(item => {
+        const matchTag = activeTag === "All" || item.tags.includes(activeTag);
+        const matchText = item[type].toLowerCase().includes(query);
+        return matchTag && matchText;
+    });
+    renderAnnouncements(filtered);
+}
 
 document.getElementById('search-input').addEventListener('input', handleSearch);
 document.querySelectorAll('input[name="search-type"]').forEach(r => r.addEventListener('change', handleSearch));
