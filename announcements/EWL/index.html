@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../index.css">
+    <link rel="stylesheet" href="../../mrt-color.css">
+    <link rel="stylesheet" href="../anncs.css">
+
+    <link rel="icon" type="image/svg+xml" href="../logo-red.svg">
+    <title>joofer.j/announcements (EWL)</title>
+
+    <style type="text/css">
+        :root {
+            --line-color: var(--smrt-ewl-color);
+        }
+        
+        html {
+            background: #000000;
+            font-family: Ubuntu;
+            font-weight: 500;
+            color: #FFFFFF;
+        }
+
+        .tab-button.active {
+            background: var(--smrt-ewl-color);
+            color: white;
+        }
+    </style>
+</head>
+  
+<body>
+    <div id="header">
+        <span>joofer.j/announcements (EWL)</span>
+        <div id="header-right">
+            <a id="home" href="../smrt.html">Back</a>
+        </div>
+    </div>
+  
+    <div id="content">
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Search announcements...">
+            
+            <div class="search-options">
+                <label style="accent-color: var(--line-color);"><input type="radio" name="search-type" value="title" checked> Search by Title</label>
+                <label style="accent-color: var(--line-color); margin-left: 15px;"><input type="radio" name="search-type" value="transcript"> Search by Transcript</label>
+            </div>
+
+            <div id="filter-tags">
+                </div>
+        </div>
+
+        <div id="announcement-list">
+            <span class="body-text-only">Loading announcements...</span>
+        </div>
+    </div>
+
+    <div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <div id="modalTags" class="tags-row"></div>
+        
+        <div class="modal-tabs">
+            <button class="tab-button active" onclick="switchTab('Description')">Description</button>
+            <button class="tab-button" onclick="switchTab('Transcript')">Transcript</button>
+        </div>
+        
+        <div class="tab-pane">
+            <div id="modalBodyText"></div>
+        </div>
+
+        <div class="modal-player" style="display: none !important;">
+            <div class="controls">
+                <button class="play-btn-modal" id="modalPlayBtn">
+                    <img src="../icons/play.svg" class="ctrl-icon" alt="Play">
+                </button>
+                <div class="player-mid">
+                    <input type="range" class="modal-progress-bar" value="0" max="100">
+                    <span class="modal-time-display">0:00 / 0:00</span>
+                </div>
+                <a id="modalDownload" href="#" download class="download-btn">
+                    <img src="../icons/download.svg" class="ctrl-icon" alt="Download">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="../player.js"></script>
+</body>
+</html>
