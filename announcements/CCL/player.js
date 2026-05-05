@@ -182,7 +182,7 @@ function renderTags() {
     announcementData.forEach(item => item.tags.forEach(t => allTags.add(t)));
     
     tagContainer.innerHTML = Array.from(allTags).map(tag => 
-        `<span style="border-color: var(--smrt-ccl-color);" class="tag-filter ${tag === activeTag ? 'active' : ''}" data-tag="${tag}">${tag}</span>`
+        `<span style="border-color: var(--smrt-ccl-color);" class="tag-filter ${tag === activeTag ? 'smrt-ccl' : ''}" data-tag="${tag}">${tag}</span>`
     ).join('');
 
     tagContainer.querySelectorAll('.tag-filter').forEach(el => {
