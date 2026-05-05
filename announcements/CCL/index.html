@@ -16,6 +16,10 @@
     <title>joofer.j/announcements (CCL)</title>
 
     <style type="text/css">
+        :root {
+            --line-color: var(--smrt-ccl-color);
+        }
+        
         html {
             background: #000000;
             font-family: Ubuntu;
@@ -24,12 +28,11 @@
         }
 
         .tab-button.active {
-            background: var(--smrt-ccl-color); /* Accent color */
-            color: #2E2A25;
+            background: var(--smrt-ccl-color);
+            color: var(--smrt-black);
         }
-
         .modal-progress-bar {
-            accent-color: var(--smrt-ccl-color);
+            accent-color: var(--line-color);
         }
     </style>
 </head>
@@ -47,8 +50,8 @@
             <input type="text" id="search-input" placeholder="Search announcements...">
             
             <div class="search-options">
-                <label style="accent-color: var(--smrt-ccl-color);"><input type="radio" name="search-type" value="title" checked> Search by Title</label>
-                <label style="accent-color: var(--smrt-ccl-color); margin-left: 15px;"><input type="radio" name="search-type" value="transcript"> Search by Transcript</label>
+                <label style="accent-color: var(--line-color);"><input type="radio" name="search-type" value="title" checked> Search by Title</label>
+                <label style="accent-color: var(--line-color); margin-left: 15px;"><input type="radio" name="search-type" value="transcript"> Search by Transcript</label>
             </div>
 
             <div id="filter-tags">
@@ -92,6 +95,6 @@
     </div>
 </div>
 
-    <script src="player.js"></script>
+    <script src="../player.js"></script>
 </body>
 </html>
