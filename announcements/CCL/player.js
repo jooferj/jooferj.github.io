@@ -65,9 +65,6 @@ function renderAnnouncements(data) {
                     <button class="play-btn">
                         <img src="${iconPaths.play}" class="ctrl-icon" alt="Play">
                     </button>
-                    <button class="restart-btn">
-                        <img src="${iconPaths.restart}" class="ctrl-icon" alt="Restart">
-                    </button>
                     <div class="player-mid">
                         <input type="range" class="progress-bar" value="0" max="100" style="accent-color: var(--smrt-ccl-color);">
                         <span class="time-display">0:00 / 0:00</span>
@@ -90,34 +87,22 @@ function setupAudioLogic(card, src) {
 
     const playBtn = card.querySelector('.play-btn');
     const playImg = playBtn.querySelector('img');
-    const restartBtn = card.querySelector('.restart-btn');
+    const restartBtn = card.querySelector('.restart-btn'); // You can keep or remove this button now
     const progress = card.querySelector('.progress-bar');
     const timeDisp = card.querySelector('.time-display');
 
-    audio.addEventListener('error', (e) => {
-        if (audio.duration > 120000) {
-            timeDisp.innerText = "Audio fetch blocked.";
-            timeDisp.style.color = "red";
-        }
-        
-        const error = audio.error;
-        console.error("Audio Error Code:", error.code);
-        if (error.code === 4) { // MEDIA_ERR_SRC_NOT_SUPPORTED
-            timeDisp.innerText = "Audio fetch failed.";
-            timeDisp.style.color = "red";
-        }
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-        timeDisp.innerText = `0:00 / ${formatTime(audio.duration)}`;
-    });
-
     playBtn.addEventListener('click', () => {
+        if (playImg.src.includes('restart.svg')) {
+            audio.currentTime = 0;
+        }
+
         if (audio.paused) {
             document.querySelectorAll('audio').forEach(a => {
-                a.pause();
-                const otherImg = a.parentElement?.querySelector('.play-btn img');
-                if(otherImg) otherImg.src = iconPaths.play;
+                if (a !== audio) {
+                    a.pause();
+                    const otherImg = a.parentElement?.querySelector('.play-btn img');
+                    if (otherImg) otherImg.src = iconPaths.play;
+                }
             });
             audio.play();
             playImg.src = iconPaths.pause;
@@ -127,12 +112,6 @@ function setupAudioLogic(card, src) {
         }
     });
 
-    restartBtn.addEventListener('click', () => {
-        audio.currentTime = 0;
-        audio.play();
-        playImg.src = iconPaths.pause;
-    });
-
     audio.addEventListener('timeupdate', () => {
         progress.value = (audio.currentTime / audio.duration) * 100 || 0;
         timeDisp.innerText = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
@@ -140,10 +119,14 @@ function setupAudioLogic(card, src) {
 
     progress.addEventListener('input', () => {
         audio.currentTime = (progress.value / 100) * audio.duration;
+        
+        if (audio.paused) {
+            playImg.src = iconPaths.play;
+        }
     });
-
+    
     audio.addEventListener('ended', () => { 
-        playImg.src = iconPaths.play; 
+        playImg.src = iconPaths.restart; 
     });
 }
 
