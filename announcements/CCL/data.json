@@ -1,4 +1,12 @@
-[
+[ 
+  {
+    "title": "TEST ANNC",
+    "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
+    "description": "",
+    "tags": ["C830", "C830C"],
+    "file": "https://www.dropbox.com/scl/fi/w01lbf0npfayrd0ms3wk4/CCL_C830_CrossOverToOppPlat.mp3?rlkey=wg361hd89lbg6fx1d8j1eoc6s&st=1j0cwmmj&raw=1",
+    "color": "var(--smrt-ccl)"
+  },
   {
     "title": "Cross over to opposite platform (C830)",
     "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
