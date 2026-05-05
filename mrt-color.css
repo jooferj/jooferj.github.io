@@ -9,7 +9,8 @@
     --smrt-crl-color: #93D500;
     --smrt-sll-color: #F266B5;
     --smrt-lrt-color: #708270;
-    --smrt-rts-color! #87CEFA;
+    --smrt-rts-color: #87CEFA;
+    --smrt-black: #2E2A25;
 }
 
 .smrt-nsl {
