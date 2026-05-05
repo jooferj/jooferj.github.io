@@ -158,7 +158,7 @@ button:hover .ctrl-icon { filter: invert(0); }
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Translucent background */
+    background-color: rgba(0, 0, 0, 0.7); /* Translucent background */
     backdrop-filter: blur(5px);
 }
 
@@ -186,6 +186,7 @@ button:hover .ctrl-icon { filter: invert(0); }
     color: #888;
     padding: 10px 20px;
     cursor: pointer;
+    font-family: 'Ubuntu';
     font-weight: 700;
     border-radius: 4px 4px 0 0;
     width: auto !important; /* Overriding global button width */
