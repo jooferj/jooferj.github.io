@@ -33,16 +33,11 @@
 
 .tag-filter {
     padding: 5px 12px;
-    border: 1px solid #444;
+    border: 1px solid var(--line-color);
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.8rem;
     transition: 0.2s;
-}
-
-.tag-filter.active {
-    background: #0000ff;
-    border-color: #0000ff;
 }
 
 /* Audio Cards */
@@ -131,8 +126,8 @@ button:hover .ctrl-icon { filter: invert(0); }
     margin: 12px 0 5px 0;
     padding: 6px 16px;
     background: none;
-    border: 1px solid var(--line-color, #ffffff) !important;
-    color: var(--line-color, #ffffff) !important;
+    border: 1px solid #ffffff !important;
+    color: #ffffff !important;
     font-family: 'Ubuntu';
     font-size: 0.8rem;
     font-weight: 500;
@@ -142,8 +137,8 @@ button:hover .ctrl-icon { filter: invert(0); }
 }
 
 .annc-show-more:hover {
-    background-color: var(--line-color, #ffffff) !important;
-    color: #000 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
 }
 
 .tags-row {
