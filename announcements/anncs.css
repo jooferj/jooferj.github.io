@@ -186,7 +186,7 @@ button:hover .ctrl-icon { filter: invert(0); }
     color: #888;
     padding: 10px 20px;
     cursor: pointer;
-    font-family: 'Ubuntu';
+    font-weight: 700;
     border-radius: 4px 4px 0 0;
     width: auto !important; /* Overriding global button width */
 }
