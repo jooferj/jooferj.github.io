@@ -2,10 +2,10 @@ let announcementData = [];
 let activeTag = "All";
 
 const iconPaths = {
-    play: "icons/play.svg",
-    pause: "icons/pause.svg",
-    restart: "icons/restart.svg",
-    download: "icons/download.svg"
+    play: "../icons/play.svg",
+    pause: "../icons/pause.svg",
+    restart: "../icons/restart.svg",
+    download: "../icons/download.svg"
 };
 
 const formatTime = (s) => isNaN(s) ? "0:00" : `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
