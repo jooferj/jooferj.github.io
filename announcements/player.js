@@ -91,7 +91,6 @@ function setupAudioLogic(card, src) {
 
     const playBtn = card.querySelector('.play-btn');
     const playImg = playBtn.querySelector('img');
-    const restartBtn = card.querySelector('.restart-btn'); // You can keep or remove this button now
     const progress = card.querySelector('.progress-bar');
     const timeDisp = card.querySelector('.time-display');
 
@@ -175,7 +174,7 @@ function switchTab(type) {
     
     if (type === 'Description') {
         btns[0].classList.add('active');
-        body.innerText = currentModalItem.description || "No description available.";
+        body.innerText = currentModalItem.description;
     } else {
         btns[1].classList.add('active');
         body.innerText = currentModalItem.transcript;
