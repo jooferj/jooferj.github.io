@@ -3,21 +3,126 @@
     "title": "",
     "transcript": "",
     "description": "",
-    "tags": ["C830", "C830C/C851E", "HBF CCL6 Works 2024"],
+    "tags": ["C830", "C830C/C851E", "Old", "HBF CCL6 Works 2024"],
     "file": ""
   },
   {
-    "title": "Cross over to opposite platform (C830)",
+    "title": "Cross over to opposite platform",
     "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
     "description": "",
     "tags": ["C830", "HBF CCL6 Works 2024"],
     "file": "https://www.dropbox.com/scl/fi/w01lbf0npfayrd0ms3wk4/CCL_C830_CrossOverToOppPlat.mp3?rlkey=wg361hd89lbg6fx1d8j1eoc6s&st=1j0cwmmj&raw=1"
   },
   {
-    "title": "Cross over to opposite platform (C830C)",
+    "title": "Cross over to opposite platform",
     "transcript": "Please alight, and cross over to the opposite platform to continue your journey.",
     "description": "",
     "tags": ["C830C/C851E", "HBF CCL6 Works 2024"],
     "file": "https://www.dropbox.com/scl/fi/shgl284j928xu7mj2nrr0/CCL_C830C_CrossOverToOppPlat.mp3?rlkey=j5ggxhpfyq4hwmd6g7b7c5f9z&st=xif4me9g&raw=1"
+  },
+  {
+    "title": "Please do not lean against the train doors",
+    "transcript": "Please do not lean against the train doors.",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/x1i93b8yhml8vuf6eovz1/CCL_DoNotLeanAgainstDoors.mp3?rlkey=vtyjs0aey7k4n42qkx6o1y2pe&st=60tpw718&raw=1"
+  },
+  {
+    "title": "Move to centre & make way for alighting pax",
+    "transcript": "Dear commuters, please move to the centre of the cabin, and make way for other commuters alighting at the next station. Thank you.",
+    "description": "",
+    "tags": ["C830", "C830C/C851E"],
+    "file": "https://www.dropbox.com/scl/fi/6pqd8w6lyhxi5qsqhrjhd/CCL_MoveToCtr_Int.mp3?rlkey=oqm1ephr888qcfqsz5xxuij1v&st=jsvb66uj&raw=1"
+  },
+  {
+    "title": "Please mind the platform gap (1L Old)",
+    "transcript": "Please mind the platform gap.",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/43r06q7jr08z8l6hbg31m/CCL_C830C_PMTPG_Old.mp3?rlkey=qyhzmv6brtguvqd32vdhb9z77&st=kj1ixtp5&raw=1"
+  },
+  {
+    "title": "Train service terminates here (Full)",
+    "transcript": "This train service terminates at this station. All passengers, please alight. Thank you for travelling with SMRT.",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/61y2zqnjdv8zdgnrllw0u/CCL_C830C_TerminatesHere-Full.mp3?rlkey=vvnu3o4b5r1ibia8bsgqacd37&st=dpbydcm1&raw=1"
+  },
+  {
+    "title": "Next station (Old)",
+    "transcript": "Next station,",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/vma9mooeg0ejy0bpkz56l/CCL_NextStn_Old.mp3?rlkey=x251ormtpjzo11rn1n6ug4s6h&st=aaget7sh&raw=1"
+  },
+  {
+    "title": "Dhoby Ghaut Interchange",
+    "transcript": "Dhoby Ghaut Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/mk4wd3efxlpqlubj7z44b/847_DBGInt.mp3?rlkey=rt1eq2cgexyz1hj1espd3e0wm&st=9ldqhdns&raw=1"
+  },
+  {
+    "title": "Paya Lebar Interchange",
+    "transcript": "Paya Lebar Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/tf778p3wjklipw6qlii3e/847_PYLInt.mp3?rlkey=376dnrfse58vuql2rhebbccyo&st=y6lrsa9l&raw=1"
+  },
+  {
+    "title": "Serangoon Interchange",
+    "transcript": "Serangoon Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/r07mbzd8lx7djy8mz2i0a/847_SERInt.mp3?rlkey=v1544x0k9h9pmwrh92dw07oxo&st=qzvwghem&raw=1"
+  },
+  {
+    "title": "Bishan Interchange",
+    "transcript": "Bishan Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/6s3sb3g9u8jvxe25y200u/847_BSHInt.mp3?rlkey=r7x16is30jzvpgpzt3ogmpxa1&st=9apkt7or&raw=1"
+  },
+  {
+    "title": "Buona Vista Interchange",
+    "transcript": "Buona Vista Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/kzj69gftpuueeognr5tbj/847_BNVInt.mp3?rlkey=78fofbxnx6zm77b7cltoqpuka&st=9x1akqhg&raw=1"
+  },
+  {
+    "title": "HarbourFront Interchange",
+    "transcript": "HarbourFront Interchange",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/jt9pa14sr6guj1x5engcf/847_HBFInt.mp3?rlkey=m8vs2ika8pm4sh00gx7ixr8yg&st=ta9iu6it&raw=1"
+  },
+  {
+    "title": "Change at next station for NSL (Old)",
+    "transcript": "",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/lw8k2vitlembeijocybux/847_ChangeNSL_NextStn.mp3?rlkey=qvzdk2zqaqefymgmkiu6o4ecc&st=cq9ud1sf&raw=1"
+  },
+  {
+    "title": "Change at next station for EWL (Old)",
+    "transcript": "",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/0c7553qty1pslzio23mv4/847_ChangeEWL_NextStn.mp3?rlkey=85xf7x4pvjgemulssbjfklbk6&st=0avm55q2&raw=1"
+  },
+  {
+    "title": "Change at next station for NEL (Old)",
+    "transcript": "",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/tesw41tpkh6v968iu6zsm/847_ChangeNEL_NextStn.mp3?rlkey=zuix0rulfqgp9atshkcqvr0ew&st=701jzvxb&raw=1"
+  },
+  {
+    "title": "Change at next station for NSL/NEL (Old)",
+    "transcript": "",
+    "description": "",
+    "tags": ["C830C/C851E", "Old"],
+    "file": "https://www.dropbox.com/scl/fi/cfz140y04liwwqbrf4oyx/847_ChangeNSLNEL_NextStn.mp3?rlkey=so2hkv8s6kuvoprmdtmrbuuuy&st=4gcqxzxs&raw=1"
   }
 ]
