@@ -3,19 +3,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Ubuntu';
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #f4f6f9;
-    color: #333;
+    background-color: #0f172a; /* Deep dark slate background */
+    color: #f8fafc; /* Off-white text color */
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
+    min-height: 100vh;
 }
 
-/* Header */
+/* Header Styles */
 header {
     margin-bottom: 3rem;
     text-align: center;
@@ -23,45 +24,47 @@ header {
 
 header h1 {
     font-size: 2.5rem;
-    color: #1e3a8a;
+    color: #38bdf8; /* Bright sky blue accent for dark mode */
     letter-spacing: -0.5px;
 }
 
-/* Grid */
+/* Grid Container */
 .class-grid {
     display: grid;
     width: 100%;
     max-width: 900px;
     gap: 1.5rem;
+    /* Default: 3 columns for desktop/tablet */
     grid-template-columns: repeat(3, 1fr);
 }
 
-/* Button */
+/* Class Button Styles */
 .class-btn {
-    background-color: #ffffff;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 2rem 1rem;
+    background-color: #1e293b; /* Darker slate card background */
+    border: 2px solid #334155; /* Subtle border outline */
+    border-radius: 16px;
+    padding: 2.5rem 1rem; /* Increased padding for the larger text */
     text-align: center;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 .class-btn:hover {
     transform: translateY(-4px);
-    border-color: #3b82f6;
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+    border-color: #38bdf8; /* Blue border highlight on hover */
+    background-color: #1e293b; 
+    box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.15); /* Soft blue glow */
 }
 
 .class-btn h2 {
-    font-size: 2rem;
-    color: #2d3748;
-    margin-bottom: 0.5rem;
+    font-size: 2.2rem; /* Significantly increased size of the class number */
+    color: #f1f5f9;
+    font-weight: 700;
 }
 
-/* under 600px, use 2 per row */
+/* Responsive Design: 2 columns for mobile screens (under 600px) */
 @media (max-width: 600px) {
     body {
         padding: 1rem;
@@ -81,6 +84,10 @@ header h1 {
     }
     
     .class-btn {
-        padding: 1.5rem 0.5rem;
+        padding: 2rem 0.5rem;
+    }
+
+    .class-btn h2 {
+        font-size: 1.8rem; /* Slightly scaled down for mobile screens */
     }
 }
