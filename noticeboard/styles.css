@@ -56,14 +56,9 @@ header h1 {
 }
 
 .class-btn h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #2d3748;
     margin-bottom: 0.5rem;
-}
-
-.class-btn p {
-    font-size: 0.9rem;
-    color: #718096;
 }
 
 /* under 600px, use 2 per row */
