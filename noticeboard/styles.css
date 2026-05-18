@@ -1,0 +1,91 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu';
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Header */
+header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    letter-spacing: -0.5px;
+}
+
+/* Grid */
+.class-grid {
+    display: grid;
+    width: 100%;
+    max-width: 900px;
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Button */
+.class-btn {
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.class-btn:hover {
+    transform: translateY(-4px);
+    border-color: #3b82f6;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+}
+
+.class-btn h2 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.class-btn p {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+/* under 600px, use 2 per row */
+@media (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+    
+    header {
+        margin-bottom: 2rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .class-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .class-btn {
+        padding: 1.5rem 0.5rem;
+    }
+}
