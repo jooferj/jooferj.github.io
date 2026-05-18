@@ -1,14 +1,23 @@
-/* Reset and Base Styles */
+:root {
+    --white: #F8F8F8;
+    --offwhite: #F1F5F9;
+    --brightblue: #38BDF8;
+    --subtleblue: #334155;
+    --navyblue: #1B263B;
+    --blueblack: #0D1B2A;
+    --black: #000C1A;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Ubuntu';
 }
 
 body {
-    background-color: #0f172a; /* Deep dark slate background */
-    color: #f8fafc; /* Off-white text color */
+    background-color: var(--black);
+    color: var(--offwhite);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +25,7 @@ body {
     min-height: 100vh;
 }
 
-/* Header Styles */
+/* Header */
 header {
     margin-bottom: 3rem;
     text-align: center;
@@ -24,11 +33,11 @@ header {
 
 header h1 {
     font-size: 2.5rem;
-    color: #38bdf8; /* Bright sky blue accent for dark mode */
+    color: var(--white);
     letter-spacing: -0.5px;
 }
 
-/* Grid Container */
+/* Grid */
 .class-grid {
     display: grid;
     width: 100%;
@@ -38,12 +47,12 @@ header h1 {
     grid-template-columns: repeat(3, 1fr);
 }
 
-/* Class Button Styles */
+/* Class Button */
 .class-btn {
-    background-color: #1e293b; /* Darker slate card background */
-    border: 2px solid #334155; /* Subtle border outline */
+    background-color: var(--navyblue);
+    border: 2px solid var(--subtleblue);
     border-radius: 16px;
-    padding: 2.5rem 1rem; /* Increased padding for the larger text */
+    padding: 2.5rem 1rem;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -53,14 +62,13 @@ header h1 {
 
 .class-btn:hover {
     transform: translateY(-4px);
-    border-color: #38bdf8; /* Blue border highlight on hover */
-    background-color: #1e293b; 
-    box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.15); /* Soft blue glow */
+    border-color: var(--brightblue);
+    box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.15);
 }
 
 .class-btn h2 {
-    font-size: 2.2rem; /* Significantly increased size of the class number */
-    color: #f1f5f9;
+    font-size: 2.2rem;
+    color: var(--offwhite);
     font-weight: 700;
 }
 
@@ -88,6 +96,6 @@ header h1 {
     }
 
     .class-btn h2 {
-        font-size: 1.8rem; /* Slightly scaled down for mobile screens */
+        font-size: 1.8rem;
     }
 }
