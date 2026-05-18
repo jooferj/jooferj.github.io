@@ -60,7 +60,7 @@ header h1 {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
-.class-btn:hover {
+.class-btn:hover, .class-btn:active {
     transform: translateY(-4px);
     border-color: var(--brightblue);
     box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.15);
