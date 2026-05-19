@@ -12,7 +12,7 @@
 <body>
 
     <header class="notice-header">
-        <a href="index.html" class="back-btn">&larr; Back to All Classes</a>
+        <a href="index.html" class="back-btn">Back to All Classes</a>
         <h1 id="class-title">Class Notices</h1>
     </header>
 
@@ -56,7 +56,7 @@
             const classNotices = notices.filter(n => n.class.toLowerCase() === className.toLowerCase());
 
             if (classNotices.length === 0) {
-                container.innerHTML = `<div class="no-notices">No active notices for this class. 🎉</div>`;
+                container.innerHTML = `<div class="no-notices">No active notices</div>`;
                 return;
             }
 
@@ -76,7 +76,7 @@
 
         setTimeout(() => {
             displayNotices(sampleNotices);
-        }, 500);
+        }, 100);
     </script>
 </body>
 </html>
