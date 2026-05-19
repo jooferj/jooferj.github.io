@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS(S) Class Notices</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="notice-header">
+        <a href="index.html" class="back-btn">&larr; Back to All Classes</a>
+        <h1 id="class-title">Class Notices</h1>
+    </header>
+
+    <main class="notices-container" id="notices-container">
+        <div class="loading">Loading notices...</div>
+        
+        </main>
+
+    <script>
+        // 1. Grab the class name from the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const className = urlParams.get('class');
+
+        // 2. Fallback if someone visits the page directly without a parameter
+        if (!className) {
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('class-title').innerText = `Notices for ${className.toUpperCase()}`;
+        }
+
+        // Placeholder array mirroring Google Form fields: class, teacher, notice content, expiry
+        const sampleNotices = [
+            {
+                class: "5TCA",
+                teacher: "XYZ",
+                content: "Don't forget your field trip permission slips by Friday! Wear your walking shoes.",
+                expiry: "2026-05-22"
+            },
+            {
+                class: "5TCA",
+                teacher: "XYZ",
+                content: "Math homework on page 42 is due tomorrow morning.",
+                expiry: "2026-05-19"
+            }
+        ];
+
+        // 3. Function to display notices on the screen
+        function displayNotices(notices) {
+            const container = document.getElementById('notices-container');
+            container.innerHTML = '';
+
+            const classNotices = notices.filter(n => n.class.toLowerCase() === className.toLowerCase());
+
+            if (classNotices.length === 0) {
+                container.innerHTML = `<div class="no-notices">No active notices for this class. 🎉</div>`;
+                return;
+            }
+
+            classNotices.forEach(notice => {
+                const card = document.createElement('div');
+                card.className = 'notice-card';
+                card.innerHTML = `
+                    <div class="notice-meta">
+                        <span class="teacher-tag">Teacher: ${notice.teacher}</span>
+                        <span class="expiry-tag">Expires: ${notice.expiry}</span>
+                    </div>
+                    <p class="notice-text">${notice.content}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        setTimeout(() => {
+            displayNotices(sampleNotices);
+        }, 500);
+    </script>
+</body>
+</html>
