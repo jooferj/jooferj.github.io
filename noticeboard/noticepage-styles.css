@@ -1,0 +1,88 @@
+.notice-header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+/* Back navigation button */
+.back-btn {
+    color: var(--brightblue);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    align-self: flex-start; 
+}
+
+.back-btn:hover {
+    transform: translateX(-4px);
+}
+
+/* Container holding the stacked notice cards */
+.notices-container {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Single Notice Card */
+.notice-card {
+    background-color: var(--navyblue);
+    border: 1px solid var(--subtleblue);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.notice-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--subtleblue);
+    padding-bottom: 0.5rem;
+}
+
+.teacher-tag {
+    color: var(--brightblue);
+    font-weight: 700;
+}
+
+.expiry-tag {
+    color: #94a3b8;
+}
+
+.notice-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--offwhite);
+    white-space: pre-wrap; /* Preserves paragraphs/spacing from teachers */
+}
+
+/* States */
+.loading, .no-notices {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--offwhite);
+    padding: 3rem 0;
+    opacity: 0.7;
+}
+
+/* Responsive Design for mobile screens (under 600px) */
+@media (max-width: 600px) {
+    .notice-header {
+        align-items: flex-start;
+        padding: 0 0.5rem;
+    }
+    
+    .notice-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+}
