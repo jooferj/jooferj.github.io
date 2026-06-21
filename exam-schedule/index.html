@@ -85,9 +85,9 @@
 					if (currentViewMode === 'weeks') {
 						const weeks = Math.floor(diffDays / 7);
 						const remDays = diffDays % 7;
-						dynamicCountdownStr = remDays > 0 ? `${weeks}w <span class="days-label">${remDays}d</span>` : `${weeks}w`;
+						dynamicCountdownStr = remDays > 0 ? `${weeks}${remDays}<span class="days-label">w </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
 					} else { 
-						dynamicCountdownStr = `${diffDays}<span class="days-label">d</span>`;
+						dynamicCountdownStr = `${diffDays}<span class="days-label"> d</span>`;
 					}
 					
 					const card = document.createElement('div');
