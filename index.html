@@ -81,7 +81,7 @@
     if (diffDays > 30) {
         const weeks = Math.floor(diffDays / 7);
         const remDays = diffDays % 7;
-        timeLabelStr = remDays > 0 ? `${weeks}<span class="days-label">w </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
+        timeLabelStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
     } else {
         timeLabelStr = `${diffDays}<span class="days-label"> d</span>`;
     }
