@@ -40,51 +40,77 @@
     </div>
 
     <script>
-        async function renderSchedule() {
-    const grid = document.getElementById('schedule-grid');
-    try {
-        const response = await fetch('exams.json');
-        const exams = await response.json();
-        const now = new Date();
-		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        let examData = [];
+		let currentViewMode = 'days';
+		async function loadExams() {
+			try {
+				const response = await fetch('exams.json');
+				examData = await response.json();
+				
+				setInterval(() => {
+					currentViewMode = currentViewMode === 'days' ? 'weeks' : 'days';
+					renderSchedule();
+				}, 2000);
+				
+				renderSchedule();
+			} 
+				
+			catch (e) {
+				console.error("Error loading exams:", e);
+			}
+		}
 
-        const upcoming = exams
-            .map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
-            .filter(exam => exam.dateObj >= today)
-            .sort((a, b) => a.dateObj - b.dateObj);
+		function renderSchedule() {
+			const grid = document.getElementById('schedule-grid');
+			grid.innerHTML = '';
+			
+			const now = new Date();
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        upcoming.forEach(exam => {
-            const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
-			const todayClass = diffDays === 0 ? 'is-today' : '';
-            const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
-            const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+			const upcoming = examData
+				.map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
+				.filter(exam => exam.dateObj >= today)
+				.sort((a, b) => a.dateObj - b.dateObj);
+			
+			upcoming.forEach(exam => {
+				const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
+				const todayClass = diffDays === 0 ? 'is-today' : '';
+				const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+				const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+				
+				let colorClass = 'color-blue';
+				if (diffDays <= 30) colorClass = 'color-red';
+				else if (diffDays <= 60) colorClass = 'color-orange';
+				else if (diffDays <= 90) colorClass = 'color-green';
 
-            let colorClass = 'color-blue';
-            if (diffDays <= 30) colorClass = 'color-red';
-            else if (diffDays <= 60) colorClass = 'color-orange';
-            else if (diffDays <= 90) colorClass = 'color-green';
-
-            const card = document.createElement('div');
-            card.className = 'schedule-card';
-            card.innerHTML = `
-                <div class="card-header">
+        
+				let dynamicCountdownStr = '';
+				if (currentViewMode === 'weeks') {
+					const weeks = Math.floor(diffDays / 7);
+					const remDays = diffDays % 7;
+					dynamicCountdownStr = remDays > 0 ? `${weeks}w <span class="days-label">${remDays}d</span>` : `${weeks}w`;
+				} 
+					
+				else { 
+					dynamicCountdownStr = `${diffDays}<span class="days-label">d</span>`;
+				}
+				
+				const card = document.createElement('div');
+				card.className = 'schedule-card';
+				card.innerHTML = `
+				<div class="card-header">
                     <span>${exam.week || ''}</span>
-                    <span>${dayName}</span>
-                </div>
+				    <span>${dayName}</span>
+				</div>
                 <div class="card-body">
-                    <div class="exam-name-static ${todayClass}">${exam.name}</div>
-					<div class="date-row ${todayClass}">${formattedDate}</div>
-                    <div class="countdown-row ${colorClass}">${diffDays}<span class="days-label">d</span></div>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-    } catch (e) {
-        console.error("Schedule Error:", e);
-    }
-}
-renderSchedule();
-    </script>
-</body>	
-
+                    <div class="exam-name-static ${todayClass}\">${exam.name}</div>
+                    <div class="date-row ${todayClass}\">${formattedDate}</div>
+                    <div class="countdown-row ${colorClass}">${dynamicCountdownStr}</div>
+				</div>
+				`;
+				grid.appendChild(card);
+			});
+			loadExams();
+		</script>
+    </body>	
 </html>
