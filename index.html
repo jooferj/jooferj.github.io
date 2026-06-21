@@ -67,24 +67,33 @@
         const displayedExams = futureExams.slice(0, 11);
 
         displayedExams.forEach(exam => {
-            const examDate = new Date(exam.date);
-            const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
+    const examDate = new Date(exam.date);
+    const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
 
-			const todayClass = diffDays === 0 ? 'is-today' : '';
+    const todayClass = diffDays === 0 ? 'is-today' : '';
 
-            let colorClass = 'color-blue';
-            if (diffDays <= 30) colorClass = 'color-red';
-            else if (diffDays <= 60) colorClass = 'color-orange';
-            else if (diffDays <= 90) colorClass = 'color-green';
+    let colorClass = 'color-blue';
+    if (diffDays <= 30) colorClass = 'color-red';
+    else if (diffDays <= 60) colorClass = 'color-orange';
+    else if (diffDays <= 90) colorClass = 'color-green';
 
-            const card = document.createElement('div');
-            card.className = 'exam-card';
-            card.innerHTML = `
-                <div class="exam-title ${todayClass}">${exam.name}</div>
-                <span class="days-left ${colorClass}">${diffDays}<span class="days-label"> d</span></span>
-            `;
-            grid.appendChild(card);
-        });
+    let timeLabelStr = '';
+    if (diffDays > 30) {
+        const weeks = Math.floor(diffDays / 7);
+        const remDays = diffDays % 7;
+        timeLabelStr = remDays > 0 ? `${weeks}w <span class="days-label">${remDays}d</span>` : `${weeks}w`;
+    } else {
+        timeLabelStr = `${diffDays}<span class="days-label"> d</span>`;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'exam-card';
+    card.innerHTML = `
+        <div class="exam-title ${todayClass}">${exam.name}</div>
+        <span class="days-left ${colorClass}">${timeLabelStr}</span>
+		`;
+			grid.appendChild(card);
+		});
 
         if (futureExams.length > 11) {
             const moreCard = document.createElement('a');
