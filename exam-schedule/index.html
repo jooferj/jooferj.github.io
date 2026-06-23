@@ -85,7 +85,7 @@
 					if (currentViewMode === 'weeks') {
 						const weeks = Math.floor(diffDays / 7);
 						const remDays = diffDays % 7;
-						dynamicCountdownStr = remDays > 0 ? `${weeks}${remDays}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
+						dynamicCountdownStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
 					} else { 
 						dynamicCountdownStr = `${diffDays}<span class="days-label"> d</span>`;
 					}
