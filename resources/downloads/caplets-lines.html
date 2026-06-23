@@ -85,7 +85,7 @@
 					const response = await fetch('caplets-lines.json');
 					if (!response.ok) throw new Error("Error loading JSON");
 					
-					const capletData = await response.json();
+					const iconData = await response.json();
 					const grid = document.getElementById('file-grid');
 					
 					iconData.forEach(item => {
