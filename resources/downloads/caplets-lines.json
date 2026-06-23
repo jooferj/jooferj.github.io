@@ -1,0 +1,38 @@
+[
+  {
+    "link": "../../media/caplets/NSL.svg",
+    "text": "North-South Line"
+  },
+  {
+    "link": "../../media/caplets/EWL.svg",
+    "text": "East-West Line"
+  },
+  {
+    "link": "../../media/caplets/NEL.svg",
+    "text": "North East Line"
+  },
+  {
+    "link": "../../media/caplets/CCL.svg",
+    "text": "Circle Line"
+  },
+  {
+    "link": "../../media/caplets/DTL.svg",
+    "text": "Downtown Line"
+  },
+  {
+    "link": "../../media/caplets/TEL.svg",
+    "text": "Thomson-East Coast Line"
+  },
+  {
+    "link": "../../media/caplets/BP.svg",
+    "text": "Bukit Panjang LRT"
+  },
+  {
+    "link": "../../media/caplets/SK.svg",
+    "text": "Sengkang LRT"
+  },
+  {
+    "link": "../../media/caplets/PG.svg",
+    "text": "Punggol LRT"
+  }
+]
