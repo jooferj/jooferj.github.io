@@ -1,18 +1,18 @@
 [
   {
-    "link": "../../media/landmarks/platform-white.svg",
+    "link": "../../media/platform/platform-white.svg",
     "text": "Platform (White Text)"
   },
   {
-    "link": "../../media/landmarks/platform-white-outlined.svg",
+    "link": "../../media/platform/platform-white-outlined.svg",
     "text": "Platform (Outline + White Text)"
   },
   {
-    "link": "../../media/landmarks/platform-black.svg",
+    "link": "../../media/platform/platform-black.svg",
     "text": "Platform (Black Text)"
   },
   {
-    "link": "../../media/landmarks/platform-black-outlined.svg",
+    "link": "../../media/platform/platform-black-outlined.svg",
     "text": "Platform (Outline + Black Text)"
   }
 ]
