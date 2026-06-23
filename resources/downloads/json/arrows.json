@@ -1,0 +1,98 @@
+[
+  {
+    "link": "../../media/arrows/arrow-e.svg",
+    "text": "Arrow E"
+  },
+  {
+    "link": "../../media/arrows/arrow-n.svg",
+    "text": "Arrow N"
+  },
+  {
+    "link": "../../media/arrows/arrow-ne.svg",
+    "text": "Arrow NE"
+  },
+  {
+    "link": "../../media/arrows/arrow-nw.svg",
+    "text": "Arrow NW"
+  },
+  {
+    "link": "../../media/arrows/arrow-s.svg",
+    "text": "Arrow S"
+  },
+  {
+    "link": "../../media/arrows/arrow-se.svg",
+    "text": "Arrow SE"
+  },
+  {
+    "link": "../../media/arrows/arrow-sw.svg",
+    "text": "Arrow SW"
+  },
+  {
+    "link": "../../media/arrows/arrow-traindirection-left.svg",
+    "text": "Arrow Traindirection Left"
+  },
+  {
+    "link": "../../media/arrows/arrow-traindirection-right.svg",
+    "text": "Arrow Traindirection Right"
+  },
+  {
+    "link": "../../media/arrows/arrow-turn-from-left.svg",
+    "text": "Arrow Turn From Left"
+  },
+  {
+    "link": "../../media/arrows/arrow-turn-from-right.svg",
+    "text": "Arrow Turn From Right"
+  },
+  {
+    "link": "../../media/arrows/arrow-turn-left.svg",
+    "text": "Arrow Turn Left"
+  },
+  {
+    "link": "../../media/arrows/arrow-turn-right.svg",
+    "text": "Arrow Turn Right"
+  },
+  {
+    "link": "../../media/arrows/arrow-uturn-left.svg",
+    "text": "Arrow Uturn Left"
+  },
+  {
+    "link": "../../media/arrows/arrow-uturn-right.svg",
+    "text": "Arrow Uturn Right"
+  },
+  {
+    "link": "../../media/arrows/arrow-w.svg",
+    "text": "Arrow W"
+  },
+  {
+    "link": "../../media/arrows/escalator-left-down.svg",
+    "text": "Escalator Left Down"
+  },
+  {
+    "link": "../../media/arrows/escalator-left-up.svg",
+    "text": "Escalator Left Up"
+  },
+  {
+    "link": "../../media/arrows/escalator-right-down.svg",
+    "text": "Escalator Right Down"
+  },
+  {
+    "link": "../../media/arrows/escalator-right-up.svg",
+    "text": "Escalator Right Up"
+  },
+  {
+    "link": "../../media/arrows/stairs-left-down.svg",
+    "text": "Stairs Left Down"
+  },
+  {
+    "link": "../../media/arrows/stairs-left-up.svg",
+    "text": "Stairs Left Up"
+  },
+  {
+    "link": "../../media/arrows/stairs-right-down.svg",
+    "text": "Stairs Right Down"
+  },
+  {
+    "link": "../../media/arrows/stairs-right-up.svg",
+    "text": "Stairs Right Up"
+  }
+]

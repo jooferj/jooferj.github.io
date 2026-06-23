@@ -1,22 +1,282 @@
 [
   {
-    "link": "../../media/icons/public-bus.svg",
-    "text": "Public Buses"
+    "link": "../../media/icons/accessible-changing-room.svg",
+    "text": "Accessible Changing Room"
   },
   {
-    "link": "../../media/icons/CW_NEW.svg",
-    "text": "Clockwise"
+    "link": "../../media/icons/accessible-icon.svg",
+    "text": "Accessible Icon"
   },
   {
-    "link": "../../media/icons/CW_LOOP_NEW.svg",
-    "text": "Clockwise Loop"
+    "link": "../../media/icons/accessible-toilet-2.svg",
+    "text": "Accessible Toilet 2"
   },
   {
-    "link": "../../media/icons/ACW_NEW.svg",
-    "text": "Anticlockwise"
+    "link": "../../media/icons/accessible-toilet-supergraphic.svg",
+    "text": "Accessible Toilet Supergraphic"
   },
   {
-    "link": "../../media/icons/ACW_LOOP_NEW.svg",
-    "text": "Anticlockwise Loop"
+    "link": "../../media/icons/accessible-toilet.svg",
+    "text": "Accessible Toilet"
+  },
+  {
+    "link": "../../media/icons/accessible.svg",
+    "text": "Accessible"
+  },
+  {
+    "link": "../../media/icons/airport.svg",
+    "text": "Airport"
+  },
+  {
+    "link": "../../media/icons/ambulant-cubicle.svg",
+    "text": "Ambulant Cubicle"
+  },
+  {
+    "link": "../../media/icons/atm.svg",
+    "text": "Atm"
+  },
+  {
+    "link": "../../media/icons/baby-care-room.svg",
+    "text": "Baby Care Room"
+  },
+  {
+    "link": "../../media/icons/baggage.svg",
+    "text": "Baggage"
+  },
+  {
+    "link": "../../media/icons/bicycle-parking.svg",
+    "text": "Bicycle Parking"
+  },
+  {
+    "link": "../../media/icons/cd-shelter-text.svg",
+    "text": "Cd Shelter Text"
+  },
+  {
+    "link": "../../media/icons/cd-shelter.svg",
+    "text": "Cd Shelter"
+  },
+  {
+    "link": "../../media/icons/child-cubicle.svg",
+    "text": "Child Cubicle"
+  },
+  {
+    "link": "../../media/icons/commuter-care-room.svg",
+    "text": "Commuter Care Room"
+  },
+  {
+    "link": "../../media/icons/cycle.svg",
+    "text": "Cycle"
+  },
+  {
+    "link": "../../media/icons/emergency-exit.svg",
+    "text": "Emergency Exit"
+  },
+  {
+    "link": "../../media/icons/exit-1.svg",
+    "text": "Exit 1"
+  },
+  {
+    "link": "../../media/icons/exit-10.svg",
+    "text": "Exit 10"
+  },
+  {
+    "link": "../../media/icons/exit-1to10.svg",
+    "text": "Exit 1to10"
+  },
+  {
+    "link": "../../media/icons/exit-type-a-double.svg",
+    "text": "Exit Type A Double"
+  },
+  {
+    "link": "../../media/icons/exit-type-a-single.svg",
+    "text": "Exit Type A Single"
+  },
+  {
+    "link": "../../media/icons/exit-type-b1-range.svg",
+    "text": "Exit Type B1 Range"
+  },
+  {
+    "link": "../../media/icons/exit-type-b2-range.svg",
+    "text": "Exit Type B2 Range"
+  },
+  {
+    "link": "../../media/icons/family-toilet.svg",
+    "text": "Family Toilet"
+  },
+  {
+    "link": "../../media/icons/female-toilet-supergraphic.svg",
+    "text": "Female Toilet Supergraphic"
+  },
+  {
+    "link": "../../media/icons/fire-extinguisher.svg",
+    "text": "Fire Extinguisher"
+  },
+  {
+    "link": "../../media/icons/fire-hosereel.svg",
+    "text": "Fire Hosereel"
+  },
+  {
+    "link": "../../media/icons/first-aid-room-allgreen.svg",
+    "text": "First Aid Room Allgreen"
+  },
+  {
+    "link": "../../media/icons/first-aid-room.svg",
+    "text": "First Aid Room"
+  },
+  {
+    "link": "../../media/icons/general-ticket-machine.svg",
+    "text": "General Ticket Machine"
+  },
+  {
+    "link": "../../media/icons/hearing-protection.svg",
+    "text": "Hearing Protection"
+  },
+  {
+    "link": "../../media/icons/hospital-sgh.svg",
+    "text": "Hospital Sgh"
+  },
+  {
+    "link": "../../media/icons/hospital.svg",
+    "text": "Hospital"
+  },
+  {
+    "link": "../../media/icons/information-point.svg",
+    "text": "Information Point"
+  },
+  {
+    "link": "../../media/icons/lift-black.svg",
+    "text": "Lift Black"
+  },
+  {
+    "link": "../../media/icons/lift-white.svg",
+    "text": "Lift White"
+  },
+  {
+    "link": "../../media/icons/lift.svg",
+    "text": "Lift"
+  },
+  {
+    "link": "../../media/icons/locality-map-compass.svg",
+    "text": "Locality Map Compass"
+  },
+  {
+    "link": "../../media/icons/low-headroom.svg",
+    "text": "Low Headroom"
+  },
+  {
+    "link": "../../media/icons/male-toilet-supergraphic.svg",
+    "text": "Male Toilet Supergraphic"
+  },
+  {
+    "link": "../../media/icons/mobility-and-luggage-friendly-access.svg",
+    "text": "Mobility And Luggage Friendly Access"
+  },
+  {
+    "link": "../../media/icons/passenger-service-centre.svg",
+    "text": "Passenger Service Centre"
+  },
+  {
+    "link": "../../media/icons/pedestrian-overhead-bridge.svg",
+    "text": "Pedestrian Overhead Bridge"
+  },
+  {
+    "link": "../../media/icons/phone.svg",
+    "text": "Phone"
+  },
+  {
+    "link": "../../media/icons/priority-heart.svg",
+    "text": "Priority Heart"
+  },
+  {
+    "link": "../../media/icons/priority-use-blue.svg",
+    "text": "Priority Use Blue"
+  },
+  {
+    "link": "../../media/icons/priority-use-text-blue.svg",
+    "text": "Priority Use Text Blue"
+  },
+  {
+    "link": "../../media/icons/priority-use-text-white.svg",
+    "text": "Priority Use Text White"
+  },
+  {
+    "link": "../../media/icons/priority-use.svg",
+    "text": "Priority Use"
+  },
+  {
+    "link": "../../media/icons/priority-users.svg",
+    "text": "Priority Users"
+  },
+  {
+    "link": "../../media/icons/pudo.svg",
+    "text": "Pudo"
+  },
+  {
+    "link": "../../media/icons/retail.svg",
+    "text": "Retail"
+  },
+  {
+    "link": "../../media/icons/stair-lift.svg",
+    "text": "Stair Lift"
+  },
+  {
+    "link": "../../media/icons/ticketing-service-centre-allblue.svg",
+    "text": "Ticketing Service Centre Allblue"
+  },
+  {
+    "link": "../../media/icons/ticketing-service-centre.svg",
+    "text": "Ticketing Service Centre"
+  },
+  {
+    "link": "../../media/icons/ticketing-service-kisoks-allblue.svg",
+    "text": "Ticketing Service Kisoks Allblue"
+  },
+  {
+    "link": "../../media/icons/ticketing-service-kisoks.svg",
+    "text": "Ticketing Service Kisoks"
+  },
+  {
+    "link": "../../media/icons/toilets.svg",
+    "text": "Toilets"
+  },
+  {
+    "link": "../../media/icons/top-up-kiosk.svg",
+    "text": "Top Up Kiosk"
+  },
+  {
+    "link": "../../media/icons/trackside-warning-sign-1.svg",
+    "text": "Trackside Warning Sign 1"
+  },
+  {
+    "link": "../../media/icons/trackside-warning-sign-2.svg",
+    "text": "Trackside Warning Sign 2"
+  },
+  {
+    "link": "../../media/icons/underpass-bottom.svg",
+    "text": "Underpass Bottom"
+  },
+  {
+    "link": "../../media/icons/underpass-top.svg",
+    "text": "Underpass Top"
+  },
+  {
+    "link": "../../media/icons/walk.svg",
+    "text": "Walk"
+  },
+  {
+    "link": "../../media/icons/warning-outlined.svg",
+    "text": "Warning Outlined"
+  },
+  {
+    "link": "../../media/icons/warning.svg",
+    "text": "Warning"
+  },
+  {
+    "link": "../../media/icons/what-looks-to-be-sir-stamford-raffles-thinking.svg",
+    "text": "What Looks To Be Sir Stamford Raffles Thinking"
+  },
+  {
+    "link": "../../media/icons/you-are-here.svg",
+    "text": "You Are Here"
   }
 ]
