@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en-GB">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+		<link rel="stylesheet" href="../../index.css">
+		<link rel="stylesheet" href="../../mrt-color.css">
+		<link rel="stylesheet" href="icon-list.css">
+
+		<link rel="icon" type="image/svg+xml" href="../../logo-red.svg">
+		<title>Landmarks</title>
+		
+		<style type="text/css">
+			html {
+				background: #000000;
+				font-family: Ubuntu;
+				font-weight: 500;
+				color: #FFFFFF;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<div id="header">
+			<span>Landmarks</span>
+			<div id="header-right">
+				<a id="home" href="index.html">Back</a>
+			</div>
+		</div>
+		
+		<div id="content">
+			<div class="icon-grid" id="file-grid"></div>
+		</div>
+
+		<script>
+			async function loadIcons() {
+				try {
+					// CHANGE JSON FILE NAME
+					const response = await fetch('json/landmarks.json');
+					if (!response.ok) throw new Error("Error loading JSON");
+					
+					const iconData = await response.json();
+					const grid = document.getElementById('file-grid');
+					
+					iconData.forEach(item => {
+						const cardElement = document.createElement('a');
+						cardElement.href = item.link;
+						cardElement.className = 'icon-card';
+						
+						cardElement.innerHTML = `
+							<img src="${item.link}" alt="${item.text}" loading="lazy"/>
+							<span class="smalltext">${item.text}</span>
+						`;
+						grid.appendChild(cardElement);
+					});
+				}
+					
+				catch (error) {
+					console.error("Error rendering cards:", error);
+					document.getElementById('file-grid').innerHTML = 
+						`<span class="body-text-only" style="color: #ff5555; padding-top: 20px;">Failed to load items. Check console.</span>`;
+				}
+			}
+			
+			window.addEventListener('DOMContentLoaded', loadIcons);
+		</script>
+	</body>
+</html>
