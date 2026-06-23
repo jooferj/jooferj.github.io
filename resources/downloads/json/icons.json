@@ -1,0 +1,22 @@
+[
+  {
+    "link": "../../media/icons/public-bus.svg",
+    "text": "Public Buses"
+  },
+  {
+    "link": "../../media/icons/CW_NEW.svg",
+    "text": "Clockwise"
+  },
+  {
+    "link": "../../media/icons/CW_LOOP_NEW.svg",
+    "text": "Clockwise Loop"
+  },
+  {
+    "link": "../../media/icons/ACW_NEW.svg",
+    "text": "Anticlockwise"
+  },
+  {
+    "link": "../../media/icons/ACW_LOOP_NEW.svg",
+    "text": "Anticlockwise Loop"
+  }
+]
