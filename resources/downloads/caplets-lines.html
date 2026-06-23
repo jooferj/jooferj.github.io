@@ -10,6 +10,7 @@
 
 		<link rel="stylesheet" href="../../index.css">
 		<link rel="stylesheet" href="../../mrt-color.css">
+		<link rel="stylesheet" href="icon-list.css">
 
 		<link rel="icon" type="image/svg+xml" href="../../logo-red.svg">
 		<title>joofer.j/caplets</title>
@@ -82,7 +83,7 @@
 			async function loadIcons() {
 				try {
 					// CHANGE JSON FILE NAME
-					const response = await fetch('caplets-lines.json');
+					const response = await fetch('json/caplets-lines.json');
 					if (!response.ok) throw new Error("Error loading JSON");
 					
 					const iconData = await response.json();
