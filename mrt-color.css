@@ -1,20 +1,20 @@
 :root{
-    --smrt-nsl-color: #DF2827;
+    --smrt-nsl-color: #D42E12;
     --smrt-ewl-color: #009645;
-    --smrt-nel-color: #9900AB;
-    --smrt-ccl-color: #FA9E0D;
-    --smrt-dtl-color: #0055B8;
-    --smrt-tel-color: #9D5918;
+    --smrt-nel-color: #9900AA;
+    --smrt-ccl-color: #F9A01B;
+    --smrt-dtl-color: #005EC4;
+    --smrt-tel-color: #9D5B25;
     --smrt-jrl-color: #00ADBB;
     --smrt-crl-color: #93D500;
     --smrt-stl-color: #F266B5;
     --smrt-lrt-color: #708270;
     --smrt-rts-color: #87CEFA;
-    --smrt-black: #2E2A25;
+    --smrt-black: #2E2A26;
 }
 
 .smrt-nsl {
-    background-color: #DF2827;
+    background-color: #D42E12;
     color: white;
 }
 
@@ -24,22 +24,22 @@
 }
 
 .smrt-nel {
-    background-color: #9900AB;
+    background-color: #9900AA;
     color: white;
 }
 
 .smrt-ccl {
-    background-color: #FA9E0D;
+    background-color: #F9A01B;
     color: #2E2A25;
 }
 
 .smrt-dtl {
-    background-color: #0055B8;
+    background-color: #005EC4;
     color: white;
 }
 
 .smrt-tel {
-    background-color: #9D5918;
+    background-color: #9D5B25;
     color: white;
 }
 
