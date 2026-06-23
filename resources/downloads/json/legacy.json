@@ -48,6 +48,10 @@
     "text": "Old Arrow Turn Left"
   },
   {
+    "link": "../../media/legacy-graphics/old-arrow-turn-right.svg",
+    "text": "Old Arrow Turn Right"
+  },
+  {
     "link": "../../media/legacy-graphics/old-arrow-w.svg",
     "text": "Old Arrow W"
   },
@@ -170,10 +174,6 @@
   {
     "link": "../../media/legacy-graphics/old-ticketing-service-centre.svg",
     "text": "Old Ticketing Service Centre"
-  },
-  {
-    "link": "../../media/legacy-graphics/oldarrow-turn-right.svg",
-    "text": "Oldarrow Turn Right"
   },
   {
     "link": "../../media/legacy-graphics/taxi-stand-logotype.svg",
