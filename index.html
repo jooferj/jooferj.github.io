@@ -78,7 +78,7 @@
     else if (diffDays <= 90) colorClass = 'color-green';
 
     let timeLabelStr = '';
-    if (diffDays > 30) {
+    if (diffDays > 14) {
         const weeks = Math.floor(diffDays / 7);
         const remDays = diffDays % 7;
         timeLabelStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
