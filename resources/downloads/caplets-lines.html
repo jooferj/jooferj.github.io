@@ -82,7 +82,7 @@
 			async function loadIcons() {
 				try {
 					// CHANGE JSON FILE NAME
-					const response = await fetch('caplets.json');
+					const response = await fetch('caplets-lines.json');
 					if (!response.ok) throw new Error("Error loading JSON");
 					
 					const capletData = await response.json();
