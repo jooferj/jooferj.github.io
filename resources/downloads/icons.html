@@ -10,6 +10,7 @@
 
 		<link rel="stylesheet" href="../../index.css">
 		<link rel="stylesheet" href="../../mrt-color.css">
+		<link rel="stylesheet" href="icon-list.css">
 
 		<link rel="icon" type="image/svg+xml" href="../../logo-red.svg">
 		<title>joofer.j/icons</title>
@@ -33,8 +34,40 @@
 		</div>
 		
 		<div id="content">
-			<a href="eee">
-			    <span>Placeholder</span>
-			</a>
+			<div class="icon-grid" id="file-grid"></div>
+		</div>
+
+		<script>
+			async function loadIcons() {
+				try {
+					// CHANGE JSON FILE NAME
+					const response = await fetch('icons.json');
+					if (!response.ok) throw new Error("Error loading JSON");
+					
+					const iconData = await response.json();
+					const grid = document.getElementById('file-grid');
+					
+					iconData.forEach(item => {
+						const cardElement = document.createElement('a');
+						cardElement.href = item.link;
+						cardElement.className = 'icon-card';
+						
+						cardElement.innerHTML = `
+							<img src="${item.link}" alt="${item.text}" loading="lazy"/>
+							<span class="smalltext">${item.text}</span>
+						`;
+						grid.appendChild(cardElement);
+					});
+				}
+					
+				catch (error) {
+					console.error("Error rendering cards:", error);
+					document.getElementById('file-grid').innerHTML = 
+						`<span class="body-text-only" style="color: #ff5555; padding-top: 20px;">Failed to load items. Check console.</span>`;
+				}
+			}
+			
+			window.addEventListener('DOMContentLoaded', loadIcons);
+		</script>
 	</body>
 </html>
