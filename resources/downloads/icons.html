@@ -41,7 +41,7 @@
 			async function loadIcons() {
 				try {
 					// CHANGE JSON FILE NAME
-					const response = await fetch('icons.json');
+					const response = await fetch('json/icons.json');
 					if (!response.ok) throw new Error("Error loading JSON");
 					
 					const iconData = await response.json();
