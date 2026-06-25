@@ -40,17 +40,11 @@
 
 		<script>
 			let examData = [];
-			let currentViewMode = 'days';
 
 			async function loadExams() {
 				try {
 					const response = await fetch('exams.json');
 					examData = await response.json();
-					
-					setInterval(() => {
-						currentViewMode = currentViewMode === 'days' ? 'weeks' : 'days';
-						renderSchedule();
-					}, 4000);
 					
 					renderSchedule();
 				} catch (e) {
@@ -82,13 +76,11 @@
 					else if (diffDays <= 90) colorClass = 'color-green';
 
 					let dynamicCountdownStr = '';
-					if (currentViewMode === 'weeks') {
-						const weeks = Math.floor(diffDays / 7);
-						const remDays = diffDays % 7;
-						dynamicCountdownStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
-					} else { 
-						dynamicCountdownStr = `${diffDays}<span class="days-label"> d</span>`;
-					}
+					const weeks = Math.floor(diffDays / 7);
+					const remDays = diffDays % 7;
+					if (weeks > 0 && remDays > 0) dynamicCountdownStr = `${weeks}<span class="days-label">w </span> ${remDays}<span class="days-label">d</span>`;
+					else if (weeks > 0 && remDays === 0) dynamicCountdownStr = `${weeks}<span class="days-label">w</span>`;
+					else dynamicCountdownStr = `${remDays}<span class="days-label">d</span>`;
 					
 					const card = document.createElement('div');
 					card.className = 'schedule-card';
