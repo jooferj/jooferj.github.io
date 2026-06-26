@@ -1,0 +1,46 @@
+This is the TXT file. Not linked to JSON.
+
+LANGUAGES
+English (1184)
+Chinese (1160)
+Chinese B (1153)
+Higher Chinese (1116)
+Malay (1148)
+Malay B (1151)
+Higher Malay (1117)
+Tamil (1157)
+Tamil B (1152)
+Higher Tamil (1147)
+
+MATHS
+Mathematics (4052)
+Additional Mathematics (4049)
+
+SCIENCES
+Physics (6091)
+Chemistry (6092)
+Biology (6093)
+Science(Phy/Chem) (5086)
+Science(Phy/Bio) (5087)
+Science(Chem/Bio) (5088)
+
+HUMANITIES
+Geography (2279)
+History (2174)
+Literature in English (2065)
+Literature in Chinese (2031)
+Literature in Malay (2032)
+Literature in Tamil (2033)
+Humanities(SS, Geography) (2260)
+Humanities(SS, History) (2261)
+Humanities(SS, Lit In English) (2262)
+Humanities(SS, Lit In Chinese) (2263)
+Humanities(SS, Lit In Malay) (2264)
+Humanities(SS, Lit In Tamil) (2265)
+
+OTHERS
+Music (6085)
+Higher Music (6086)
+Art (6114)
+Higher Art (6124)
+Principles of Accounts (7087)

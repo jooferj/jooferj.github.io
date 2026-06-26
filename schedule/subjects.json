@@ -1,0 +1,47 @@
+{
+  "LANGUAGES": [
+    { "code": "1184", "name": "English" },
+    { "code": "1160", "name": "Chinese" },
+    { "code": "1153", "name": "Chinese B" },
+    { "code": "1116", "name": "Higher Chinese" },
+    { "code": "1148", "name": "Malay" },
+    { "code": "1151", "name": "Malay B" },
+    { "code": "1117", "name": "Higher Malay" },
+    { "code": "1157", "name": "Tamil" },
+    { "code": "1152", "name": "Tamil B" },
+    { "code": "1147", "name": "Higher Tamil" }
+  ],
+  "MATHS": [
+    { "code": "4052", "name": "Mathematics" },
+    { "code": "4049", "name": "Additional Mathematics" }
+  ],
+  "SCIENCES": [
+    { "code": "6091", "name": "Physics" },
+    { "code": "6092", "name": "Chemistry" },
+    { "code": "6093", "name": "Biology" },
+    { "code": "5086", "name": "Science(Phy/Chem)" },
+    { "code": "5087", "name": "Science(Phy/Bio)" },
+    { "code": "5088", "name": "Science(Chem/Bio)" }
+  ],
+  "HUMANITIES": [
+    { "code": "2279", "name": "Geography" },
+    { "code": "2174", "name": "History" },
+    { "code": "2065", "name": "Literature in English" },
+    { "code": "2031", "name": "Literature in Chinese" },
+    { "code": "2032", "name": "Literature in Malay" },
+    { "code": "2033", "name": "Literature in Tamil" },
+    { "code": "2260", "name": "Humanities(SS, Geography)" },
+    { "code": "2261", "name": "Humanities(SS, History)" },
+    { "code": "2262", "name": "Humanities(SS, Lit In English)" },
+    { "code": "2263", "name": "Humanities(SS, Lit In Chinese)" },
+    { "code": "2264", "name": "Humanities(SS, Lit In Malay)" },
+    { "code": "2265", "name": "Humanities(SS, Lit In Tamil)" }
+  ],
+  "OTHERS": [
+    { "code": "6085", "name": "Music" },
+    { "code": "6086", "name": "Higher Music" },
+    { "code": "6114", "name": "Art" },
+    { "code": "6124", "name": "Higher Art" },
+    { "code": "7087", "name": "Principles of Accounts" }
+  ]
+}

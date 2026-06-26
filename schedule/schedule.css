@@ -1,14 +1,38 @@
-/* Toggle button */
+/* TOP BANNER */
+.info-banner {
+    max-width: 1200px;
+    margin: 15px auto 0 auto;
+    padding: 0 20px;
+    font-size: 13px;
+    color: #aaaaaa;
+    line-height: 1.5;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+
+.info-banner a {
+    color: #3498db;
+    text-decoration: underline;
+}
+
+/* TOP BUTTONS */
 #controls-container {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 15px 20px 5px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    gap: 10px;
+    box-sizing: border-box;
 }
 
+.controls-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* SHOW ALL EXAMS TOGGLE */
 .toggle-label {
     font-family: Ubuntu;
     font-size: 1.5rem;
@@ -45,12 +69,222 @@
     background-color: #34C759;
 }
 
-/* Slide the white blob to the right */
 #toggle-btn-schd.active .toggle-handle {
     transform: translateX(20px);
 }
 
-/* Homepage Grid */
+/* SETTINGS */
+#settings-btn {
+    width: 36px;
+    height: 36px;
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#settings-btn:hover {
+    background-color: #2a2a2a;
+    border-color: #444444;
+}
+
+#settings-btn img {
+    width: 20px;
+    height: 20px;
+    filter: invert(1);
+}
+
+/* SETTINGS MODAL */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-window {
+    background-color: #1c1c1e;
+    border: 1px solid #2c2c2e;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    animation: modalFadeIn 0.2s ease-out;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #2c2c2e;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: #8e8e93;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #ffffff;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+/* ACTUAL SETTINGS */
+.settings-group {
+    margin-bottom: 8px;
+}
+
+.settings-group summary {
+    font-weight: 500;
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 4px;
+    outline: none;
+    user-select: none;
+}
+
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 8px;
+    margin-top: 6px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #dddddd;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-item input {
+    accent-color: #34c759;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+
+.settings-divider {
+    border: 0;
+    height: 1px;
+    background: #2c2c2e;
+    margin: 20px 0;
+}
+
+.settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-section h3 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #8e8e93;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #dddddd;
+}
+
+.settings-row select {
+    background-color: #2c2c2e;
+    color: #ffffff;
+    border: 1px solid #3a3a3c;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: Ubuntu;
+    outline: none;
+    cursor: pointer;
+}
+
+/* 2x2 Grid for Formatting Checkboxes */
+.settings-row-checkboxes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 4px;
+}
+
+/* Vertically Stacked Color Threshold Inputs */
+.range-settings-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-row-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #dddddd;
+}
+
+.settings-row-input input[type="number"] {
+    background-color: #2c2c2e;
+    border: 1px solid #3a3a3c;
+    color: #ffffff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: Ubuntu;
+    font-size: 14px;
+    text-align: left;
+    width: 70px;
+    outline: none;
+}
+
+.settings-tip {
+    font-size: 11px;
+    color: #636366;
+    margin-top: 2px;
+}
+
+/* HOMEPAGE */
 #exam-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr); 
@@ -107,7 +341,7 @@
 .color-green { color: #2ecc71; }
 .color-blue { color: #3498db; }
 
-/* Show More Page Grid */
+/* FULL SCHEDULE PAGE */
 #schedule-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -176,4 +410,24 @@
 
 .is-today {
     animation: flash-yellow 2s steps(1) infinite;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* UTILITY STYLE TARGET MODIFIERS */
+.font-weight-bold {
+    font-weight: 700 !important;
+}
+
+.font-style-italic {
+    font-style: italic !important;
 }

@@ -21,6 +21,10 @@
 				font-weight: 500;
 				color: #FFFFFF;
 			}
+
+			.none {
+				display: none !important;
+			}
 		</style>
 	</head>
   
@@ -32,10 +36,20 @@
 			</div>
 		</div>
 
+		<div class="info-banner">
+			Please note that only selected subjects are displayed. For examinations spanning multiple days, only the initial session is listed. For comprehensive information, please refer to the official <a href="https://file.go.gov.sg/2026-o-level-exam-cal.pdf" target="_blank" rel="noopener noreferrer">2026 O-Level Examination Calendar</a>.
+		</div>
+
 		<div id="controls-container">
-			<span class="toggle-label">Show All Exams</span>
-			<button id="toggle-btn-schd" onclick="toggleOptionalExams()" aria-label="Show All Exams">
-				<span class="toggle-handle"></span>
+			<div class="controls-left">
+				<span class="toggle-label">Show All Exams</span>
+				<button id="toggle-btn-schd" onclick="toggleOptionalExams()" aria-label="Toggle Optional Cards">
+					<span class="toggle-handle"></span>
+				</button>
+			</div>
+		
+			<button id="settings-btn" onclick="openSettings()" aria-label="Open Settings">
+				<img src="../media/settings.svg" alt="Settings" />
 			</button>
 		</div>
 
@@ -46,11 +60,219 @@
 			<span class="body-text-only" style="padding-top: 2.5px; padding-bottom: 5px;">OL: O Levels (actual)</span>
 		</div>
 
+		<div id="settings-modal" class="modal-overlay" onclick="closeSettingsOutside(event)">
+			<div class="modal-window">
+				<div class="modal-header">
+					<h2>Settings</h2>
+					<button class="modal-close-btn" onclick="closeSettings()">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="settings-section">
+						<h3>Subject Selection</h3>
+						<div id="settings-subjects-container"></div>
+					</div>
+					
+					<hr class="settings-divider">
+
+					<div class="settings-section">
+						<h3>Formatting Options</h3>
+						<label class="settings-row">
+							<span>Subject Title</span>
+							<select id="setting-format" onchange="saveDisplaySettings()">
+								<option value="name">Subject Name Only</option>
+								<option value="code">Subject Code Only</option>
+								<option value="both">Both Code & Name</option>
+							</select>
+						</label>
+
+						<!-- HIDDEN -->
+						<div class="none settings-row-checkboxes-grid">
+							<label class="checkbox-item">
+								<input type="checkbox" id="setting-bold-code" onchange="saveDisplaySettings()">
+								<span>Bold Code</span>
+							</label>
+							<label class="checkbox-item">
+								<input type="checkbox" id="setting-italic-code" onchange="saveDisplaySettings()">
+								<span>Italic Code</span>
+							</label>
+							<label class="checkbox-item">
+								<input type="checkbox" id="setting-bold-name" onchange="saveDisplaySettings()">
+								<span>Bold Name</span>
+							</label>
+							<label class="checkbox-item">
+								<input type="checkbox" id="setting-italic-name" onchange="saveDisplaySettings()">
+								<span>Italic Name</span>
+							</label>
+						</div>
+					</div>
+
+					<hr class="settings-divider">
+
+					<div class="settings-section">
+						<h3>Countdown Ranges</h3>
+						<div class="range-settings-stack">
+							<label class="settings-row-input">
+								<span class="color-red">Red (≤ days):</span>
+								<input type="number" id="range-red" onchange="saveDisplaySettings()">
+							</label>
+							<label class="settings-row-input">
+								<span class="color-orange">Orange (≤ days):</span>
+								<input type="number" id="range-orange" onchange="saveDisplaySettings()">
+							</label>
+							<label class="settings-row-input">
+								<span class="color-green">Green (≤ days):</span>
+								<input type="number" id="range-green" onchange="saveDisplaySettings()">
+							</label>
+							<label class="settings-row-input" style="opacity: 0.6;">
+								<span class="color-blue">Blue (&gt; days):</span>
+								<input type="number" id="range-blue" readonly disabled>
+							</label>
+						</div>
+						<small class="settings-tip">Days beyond Green are set to Blue.</small>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<script>
+			let subjectCategories = null;
+			const defaultPinned = ["1184", "1160", "4052", "4049", "6091", "6092", "2260"];
+			let pinnedSubjects = JSON.parse(localStorage.getItem('pinnedSubjects')) || defaultPinned;
 			let examData = [];
 			let showOptional = false;
 
-			async function loadExams() {
+			let displayPrefs = JSON.parse(localStorage.getItem('examDisplayPrefs')) || {
+				format: 'name',
+				boldCode: false,
+				italicCode: false,
+				boldName: false,
+				italicName: false,
+				rangeRed: 30,
+				rangeOrange: 60,
+				rangeGreen: 90
+			};
+
+			async function loadSubjectCategories() {
+				try {
+					const response = await fetch('subjects.json');
+					subjectCategories = await response.json();
+				} catch (e) {
+					console.error("Error loading subjects config file:", e);
+				}
+			}
+
+			// Synchronize UI values when opening menu
+			function buildSettingsMenu() {
+				const container = document.getElementById('settings-subjects-container');
+				container.innerHTML = '';
+				if (!subjectCategories) return;
+
+				for (const [category, subjects] of Object.entries(subjectCategories)) {
+					const details = document.createElement('details');
+					details.className = 'settings-group';
+					details.open = false;
+
+					const summary = document.createElement('summary');
+					summary.innerText = category;
+					details.appendChild(summary);
+
+					const list = document.createElement('div');
+					list.className = 'checkbox-list';
+
+					subjects.forEach(sub => {
+						const label = document.createElement('label');
+						label.className = 'checkbox-item';
+						const isChecked = pinnedSubjects.includes(sub.code) ? 'checked' : '';
+						label.innerHTML = `
+							<input type="checkbox" value="${sub.code}" ${isChecked} onchange="updatePinPreference(this)">
+							<span>${sub.code} ${sub.name}</span>
+						`;
+						list.appendChild(label);
+					});
+					details.appendChild(list);
+					container.appendChild(details);
+				}
+
+				document.getElementById('setting-format').value = displayPrefs.format;
+				document.getElementById('setting-bold-code').checked = displayPrefs.boldCode || false;
+				document.getElementById('setting-italic-code').checked = displayPrefs.italicCode || false;
+				document.getElementById('setting-bold-name').checked = displayPrefs.boldName || false;
+				document.getElementById('setting-italic-name').checked = displayPrefs.italicName || false;
+				document.getElementById('range-red').value = displayPrefs.rangeRed;
+				document.getElementById('range-orange').value = displayPrefs.rangeOrange;
+				document.getElementById('range-green').value = displayPrefs.rangeGreen;
+				document.getElementById('range-blue').value = displayPrefs.rangeGreen; // Match Green automatically
+			}
+
+			// Automatically cascade the Green input changes into the read-only Blue container
+			function saveDisplaySettings() {
+				displayPrefs.format = document.getElementById('setting-format').value;
+				displayPrefs.boldCode = document.getElementById('setting-bold-code').checked;
+				displayPrefs.italicCode = document.getElementById('setting-italic-code').checked;
+				displayPrefs.boldName = document.getElementById('setting-bold-name').checked;
+				displayPrefs.italicName = document.getElementById('setting-italic-name').checked;
+
+				displayPrefs.rangeRed = parseInt(document.getElementById('range-red').value) || 30;
+				displayPrefs.rangeOrange = parseInt(document.getElementById('range-orange').value) || 60;
+				displayPrefs.rangeGreen = parseInt(document.getElementById('range-green').value) || 90;
+				document.getElementById('range-blue').value = displayPrefs.rangeGreen;
+
+				localStorage.setItem('examDisplayPrefs', JSON.stringify(displayPrefs));
+				renderSchedule();
+			}
+
+			function updatePinPreference(checkbox) {
+				const code = checkbox.value;
+				if (checkbox.checked) {
+					if (!pinnedSubjects.includes(code)) pinnedSubjects.push(code);
+				} else {
+					pinnedSubjects = pinnedSubjects.filter(c => c !== code);
+				}
+				localStorage.setItem('pinnedSubjects', JSON.stringify(pinnedSubjects));
+				renderSchedule();
+			}
+
+			function formatSubjectHTML(rawName) {
+				const match = rawName.match(/^(\d+)\s+(.+?)(?:\s+((?:P\d+\s+|OL\s+|TP\s+)*(?:P\d+|OL|TP)))?$/);
+				if (!match) return `<span>${rawName}</span>`;
+
+				const code = match[1];
+				const name = match[2].trim();
+				const suffix = match[3] ? match[3].trim() : '';
+
+				const codeStyle = `class="${displayPrefs.boldCode ? 'font-weight-bold' : ''} ${displayPrefs.italicCode ? 'font-style-italic' : ''}"`.trim();
+				const nameStyle = `class="${displayPrefs.boldName ? 'font-weight-bold' : ''} ${displayPrefs.italicName ? 'font-style-italic' : ''}"`.trim();
+
+				const codeHTML = `<span ${codeStyle}>${code}</span>`;
+				const nameHTML = `<span ${nameStyle}>${name}</span>`;
+				const suffixHTML = suffix ? ` <span>${suffix}</span>` : '';
+
+				if (displayPrefs.format === 'code') return `${codeHTML}${suffixHTML}`;
+				if (displayPrefs.format === 'name') return `${nameHTML}${suffixHTML}`;
+				return `${codeHTML} ${nameHTML}${suffixHTML}`;
+			}
+
+			function getCountdownColorClass(diffDays) {
+				if (diffDays <= displayPrefs.rangeRed) return 'color-red';
+				if (diffDays <= displayPrefs.rangeOrange) return 'color-orange';
+				if (diffDays <= displayPrefs.rangeGreen) return 'color-green';
+				return 'color-blue';
+			}
+
+			function openSettings() {
+				buildSettingsMenu();
+				document.getElementById('settings-modal').style.display = 'flex';
+			}
+			function closeSettings() {
+				document.getElementById('settings-modal').style.display = 'none';
+			}
+			function closeSettingsOutside(event) {
+				const modal = document.getElementById('settings-modal');
+				if (event.target === modal) closeSettings();
+			}
+
+			async function init() {
+				await loadSubjectCategories();
 				try {
 					const response = await fetch('exams.json');
 					examData = await response.json();
@@ -62,14 +284,9 @@
 
 			function toggleOptionalExams() {
 				showOptional = !showOptional;
-				
 				const btn = document.getElementById('toggle-btn-schd');
-				if (showOptional) {
-					btn.classList.add('active');
-				} else {
-					btn.classList.remove('active');
-				}
-				
+				if (showOptional) btn.classList.add('active');
+				else btn.classList.remove('active');
 				renderSchedule();
 			}
 
@@ -80,33 +297,28 @@
 				const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
 				const upcoming = examData
-					.map(exam => ({
-						...exam,
-						dateObj: new Date(exam.date)
-					}))
+					.map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
 					.filter(exam => {
 						const isUpcoming = exam.dateObj >= today;
-						const matchesVisibility = showOptional || !exam.optional;
-						return isUpcoming && matchesVisibility;
+						if (!isUpcoming) return false;
+						if (showOptional) return true;
+
+						const matchCode = exam.name.match(/^\d+/);
+						if (matchCode) {
+							return pinnedSubjects.includes(matchCode[0]);
+						}
+						return !exam.optional;
 					})
 					.sort((a, b) => a.dateObj - b.dateObj);
 
 				upcoming.forEach(exam => {
 					const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
 					const todayClass = diffDays === 0 ? 'is-today' : '';
-					const dayName = exam.dateObj.toLocaleDateString('en-GB', {
-						weekday: 'long'
-					});
-					const formattedDate = exam.dateObj.toLocaleDateString('en-GB', {
-						day: '2-digit',
-						month: 'short',
-						year: 'numeric'
-					});
+					const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+					const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-					let colorClass = 'color-blue';
-					if (diffDays <= 30) colorClass = 'color-red';
-					else if (diffDays <= 60) colorClass = 'color-orange';
-					else if (diffDays <= 90) colorClass = 'color-green';
+					const colorClass = getCountdownColorClass(diffDays);
+					const processedHTML = formatSubjectHTML(exam.name);
 
 					let dynamicCountdownStr = '';
 					const weeks = Math.floor(diffDays / 7);
@@ -123,7 +335,7 @@
 						<span>${dayName}</span>
 					</div>
 					<div class="card-body">
-						<div class="exam-name-static ${todayClass}">${exam.name}</div>
+						<div class="exam-name-static ${todayClass}">${processedHTML}</div>
 						<div class="date-row ${todayClass}">${formattedDate}</div>
 						<div class="countdown-row ${colorClass}">${dynamicCountdownStr}</div>
 					</div>
@@ -132,7 +344,7 @@
 				});
 			}
 
-			loadExams();
+			init();
 		</script>
 	</body>
 </html>
