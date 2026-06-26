@@ -56,7 +56,7 @@
 		<script>
 			async function loadExams() {
     try {
-        const response = await fetch('exam-schedule/exams.json');
+        const response = await fetch('schedule/exams.json');
         const exams = await response.json();
         const grid = document.getElementById('exam-grid');
         const now = new Date();
