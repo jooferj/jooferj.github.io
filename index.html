@@ -55,61 +55,67 @@
 
 		<script>
 			async function loadExams() {
-    try {
-        const response = await fetch('schedule/exams.json');
-        const exams = await response.json();
-        const grid = document.getElementById('exam-grid');
-        const now = new Date();
-		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+				try {
+					const response = await fetch('schedule/exams.json');
+					const exams = await response.json();
+					const grid = document.getElementById('exam-grid');
+					const now = new Date();
+					const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-        exams.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const futureExams = exams.filter(exam => new Date(exam.date) >= today);
-        const displayedExams = futureExams.slice(0, 11);
+					const futureExams = exams.filter(exam => {
+						const isUpcoming = new Date(exam.date) >= today;
+						const isNotOptional = !exam.optional;
+						return isUpcoming && isNotOptional;
+					});
 
-        displayedExams.forEach(exam => {
-    const examDate = new Date(exam.date);
-    const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
+					futureExams.sort((a, b) => new Date(a.date) - new Date(b.date));
+					
+					const displayedExams = futureExams.slice(0, 11);
 
-    const todayClass = diffDays === 0 ? 'is-today' : '';
+					displayedExams.forEach(exam => {
+						const examDate = new Date(exam.date);
+						const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
 
-    let colorClass = 'color-blue';
-    if (diffDays <= 30) colorClass = 'color-red';
-    else if (diffDays <= 60) colorClass = 'color-orange';
-    else if (diffDays <= 90) colorClass = 'color-green';
+						const todayClass = diffDays === 0 ? 'is-today' : '';
 
-    let timeLabelStr = '';
-    if (diffDays > 14) {
-        const weeks = Math.floor(diffDays / 7);
-        const remDays = diffDays % 7;
-        timeLabelStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
-    } else {
-        timeLabelStr = `${diffDays}<span class="days-label"> d</span>`;
-    }
+						let colorClass = 'color-blue';
+						if (diffDays <= 30) colorClass = 'color-red';
+						else if (diffDays <= 60) colorClass = 'color-orange';
+						else if (diffDays <= 90) colorClass = 'color-green';
 
-    const card = document.createElement('div');
-    card.className = 'exam-card';
-    card.innerHTML = `
-        <div class="exam-title ${todayClass}">${exam.name}</div>
-        <span class="days-left ${colorClass}">${timeLabelStr}</span>
-		`;
-			grid.appendChild(card);
-		});
+						let timeLabelStr = '';
+						if (diffDays > 14) {
+							const weeks = Math.floor(diffDays / 7);
+							const remDays = diffDays % 7;
+							timeLabelStr = remDays > 0 ? `${weeks}<span class="days-label">w  </span> ${remDays}<span class="days-label">d</span>` : `${weeks}<span class="days-label"> w</span>`;
+						} else {
+							timeLabelStr = `${diffDays}<span class="days-label"> d</span>`;
+						}
 
-        if (futureExams.length > 11) {
-            const moreCard = document.createElement('a');
-            moreCard.className = 'exam-card show-more-card';
-            moreCard.style.display = "flex";
-            moreCard.style.justifyContent = "center";
-            moreCard.style.alignItems = "center";
-            moreCard.href = '/schedule'; 
-            moreCard.innerText = 'Show More';
-            grid.appendChild(moreCard);
-        }
-    } catch (error) {
-        console.error('Error loading exam data:', error);
-    }
-}
-loadExams();
+						const card = document.createElement('div');
+						card.className = 'exam-card';
+						card.innerHTML = `
+							<div class="exam-title ${todayClass}">${exam.name}</div>
+							<span class="days-left ${colorClass}">${timeLabelStr}</span>
+						`;
+						grid.appendChild(card);
+					});
+
+					if (futureExams.length > 11) {
+						const moreCard = document.createElement('a');
+						moreCard.className = 'exam-card show-more-card';
+						moreCard.style.display = "flex";
+						moreCard.style.justifyContent = "center";
+						moreCard.style.alignItems = "center";
+						moreCard.href = '/schedule'; 
+						moreCard.innerText = 'Show More';
+						grid.appendChild(moreCard);
+					}
+				} catch (error) {
+					console.error('Error loading exam data:', error);
+				}
+			}
+			loadExams();
 		</script>
 	</body>
 </html>
