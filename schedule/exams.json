@@ -1,5 +1,4 @@
 [
-  { "name": "Placeholder", "date": "2026-06-29T00:00:00", "week": "Placeholder", "optional": true },
   { "name": "A Math TP", "date": "2026-06-30T00:00:00", "week": "T3W1" },
   { "name": "E Math TP", "date": "2026-07-01T00:00:00", "week": "T3W1" },
   { "name": "Chinese LC OL", "date": "2026-07-07T00:00:00", "week": "T3W2" },
