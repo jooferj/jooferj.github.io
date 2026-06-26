@@ -34,8 +34,7 @@
 		</div>
 		
 		<div id="content">
-			<div id="exam-grid">
-			</div>
+			<div id="exam-grid"></div>
 			<a href="/clocks">
 				<span>Clocks</span>
 			</a>
@@ -62,26 +61,52 @@
 					const now = new Date();
 					const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
+					const defaultPinned = ["1184", "1160", "4052", "4049", "6091", "6092", "2260"];
+					const pinnedSubjects = JSON.parse(localStorage.getItem('pinnedSubjects')) || defaultPinned;
+
+					const displayPrefs = JSON.parse(localStorage.getItem('examDisplayPrefs')) || {
+						format: 'name', boldCode: false, italicCode: false, boldName: false, italicName: false, rangeRed: 30, rangeOrange: 60, rangeGreen: 90
+					};
+
 					const futureExams = exams.filter(exam => {
 						const isUpcoming = new Date(exam.date) >= today;
-						const isNotOptional = !exam.optional;
-						return isUpcoming && isNotOptional;
+						if (!isUpcoming) return false;
+
+						const matchCode = exam.name.match(/^\d+/);
+						if (matchCode) {
+							return pinnedSubjects.includes(matchCode[0]);
+						}
+						return !exam.optional;
 					});
 
 					futureExams.sort((a, b) => new Date(a.date) - new Date(b.date));
-					
 					const displayedExams = futureExams.slice(0, 11);
 
 					displayedExams.forEach(exam => {
 						const examDate = new Date(exam.date);
 						const diffDays = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
-
 						const todayClass = diffDays === 0 ? 'is-today' : '';
 
 						let colorClass = 'color-blue';
-						if (diffDays <= 30) colorClass = 'color-red';
-						else if (diffDays <= 60) colorClass = 'color-orange';
-						else if (diffDays <= 90) colorClass = 'color-green';
+						if (diffDays <= displayPrefs.rangeRed) colorClass = 'color-red';
+						else if (diffDays <= displayPrefs.rangeOrange) colorClass = 'color-orange';
+						else if (diffDays <= displayPrefs.rangeGreen) colorClass = 'color-green';
+
+						// Enhanced parser to correctly match versatile suffixes like "P3 OL", "TP", "P1 OL" etc.
+						let processedHTML = `<span>${exam.name}</span>`;
+						const match = exam.name.match(/^(\d+)\s+(.+?)(?:\s+((?:P\d+\s+|OL\s+|TP\s+)*(?:P\d+|OL|TP)))?$/);
+						if (match) {
+							const codeStyle = `class="${displayPrefs.boldCode ? 'font-weight-bold' : ''} ${displayPrefs.italicCode ? 'font-style-italic' : ''}"`.trim();
+							const nameStyle = `class="${displayPrefs.boldName ? 'font-weight-bold' : ''} ${displayPrefs.italicName ? 'font-style-italic' : ''}"`.trim();
+
+							const codeHTML = `<span ${codeStyle}>${match[1]}</span>`;
+							const nameHTML = `<span ${nameStyle}>${match[2].trim()}</span>`;
+							const suffixHTML = match[3] ? ` <span>${match[3].trim()}</span>` : '';
+
+							if (displayPrefs.format === 'code') processedHTML = `${codeHTML}${suffixHTML}`;
+							else if (displayPrefs.format === 'name') processedHTML = `${nameHTML}${suffixHTML}`;
+							else processedHTML = `${codeHTML} ${nameHTML}${suffixHTML}`;
+						}
 
 						let timeLabelStr = '';
 						if (diffDays > 14) {
@@ -95,7 +120,7 @@
 						const card = document.createElement('div');
 						card.className = 'exam-card';
 						card.innerHTML = `
-							<div class="exam-title ${todayClass}">${exam.name}</div>
+							<div class="exam-title ${todayClass}">${processedHTML}</div>
 							<span class="days-left ${colorClass}">${timeLabelStr}</span>
 						`;
 						grid.appendChild(card);
