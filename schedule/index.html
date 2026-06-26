@@ -29,6 +29,7 @@
 			<span>Exam Schedule</span>
 			<div id="header-right">
 				<a id="home" href="/">Home</a>
+				<button id="toggle-btn-schd" onclick="toggleOptionalExams()">Show All Exams</button>
 			</div>
 		</div>
 
@@ -41,67 +42,95 @@
 
 		<script>
 			let examData = [];
+let showOptional = false;
 
-			async function loadExams() {
-				try {
-					const response = await fetch('exams.json');
-					examData = await response.json();
-					
-					renderSchedule();
-				} catch (e) {
-					console.error("Error loading exams:", e);
-				}
-			}
+async function loadExams() {
+    try {
+        const response = await fetch('exams.json');
+        examData = await response.json();
 
-			function renderSchedule() {
-				const grid = document.getElementById('schedule-grid');
-				grid.innerHTML = '';
-				
-				const now = new Date();
-				const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        renderSchedule();
+    } catch (e) {
+        console.error("Error loading exams:", e);
+    }
+}
 
-				const upcoming = examData
-					.map(exam => ({ ...exam, dateObj: new Date(exam.date) }))
-					.filter(exam => exam.dateObj >= today)
-					.sort((a, b) => a.dateObj - b.dateObj);
-				
-				upcoming.forEach(exam => {
-					const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
-					const todayClass = diffDays === 0 ? 'is-today' : '';
-					const dayName = exam.dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
-					const formattedDate = exam.dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-					
-					let colorClass = 'color-blue';
-					if (diffDays <= 30) colorClass = 'color-red';
-					else if (diffDays <= 60) colorClass = 'color-orange';
-					else if (diffDays <= 90) colorClass = 'color-green';
+function toggleOptionalExams() {
+    showOptional = !showOptional;
 
-					let dynamicCountdownStr = '';
-					const weeks = Math.floor(diffDays / 7);
-					const remDays = diffDays % 7;
-					if (weeks > 0 && remDays > 0) dynamicCountdownStr = `${weeks}<span class="days-label">w </span> ${remDays}<span class="days-label">d</span>`;
-					else if (weeks > 0 && remDays === 0) dynamicCountdownStr = `${weeks}<span class="days-label">w</span>`;
-					else dynamicCountdownStr = `${remDays}<span class="days-label">d</span>`;
-					
-					const card = document.createElement('div');
-					card.className = 'schedule-card';
-					
-					card.innerHTML = `
-					<div class="card-header">
-						<span>${exam.week || ''}</span>
-						<span>${dayName}</span>
-					</div>
-					<div class="card-body">
-						<div class="exam-name-static ${todayClass}">${exam.name}</div>
-						<div class="date-row ${todayClass}">${formattedDate}</div>
-						<div class="countdown-row ${colorClass}">${dynamicCountdownStr}</div>
-					</div>
-					`;
-					grid.appendChild(card);
-				});
-			}
+    const btn = document.getElementById('toggle-btn-schd');
+    if (showOptional) {
+        btn.innerText = "Hide Optional";
+        btn.classList.add('active');
+    } else {
+        btn.innerText = "Show All Exams";
+        btn.classList.remove('active');
+    }
 
-			loadExams();
+    // re-render the schedule with the optional on/off
+    renderSchedule();
+}
+
+function renderSchedule() {
+    const grid = document.getElementById('schedule-grid');
+    grid.innerHTML = '';
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const upcoming = examData
+        .map(exam => ({
+            ...exam,
+            dateObj: new Date(exam.date)
+        }))
+        .filter(exam => {
+            const isUpcoming = exam.dateObj >= today;
+            const matchesVisibility = showOptional || !exam.optional;
+            return isUpcoming && matchesVisibility;
+        })
+        .sort((a, b) => a.dateObj - b.dateObj);
+
+    upcoming.forEach(exam => {
+        const diffDays = Math.ceil((exam.dateObj - now) / (1000 * 60 * 60 * 24));
+        const todayClass = diffDays === 0 ? 'is-today' : '';
+        const dayName = exam.dateObj.toLocaleDateString('en-GB', {
+            weekday: 'long'
+        });
+        const formattedDate = exam.dateObj.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+
+        let colorClass = 'color-blue';
+        if (diffDays <= 30) colorClass = 'color-red';
+        else if (diffDays <= 60) colorClass = 'color-orange';
+        else if (diffDays <= 90) colorClass = 'color-green';
+
+        let dynamicCountdownStr = '';
+        const weeks = Math.floor(diffDays / 7);
+        const remDays = diffDays % 7;
+        if (weeks > 0 && remDays > 0) dynamicCountdownStr = `${weeks}<span class="days-label">w </span> ${remDays}<span class="days-label">d</span>`;
+        else if (weeks > 0 && remDays === 0) dynamicCountdownStr = `${weeks}<span class="days-label">w</span>`;
+        else dynamicCountdownStr = `${remDays}<span class="days-label">d</span>`;
+
+        const card = document.createElement('div');
+        card.className = 'schedule-card';
+        card.innerHTML = `
+        <div class="card-header">
+            <span>${exam.week || ''}</span>
+            <span>${dayName}</span>
+        </div>
+        <div class="card-body">
+            <div class="exam-name-static ${todayClass}">${exam.name}</div>
+            <div class="date-row ${todayClass}">${formattedDate}</div>
+            <div class="countdown-row ${colorClass}">${dynamicCountdownStr}</div>
+        </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+loadExams();
 		</script>
 	</body>	
 </html>
