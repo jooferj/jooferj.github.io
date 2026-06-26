@@ -29,8 +29,14 @@
 			<span>Exam Schedule</span>
 			<div id="header-right">
 				<a id="home" href="/">Home</a>
-				<button id="toggle-btn-schd" onclick="toggleOptionalExams()">Show All Exams</button>
 			</div>
+		</div>
+
+		<div id="controls-container">
+			<span class="toggle-label">Show All Exams</span>
+			<button id="toggle-btn-schd" onclick="toggleOptionalExams()" aria-label="Show All Exams">
+				<span class="toggle-handle"></span>
+			</button>
 		</div>
 
 		<div id="content">
