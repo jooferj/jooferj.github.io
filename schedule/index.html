@@ -62,16 +62,14 @@
 
 			function toggleOptionalExams() {
 				showOptional = !showOptional;
-
+				
 				const btn = document.getElementById('toggle-btn-schd');
 				if (showOptional) {
-					btn.innerText = "Hide Optional";
 					btn.classList.add('active');
 				} else {
-					btn.innerText = "Show All Exams";
 					btn.classList.remove('active');
 				}
-
+				
 				renderSchedule();
 			}
 
