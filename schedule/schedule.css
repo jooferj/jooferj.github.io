@@ -1,5 +1,5 @@
 /* Toggle Button */
-#toggle-btn {
+#toggle-btn-schd {
     background: #333;
     color: #fff;
     border: 1px solid #555;
@@ -11,10 +11,11 @@
     transition: background 0.2s;
 }
 
-#toggle-btn:hover {
+#toggle-btn-schd:hover {
     background: #444;
 }
-#toggle-btn.active {
+
+#toggle-btn-schd.active {
     background: #00bcd4; /* accent color when showing all cards */
     border-color: #00bcd4;
 }
