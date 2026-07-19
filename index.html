@@ -35,15 +35,9 @@
 		
 		<div id="content">
 			<div id="exam-grid"></div>
-			<a href="/clocks">
-				<span>Clocks</span>
-			</a>
-			<a href="/resources">
-				<span>Resources</span>
-			</a>
-			<a href="/announcements">
-				<span>Announcements</span>
-			</a>
+			<a href="/clocks"><span>Clocks</span></a>
+			<a href="/resources"><span>Resources</span></a>
+			<a href="/announcements"><span>Announcements</span></a>
 			<a href="/circleline">
 				<span class="smrt-ccl nostack">
 					<img src="media/caplets/CCL.svg" style="padding-right: 2%; height: 45%;"/>
@@ -65,18 +59,34 @@
 					const pinnedSubjects = JSON.parse(localStorage.getItem('pinnedSubjects')) || defaultPinned;
 
 					const displayPrefs = JSON.parse(localStorage.getItem('examDisplayPrefs')) || {
-						format: 'name', boldCode: false, italicCode: false, boldName: false, italicName: false, rangeRed: 30, rangeOrange: 60, rangeGreen: 90
+						format: 'name', boldCode: false, italicCode: false, boldName: false, italicName: false, rangeRed: 30, rangeOrange: 60, rangeGreen: 90,
+						showOL: true, showTP: true, showPrelim: true
 					};
+
+					if (displayPrefs.showOL === undefined) displayPrefs.showOL = true;
+					if (displayPrefs.showTP === undefined) displayPrefs.showTP = true;
+					if (displayPrefs.showPrelim === undefined) displayPrefs.showPrelim = true;
 
 					const futureExams = exams.filter(exam => {
 						const isUpcoming = new Date(exam.date) >= today;
 						if (!isUpcoming) return false;
 
+						// Check Paper Type filters
+						const upperName = exam.name.toUpperCase();
+						const hasOL = upperName.includes('OL');
+						const hasTP = upperName.includes('TP');
+						const hasPrelim = upperName.includes('PRELIM');
+
+						if (hasOL && !displayPrefs.showOL) return false;
+						if (hasTP && !displayPrefs.showTP) return false;
+						if (hasPrelim && !displayPrefs.showPrelim) return false;
+
+						// Pinned subject filter check
 						const matchCode = exam.name.match(/^\d+/);
 						if (matchCode) {
 							return pinnedSubjects.includes(matchCode[0]);
 						}
-						return !exam.optional;
+						return false;
 					});
 
 					futureExams.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -92,9 +102,9 @@
 						else if (diffDays <= displayPrefs.rangeOrange) colorClass = 'color-orange';
 						else if (diffDays <= displayPrefs.rangeGreen) colorClass = 'color-green';
 
-						// Enhanced parser to correctly match versatile suffixes like "P3 OL", "TP", "P1 OL" etc.
+						// Enhanced parser to correctly match versatile suffixes like "P3 OL", "TP", "P1 OL", "Prelim" etc.
 						let processedHTML = `<span>${exam.name}</span>`;
-						const match = exam.name.match(/^(\d+)\s+(.+?)(?:\s+((?:P\d+\s+|OL\s+|TP\s+)*(?:P\d+|OL|TP)))?$/);
+						const match = exam.name.match(/^(\d+)\s+(.+?)(?:\s+((?:P\d+\s+|OL\s+|TP\s+|Prelim\s+)*(?:P\d+|OL|TP|Prelim)))?$/i);
 						if (match) {
 							const codeStyle = `class="${displayPrefs.boldCode ? 'font-weight-bold' : ''} ${displayPrefs.italicCode ? 'font-style-italic' : ''}"`.trim();
 							const nameStyle = `class="${displayPrefs.boldName ? 'font-weight-bold' : ''} ${displayPrefs.italicName ? 'font-style-italic' : ''}"`.trim();
