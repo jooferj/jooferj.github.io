@@ -171,6 +171,15 @@
 				line-height: 1;
 			}
 
+			@keyframes flash-yellow {
+				0%, 100% { color: #ffffff; }
+				50% { color: #ffff00; }
+			}
+
+			.timer-expired {
+				animation: flash-yellow 2s steps(1) infinite;
+			}
+
 			.running-meta {
 				display: flex;
 				align-items: center;
@@ -249,7 +258,8 @@
 					remainingSeconds: totalSeconds,
 					endTime: endTime,
 					isRunning: true,
-					endFormatted: endFormatted
+					endFormatted: endFormatted,
+					hasPlayedAudio: false
 				};
 
 				saveState();
@@ -306,7 +316,6 @@
 						</div>
 					`;
 				} else {
-					// Only build the running card shell once if it doesn't already exist
 					if (!container.querySelector('.running-card')) {
 						container.innerHTML = `
 							<div class="running-card">
@@ -348,7 +357,22 @@
 					: '<path d="M8 5v14l11-7z"/>';
 
 				card.querySelector('.running-name').textContent = timerState.name;
-				card.querySelector('.running-time').textContent = timeStr;
+				
+				const timeEl = card.querySelector('.running-time');
+				timeEl.textContent = timeStr;
+
+				if (diffSeconds === 0) {
+					timeEl.classList.add('timer-expired');
+					if (!timerState.hasPlayedAudio) {
+						const ding = new Audio('../media/dingding.mp3');
+						ding.play().catch(e => console.log("Audio play blocked/error:", e));
+						timerState.hasPlayedAudio = true;
+						saveState();
+					}
+				} else {
+					timeEl.classList.remove('timer-expired');
+				}
+
 				card.querySelector('.running-meta').textContent = timerState.endFormatted;
 				
 				const controlBtn = card.querySelector('.control-btn');
@@ -368,7 +392,6 @@
 			document.addEventListener('webkitfullscreenchange', checkFullscreen);
 			window.addEventListener('resize', checkFullscreen);
 
-			// Update only the numbers/icons smoothly without destroying the DOM elements
 			setInterval(() => {
 				if (timerState && timerState.isRunning) {
 					updateRunningCardValues();
