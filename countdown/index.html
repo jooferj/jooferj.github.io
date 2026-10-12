@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="../schedule/schedule.css">
 
 		<link rel="icon" type="image/svg+xml" href="../logo-red.svg">
-		<title>Custom Timers</title>
+		<title>Countdown</title>
 		
 		<style type="text/css">
 			html {
@@ -20,31 +20,48 @@
 				font-family: Ubuntu;
 				font-weight: 500;
 				color: #FFFFFF;
+				height: 100%;
 			}
 
-			.timer-container {
-				max-width: 600px;
-				margin: 30px auto;
-				padding: 0 20px;
+			body {
+				margin: 0;
+				min-height: 100%;
+				display: flex;
+				flex-direction: column;
+				background: #000000;
+			}
+
+			/* Hide top navbar in fullscreen mode */
+			body.fullscreen-mode #header {
+				display: none !important;
+			}
+
+			.countdown-wrapper {
+				flex: 1;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 20px;
 				box-sizing: border-box;
 			}
 
-			.timer-form {
+			.timer-form-card {
 				background-color: #1a1a1a;
 				border: 1px solid #2c2c2e;
-				border-radius: 12px;
-				padding: 20px;
+				border-radius: 20px;
+				padding: 30px;
+				width: 100%;
+				max-width: 500px;
 				display: flex;
 				flex-direction: column;
-				gap: 15px;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-				margin-bottom: 30px;
+				gap: 20px;
+				box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
 			}
 
 			.form-row {
 				display: flex;
 				flex-direction: column;
-				gap: 6px;
+				gap: 8px;
 			}
 
 			.form-row label {
@@ -57,139 +74,148 @@
 				background-color: #2c2c2e;
 				border: 1px solid #3a3a3c;
 				color: #ffffff;
-				padding: 10px;
-				border-radius: 8px;
+				padding: 12px;
+				border-radius: 10px;
 				font-family: Ubuntu;
-				font-size: 14px;
+				font-size: 16px;
 				outline: none;
 			}
 
 			.time-inputs {
 				display: grid;
 				grid-template-columns: repeat(3, 1fr);
-				gap: 10px;
+				gap: 12px;
 			}
 
 			.start-btn {
-				background-color: #34C759;
-				color: #ffffff;
+				background-color: #ffffff;
+				color: #000000;
 				border: none;
-				padding: 12px;
-				border-radius: 8px;
+				padding: 14px;
+				border-radius: 10px;
 				font-family: Ubuntu;
-				font-size: 15px;
+				font-size: 16px;
 				font-weight: 700;
 				cursor: pointer;
 				transition: background-color 0.2s;
 			}
 
 			.start-btn:hover {
-				background-color: #2eb04f;
+				background-color: #e0e0e0;
 			}
 
-			#timers-grid {
-				display: flex;
-				flex-direction: column;
-				gap: 15px;
-			}
-
-			.active-timer-card {
+			/* Running Timer Card UI matching design */
+			.running-card {
 				background-color: #1a1a1a;
 				border: 1px solid #2c2c2e;
-				border-radius: 12px;
-				padding: 20px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-			}
-
-			.timer-info {
+				border-radius: 24px;
+				padding: 40px 60px;
+				width: 100%;
+				max-width: 650px;
+				aspect-ratio: 16 / 9;
 				display: flex;
 				flex-direction: column;
-				gap: 5px;
+				align-items: center;
+				justify-content: space-between;
+				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+				box-sizing: border-box;
+				text-align: center;
 			}
 
-			.timer-name {
-				font-size: 1.1rem;
-				font-weight: 700;
+			.running-name {
+				font-size: 1.25rem;
+				font-weight: 500;
 				color: #ffffff;
 			}
 
-			.timer-display {
-				font-size: 2rem;
+			.running-time {
+				font-size: clamp(3rem, 10vw, 5.5rem);
 				font-weight: 700;
 				font-family: Ubuntu, sans-serif;
+				letter-spacing: -2px;
+				color: #ffffff;
+				line-height: 1;
 			}
 
-			.delete-btn {
-				background: none;
+			.running-meta {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				font-size: 1rem;
+				color: #8e8e93;
+			}
+
+			.control-btn {
+				background-color: #2c2c2e;
 				border: none;
-				color: #ff4d4d;
-				font-size: 16px;
+				width: 56px;
+				height: 56px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				cursor: pointer;
-				padding: 8px 12px;
-				border-radius: 6px;
 				transition: background-color 0.2s;
 			}
 
-			.delete-btn:hover {
-				background-color: rgba(255, 77, 77, 0.1);
+			.control-btn:hover {
+				background-color: #3a3a3c;
 			}
 
-			.expired {
-				color: #ff4d4d !important;
-				animation: flash-yellow 2s steps(1) infinite;
+			.control-icon {
+				fill: #ffffff;
+				width: 20px;
+				height: 20px;
+			}
+
+			.actions-row {
+				display: flex;
+				gap: 15px;
+				align-items: center;
+			}
+
+			.reset-btn {
+				background: none;
+				border: 1px solid #3a3a3c;
+				color: #ff4d4d;
+				padding: 10px 16px;
+				border-radius: 8px;
+				font-family: Ubuntu;
+				font-size: 14px;
+				cursor: pointer;
+				transition: background-color 0.2s;
+			}
+
+			.reset-btn:hover {
+				background-color: rgba(255, 77, 77, 0.1);
 			}
 		</style>
 	</head>
 	
 	<body>
 		<div id="header">
-			<span>Clocks & Timers</span>
+			<span>Countdown</span>
 			<div id="header-right">
 				<a id="home" href="/">Home</a>
 			</div>
 		</div>
 		
-		<div class="timer-container">
-			<!-- Timer Creation Form -->
-			<div class="timer-form">
-				<div class="form-row">
-					<label for="timer-name">Timer Name</label>
-					<input type="text" id="timer-name" placeholder="e.g., Math Paper 1 Practice" autocomplete="off">
-				</div>
-				<div class="time-inputs">
-					<div class="form-row">
-						<label for="timer-hours">Hours</label>
-						<input type="number" id="timer-hours" min="0" value="0">
-					</div>
-					<div class="form-row">
-						<label for="timer-minutes">Minutes</label>
-						<input type="number" id="timer-minutes" min="0" max="59" value="25">
-					</div>
-					<div class="form-row">
-						<label for="timer-seconds">Seconds</label>
-						<input type="number" id="timer-seconds" min="0" max="59" value="0">
-					</div>
-				</div>
-				<button class="start-btn" onclick="createTimer()">Start Timer</button>
-			</div>
-
-			<!-- Active Timers List -->
-			<div id="timers-grid"></div>
-		</div>
+		<div class="countdown-wrapper" id="main-container"></div>
 
 		<script>
-			let activeTimers = JSON.parse(localStorage.getItem('customTimers')) || [];
+			let timerState = JSON.parse(localStorage.getItem('singleCountdownTimer')) || null;
 
-			function createTimer() {
+			function saveState() {
+				localStorage.setItem('singleCountdownTimer', JSON.stringify(timerState));
+			}
+
+			function startTimer() {
 				const nameInput = document.getElementById('timer-name');
 				const hoursInput = document.getElementById('timer-hours');
 				const minutesInput = document.getElementById('timer-minutes');
 				const secondsInput = document.getElementById('timer-seconds');
 
-				const name = nameInput.value.trim() || 'Untitled Timer';
+				const name = nameInput.value.trim() || 'Timer Name Here';
 				const hours = parseInt(hoursInput.value) || 0;
 				const minutes = parseInt(minutesInput.value) || 0;
 				const seconds = parseInt(secondsInput.value) || 0;
@@ -200,70 +226,129 @@
 					return;
 				}
 
-				const endTime = Date.now() + (totalSeconds * 1000);
+				const now = Date.now();
+				const endTime = now + (totalSeconds * 1000);
+				const targetDate = new Date(endTime);
+				const endFormatted = targetDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
-				const newTimer = {
-					id: Date.now(),
+				timerState = {
 					name: name,
-					endTime: endTime
+					totalSeconds: totalSeconds,
+					remainingSeconds: totalSeconds,
+					endTime: endTime,
+					isRunning: true,
+					endFormatted: endFormatted
 				};
 
-				activeTimers.push(newTimer);
-				saveAndRender();
-
-				// Reset inputs
-				nameInput.value = '';
-				hoursInput.value = '0';
-				minutesInput.value = '25';
-				secondsInput.value = '0';
+				saveState();
+				render();
 			}
 
-			function deleteTimer(id) {
-				activeTimers = activeTimers.filter(t => t.id !== id);
-				saveAndRender();
-			}
-
-			function saveAndRender() {
-				localStorage.setItem('customTimers', JSON.stringify(activeTimers));
-				renderTimers();
-			}
-
-			function renderTimers() {
-				const grid = document.getElementById('timers-grid');
-				grid.innerHTML = '';
-
-				if (activeTimers.length === 0) {
-					grid.innerHTML = '<div style="text-align: center; color: #636366; padding: 20px;">No active timers running.</div>';
-					return;
-				}
-
-				activeTimers.forEach(timer => {
+			function togglePause() {
+				if (!timerState) return;
+				if (timerState.isRunning) {
 					const now = Date.now();
-					const diffSeconds = Math.max(0, Math.ceil((timer.endTime - now) / 1000));
+					timerState.remainingSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
+					timerState.isRunning = false;
+				} else {
+					timerState.endTime = Date.now() + (timerState.remainingSeconds * 1000);
+					const targetDate = new Date(timerState.endTime);
+					timerState.endFormatted = targetDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+					timerState.isRunning = true;
+				}
+				saveState();
+				render();
+			}
+
+			function resetTimer() {
+				timerState = null;
+				localStorage.removeItem('singleCountdownTimer');
+				render();
+			}
+
+			function render() {
+				const container = document.getElementById('main-container');
+
+				if (!timerState) {
+					container.innerHTML = `
+						<div class="timer-form-card">
+							<div class="form-row">
+								<label for="timer-name">Timer Name</label>
+								<input type="text" id="timer-name" placeholder="e.g., Timer Name Here" autocomplete="off" value="Timer Name Here">
+							</div>
+							<div class="time-inputs">
+								<div class="form-row">
+									<label for="timer-hours">Hours</label>
+									<input type="number" id="timer-hours" min="0" value="0">
+								</div>
+								<div class="form-row">
+									<label for="timer-minutes">Minutes</label>
+									<input type="number" id="timer-minutes" min="0" max="59" value="25">
+								</div>
+								<div class="form-row">
+									<label for="timer-seconds">Seconds</label>
+									<input type="number" id="timer-seconds" min="0" max="59" value="0">
+								</div>
+							</div>
+							<button class="start-btn" onclick="startTimer()">Start Timer</button>
+						</div>
+					`;
+				} else {
+					let diffSeconds = timerState.remainingSeconds;
+					if (timerState.isRunning) {
+						const now = Date.now();
+						diffSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
+						if (diffSeconds === 0 && timerState.isRunning) {
+							timerState.isRunning = false;
+						}
+					}
 
 					const h = Math.floor(diffSeconds / 3600);
 					const m = Math.floor((diffSeconds % 3600) / 60);
 					const s = diffSeconds % 60;
 
-					const formattedTime = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-					const isExpired = diffSeconds === 0 ? 'expired' : 'color-blue';
+					const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+					
+					const iconPath = timerState.isRunning 
+						? '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>' 
+						: '<path d="M8 5v14l11-7z"/>';
 
-					const card = document.createElement('div');
-					card.className = 'active-timer-card';
-					card.innerHTML = `
-						<div class="timer-info">
-							<span class="timer-name">${timer.name}</span>
-							<span class="timer-display ${isExpired}">${formattedTime}</span>
+					container.innerHTML = `
+						<div class="running-card">
+							<div class="running-name">${timerState.name}</div>
+							<div class="running-time">${timeStr}</div>
+							<div class="running-meta">
+								<span>🔔</span> ${timerState.endFormatted}
+							</div>
+							<div class="actions-row">
+								<button class="control-btn" onclick="togglePause()" title="${timerState.isRunning ? 'Pause' : 'Play'}">
+									<svg class="control-icon" viewBox="0 0 24 24">${iconPath}</svg>
+								</button>
+								<button class="reset-btn" onclick="resetTimer()">New Timer</button>
+							</div>
 						</div>
-						<button class="delete-btn" onclick="deleteTimer(${timer.id})">Delete</button>
 					`;
-					grid.appendChild(card);
-				});
+				}
 			}
 
-			// Update every second
-			setInterval(renderTimers, 1000);
-			renderTimers();
+			function checkFullscreen() {
+				if (document.fullscreenElement || document.webkitFullscreenElement) {
+					document.body.classList.add('fullscreen-mode');
+				} else {
+					document.body.classList.remove('fullscreen-mode');
+				}
+			}
+
+			document.addEventListener('fullscreenchange', checkFullscreen);
+			document.addEventListener('webkitfullscreenchange', checkFullscreen);
+
+			setInterval(() => {
+				if (timerState && timerState.isRunning) {
+					render();
+				}
+			}, 250);
+
+			render();
 		</script>
 	</body>
 </html>
