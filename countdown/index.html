@@ -31,9 +31,13 @@
 				background: #000000;
 			}
 
-			/* Hide top navbar in fullscreen mode */
+			/* Completely hide top navbar in fullscreen mode[cite: 10] */
 			body.fullscreen-mode #header {
 				display: none !important;
+				height: 0 !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				border: none !important;
 			}
 
 			.countdown-wrapper {
@@ -47,11 +51,11 @@
 
 			.timer-form-card {
 				background-color: #1a1a1a;
-				border: 1px solid #2c2c2e;
-				border-radius: 20px;
+				border: none;
+				border-radius: 24px;
 				padding: 30px;
 				width: 100%;
-				max-width: 500px;
+				max-width: 550px;
 				display: flex;
 				flex-direction: column;
 				gap: 20px;
@@ -72,13 +76,15 @@
 			.form-row input[type="text"],
 			.form-row input[type="number"] {
 				background-color: #2c2c2e;
-				border: 1px solid #3a3a3c;
+				border: none;
 				color: #ffffff;
 				padding: 12px;
 				border-radius: 10px;
 				font-family: Ubuntu;
 				font-size: 16px;
 				outline: none;
+				width: 100%;
+				box-sizing: border-box;
 			}
 
 			.time-inputs {
@@ -88,8 +94,8 @@
 			}
 
 			.start-btn {
-				background-color: #ffffff;
-				color: #000000;
+				background-color: #444;
+				color: #ffffff;
 				border: none;
 				padding: 14px;
 				border-radius: 10px;
@@ -101,17 +107,18 @@
 			}
 
 			.start-btn:hover {
-				background-color: #e0e0e0;
+				background-color: #666;
 			}
 
-			/* Running Timer Card UI matching design */
+			/* Running Timer Card UI with Increased Letter Spacing[cite: 10] */
 			.running-card {
+				position: relative;
 				background-color: #1a1a1a;
-				border: 1px solid #2c2c2e;
-				border-radius: 24px;
-				padding: 40px 60px;
+				border: none;
+				border-radius: 28px;
+				padding: clamp(20px, 6vw, 50px) clamp(20px, 8vw, 70px);
 				width: 100%;
-				max-width: 650px;
+				max-width: 850px;
 				aspect-ratio: 16 / 9;
 				display: flex;
 				flex-direction: column;
@@ -122,17 +129,44 @@
 				text-align: center;
 			}
 
-			.running-name {
-				font-size: 1.25rem;
-				font-weight: 500;
+			.close-x-btn {
+				position: absolute;
+				top: clamp(8px, 2vw, 16px);
+				right: clamp(10px, 2.5vw, 18px);
+				background: none;
+				border: none;
+				color: #8e8e93;
+				font-size: clamp(1.2rem, 3vw, 1.5rem);
+				cursor: pointer;
+				width: 44px;
+				height: 44px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border-radius: 50%;
+				padding: 0;
+				transition: color 0.2s;
+			}
+
+			.close-x-btn:hover {
 				color: #ffffff;
 			}
 
+			.running-name {
+				font-size: clamp(1rem, 3.5vw, 1.4rem);
+				font-weight: 400;
+				color: #ffffff;
+				width: 80%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
 			.running-time {
-				font-size: clamp(3rem, 10vw, 5.5rem);
-				font-weight: 700;
+				font-size: clamp(2.5rem, 12vw, 6.5rem);
+				font-weight: 500;
 				font-family: Ubuntu, sans-serif;
-				letter-spacing: -2px;
+				letter-spacing: 1px; /* Increased kerning/spacing[cite: 10] */
 				color: #ffffff;
 				line-height: 1;
 			}
@@ -141,15 +175,15 @@
 				display: flex;
 				align-items: center;
 				gap: 6px;
-				font-size: 1rem;
+				font-size: clamp(0.85rem, 2.5vw, 1.1rem);
 				color: #8e8e93;
 			}
 
 			.control-btn {
 				background-color: #2c2c2e;
 				border: none;
-				width: 56px;
-				height: 56px;
+				width: clamp(44px, 10vw, 60px);
+				height: clamp(44px, 10vw, 60px);
 				border-radius: 50%;
 				display: flex;
 				align-items: center;
@@ -164,30 +198,8 @@
 
 			.control-icon {
 				fill: #ffffff;
-				width: 20px;
-				height: 20px;
-			}
-
-			.actions-row {
-				display: flex;
-				gap: 15px;
-				align-items: center;
-			}
-
-			.reset-btn {
-				background: none;
-				border: 1px solid #3a3a3c;
-				color: #ff4d4d;
-				padding: 10px 16px;
-				border-radius: 8px;
-				font-family: Ubuntu;
-				font-size: 14px;
-				cursor: pointer;
-				transition: background-color 0.2s;
-			}
-
-			.reset-btn:hover {
-				background-color: rgba(255, 77, 77, 0.1);
+				width: clamp(16px, 4vw, 22px);
+				height: clamp(16px, 4vw, 22px);
 			}
 		</style>
 	</head>
@@ -215,7 +227,7 @@
 				const minutesInput = document.getElementById('timer-minutes');
 				const secondsInput = document.getElementById('timer-seconds');
 
-				const name = nameInput.value.trim() || 'Timer Name Here';
+				const name = nameInput.value.trim() || ' ';
 				const hours = parseInt(hoursInput.value) || 0;
 				const minutes = parseInt(minutesInput.value) || 0;
 				const seconds = parseInt(secondsInput.value) || 0;
@@ -274,16 +286,16 @@
 						<div class="timer-form-card">
 							<div class="form-row">
 								<label for="timer-name">Timer Name</label>
-								<input type="text" id="timer-name" placeholder="e.g., Timer Name Here" autocomplete="off" value="Timer Name Here">
+								<input type="text" id="timer-name" placeholder="Enter a name..." autocomplete="off" value="">
 							</div>
 							<div class="time-inputs">
 								<div class="form-row">
 									<label for="timer-hours">Hours</label>
-									<input type="number" id="timer-hours" min="0" value="0">
+									<input type="number" id="timer-hours" min="0" value="1">
 								</div>
 								<div class="form-row">
 									<label for="timer-minutes">Minutes</label>
-									<input type="number" id="timer-minutes" min="0" max="59" value="25">
+									<input type="number" id="timer-minutes" min="0" max="59" value="45">
 								</div>
 								<div class="form-row">
 									<label for="timer-seconds">Seconds</label>
@@ -294,45 +306,58 @@
 						</div>
 					`;
 				} else {
-					let diffSeconds = timerState.remainingSeconds;
-					if (timerState.isRunning) {
-						const now = Date.now();
-						diffSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
-						if (diffSeconds === 0 && timerState.isRunning) {
-							timerState.isRunning = false;
-						}
-					}
-
-					const h = Math.floor(diffSeconds / 3600);
-					const m = Math.floor((diffSeconds % 3600) / 60);
-					const s = diffSeconds % 60;
-
-					const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-					
-					const iconPath = timerState.isRunning 
-						? '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>' 
-						: '<path d="M8 5v14l11-7z"/>';
-
-					container.innerHTML = `
-						<div class="running-card">
-							<div class="running-name">${timerState.name}</div>
-							<div class="running-time">${timeStr}</div>
-							<div class="running-meta">
-								<span>🔔</span> ${timerState.endFormatted}
-							</div>
-							<div class="actions-row">
-								<button class="control-btn" onclick="togglePause()" title="${timerState.isRunning ? 'Pause' : 'Play'}">
-									<svg class="control-icon" viewBox="0 0 24 24">${iconPath}</svg>
+					// Only build the running card shell once if it doesn't already exist
+					if (!container.querySelector('.running-card')) {
+						container.innerHTML = `
+							<div class="running-card">
+								<button class="close-x-btn" onclick="resetTimer()" title="Close Timer">&times;</button>
+								<div class="running-name"></div>
+								<div class="running-time"></div>
+								<div class="running-meta"></div>
+								<button class="control-btn" onclick="togglePause()">
+									<svg class="control-icon" viewBox="0 0 24 24"></svg>
 								</button>
-								<button class="reset-btn" onclick="resetTimer()">New Timer</button>
 							</div>
-						</div>
-					`;
+						`;
+					}
+					updateRunningCardValues();
 				}
 			}
 
+			function updateRunningCardValues() {
+				if (!timerState) return;
+				const card = document.querySelector('.running-card');
+				if (!card) return;
+
+				let diffSeconds = timerState.remainingSeconds;
+				if (timerState.isRunning) {
+					const now = Date.now();
+					diffSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
+					if (diffSeconds === 0 && timerState.isRunning) {
+						timerState.isRunning = false;
+					}
+				}
+
+				const h = Math.floor(diffSeconds / 3600);
+				const m = Math.floor((diffSeconds % 3600) / 60);
+				const s = diffSeconds % 60;
+				const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+				
+				const iconPath = timerState.isRunning 
+					? '<path d="M6 4h4v16H6zm8 0h4v16h-4z"/>' 
+					: '<path d="M8 5v14l11-7z"/>';
+
+				card.querySelector('.running-name').textContent = timerState.name;
+				card.querySelector('.running-time').textContent = timeStr;
+				card.querySelector('.running-meta').textContent = timerState.endFormatted;
+				
+				const controlBtn = card.querySelector('.control-btn');
+				controlBtn.title = timerState.isRunning ? 'Pause' : 'Play';
+				card.querySelector('.control-icon').innerHTML = iconPath;
+			}
+
 			function checkFullscreen() {
-				if (document.fullscreenElement || document.webkitFullscreenElement) {
+				if (document.fullscreenElement || document.webkitFullscreenElement || window.innerHeight === screen.height) {
 					document.body.classList.add('fullscreen-mode');
 				} else {
 					document.body.classList.remove('fullscreen-mode');
@@ -341,14 +366,17 @@
 
 			document.addEventListener('fullscreenchange', checkFullscreen);
 			document.addEventListener('webkitfullscreenchange', checkFullscreen);
+			window.addEventListener('resize', checkFullscreen);
 
+			// Update only the numbers/icons smoothly without destroying the DOM elements
 			setInterval(() => {
 				if (timerState && timerState.isRunning) {
-					render();
+					updateRunningCardValues();
 				}
 			}, 250);
 
 			render();
+			checkFullscreen();
 		</script>
 	</body>
 </html>
