@@ -31,7 +31,7 @@
 				background: #000000;
 			}
 
-			/* Completely hide top navbar in fullscreen mode[cite: 10] */
+			/* Completely hide top navbar in fullscreen mode */
 			body.fullscreen-mode #header {
 				display: none !important;
 				height: 0 !important;
@@ -111,7 +111,7 @@
 				background-color: #666;
 			}
 
-			/* Running Timer Card UI with Increased Letter Spacing[cite: 10] */
+			/* Running Timer Card UI with Increased Letter Spacing */
 			.running-card {
 				position: relative;
 				background-color: #1a1a1a;
@@ -167,7 +167,7 @@
 				font-size: clamp(2.5rem, 12vw, 6.5rem);
 				font-weight: 500;
 				font-family: Ubuntu, sans-serif;
-				letter-spacing: 1px; /* Increased kerning/spacing[cite: 10] */
+				letter-spacing: 1px; /* Increased kerning/spacing */
 				color: #ffffff;
 				line-height: 1;
 			}
@@ -269,6 +269,8 @@
 
 			function togglePause() {
 				if (!timerState) return;
+				if (timerState.remainingSeconds === 0) return;
+
 				if (timerState.isRunning) {
 					const now = Date.now();
 					timerState.remainingSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
@@ -281,11 +283,13 @@
 				}
 				saveState();
 				render();
+				updateRunningCardValues();
 			}
 
 			function resetTimer() {
 				timerState = null;
 				localStorage.removeItem('singleCountdownTimer');
+				document.title = "Countdown";
 				render();
 			}
 
@@ -293,6 +297,7 @@
 				const container = document.getElementById('main-container');
 
 				if (!timerState) {
+					document.title = "Countdown";
 					container.innerHTML = `
 						<div class="timer-form-card">
 							<div class="form-row">
@@ -335,7 +340,10 @@
 			}
 
 			function updateRunningCardValues() {
-				if (!timerState) return;
+				if (!timerState) {
+					document.title = "Countdown";
+					return;
+				}
 				const card = document.querySelector('.running-card');
 				if (!card) return;
 
@@ -343,8 +351,10 @@
 				if (timerState.isRunning) {
 					const now = Date.now();
 					diffSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
-					if (diffSeconds === 0 && timerState.isRunning) {
+					if (diffSeconds === 0) {
 						timerState.isRunning = false;
+						timerState.remainingSeconds = 0;
+						saveState();
 					}
 				}
 
@@ -361,6 +371,15 @@
 				
 				const timeEl = card.querySelector('.running-time');
 				timeEl.textContent = timeStr;
+
+				// Update dynamic browser tab title without blinking
+				if (diffSeconds === 0) {
+					document.title = "00:00:00 - Ended";
+				} else if (timerState.isRunning) {
+					document.title = timeStr;
+				} else {
+					document.title = timeStr + " - Paused";
+				}
 
 				if (diffSeconds === 0) {
 					timeEl.classList.add('timer-expired');
@@ -394,7 +413,7 @@
 			window.addEventListener('resize', checkFullscreen);
 
 			setInterval(() => {
-				if (timerState && timerState.isRunning) {
+				if (timerState) {
 					updateRunningCardValues();
 				}
 			}, 250);
