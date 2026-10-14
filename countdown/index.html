@@ -226,6 +226,32 @@
 
 		<script>
 			let timerState = JSON.parse(localStorage.getItem('singleCountdownTimer')) || null;
+			let wakeLock = null;
+
+			async function requestWakeLock() {
+				if ('wakeLock' in navigator && timerState && timerState.isRunning) {
+					try {
+						wakeLock = await navigator.wakeLock.request('screen');
+					} catch (err) {
+						console.log(`${err.name}, ${err.message}`);
+					}
+				}
+			}
+
+			function releaseWakeLock() {
+				if (wakeLock !== null) {
+					wakeLock.release().then(() => {
+						wakeLock = null;
+					});
+				}
+			}
+
+			// Re-acquire wake lock if user switches back to the tab
+			document.addEventListener('visibilitychange', async () => {
+				if (wakeLock !== null && document.visibilityState === 'visible' && timerState && timerState.isRunning) {
+					await requestWakeLock();
+				}
+			});
 
 			function saveState() {
 				localStorage.setItem('singleCountdownTimer', JSON.stringify(timerState));
@@ -265,6 +291,7 @@
 
 				saveState();
 				render();
+				requestWakeLock();
 			}
 
 			function togglePause() {
@@ -275,11 +302,13 @@
 					const now = Date.now();
 					timerState.remainingSeconds = Math.max(0, Math.ceil((timerState.endTime - now) / 1000));
 					timerState.isRunning = false;
+					releaseWakeLock();
 				} else {
 					timerState.endTime = Date.now() + (timerState.remainingSeconds * 1000);
 					const targetDate = new Date(timerState.endTime);
 					timerState.endFormatted = targetDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 					timerState.isRunning = true;
+					requestWakeLock();
 				}
 				saveState();
 				render();
@@ -287,6 +316,7 @@
 			}
 
 			function resetTimer() {
+				releaseWakeLock();
 				timerState = null;
 				localStorage.removeItem('singleCountdownTimer');
 				document.title = "Countdown";
@@ -297,6 +327,7 @@
 				const container = document.getElementById('main-container');
 
 				if (!timerState) {
+					releaseWakeLock();
 					document.title = "Countdown";
 					container.innerHTML = `
 						<div class="timer-form-card">
@@ -336,6 +367,9 @@
 						`;
 					}
 					updateRunningCardValues();
+					if (timerState.isRunning) {
+						requestWakeLock();
+					}
 				}
 			}
 
@@ -354,6 +388,7 @@
 					if (diffSeconds === 0) {
 						timerState.isRunning = false;
 						timerState.remainingSeconds = 0;
+						releaseWakeLock();
 						saveState();
 					}
 				}
@@ -372,7 +407,6 @@
 				const timeEl = card.querySelector('.running-time');
 				timeEl.textContent = timeStr;
 
-				// Update dynamic browser tab title without blinking
 				if (diffSeconds === 0) {
 					document.title = "00:00:00 - Ended";
 				} else if (timerState.isRunning) {
@@ -420,6 +454,9 @@
 
 			render();
 			checkFullscreen();
+			if (timerState && timerState.isRunning) {
+				requestWakeLock();
+			}
 		</script>
 	</body>
 </html>
