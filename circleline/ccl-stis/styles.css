@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stis-screen {
+  width: 100vw;
+  height: 56.25vw; /* 16:9 ratio */
+  max-height: 100vh;
+  max-width: 177.78vh;
+  background-color: #000000;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  container-type: inline-size;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================
+   VIEW 1: SCHEDULE VIEW
+   ========================================= */
+.schedule-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Top Bar (Platform A / Arriving in) */
+.top-bar {
+  height: 14%;
+  padding: 0 3.2cqw 1.0cqw 1.4cqw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 0.32cqw solid #ffffff;
+}
+
+.platform-name,
+.prefix,
+.station-name {
+  font-size: 4.7cqw;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.platform-name {
+  letter-spacing: -0.01em;
+}
+
+.prefix,
+.station-name {
+  white-space: nowrap;
+}
+
+.arriving-header,
+.direction,
+.eta-unit,
+.clock {
+  font-size: 3.7cqw;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* Train Arrival Rows */
+.train-row {
+  height: 36.2%;
+  padding: 3.6cqw 3.2cqw 0 1.4cqw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 0.32cqw solid #ffffff;
+}
+
+.train-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2.6cqw;
+}
+
+.destination-line {
+  display: flex;
+  align-items: center;
+  gap: 1.3cqw;
+}
+
+.schedule-view .caplet-svg {
+  height: 4.4cqw;
+  width: auto;
+  display: block;
+}
+
+/* ETA */
+.eta-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 8.5cqw;
+  margin-top: -0.8cqw;
+}
+
+.eta-number {
+  font-size: 12.2cqw;
+  font-weight: 700;
+  line-height: 0.88;
+}
+
+.eta-unit {
+  margin-top: 0.9cqw;
+}
+
+/* Bottom Clock */
+.bottom-bar {
+  height: 13.6%;
+  padding: 0 1.4cqw;
+  display: flex;
+  align-items: center;
+}
+
+.clock {
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================
+   VIEW 2: ARRIVING OVERLAY VIEW
+   ========================================= */
+.arriving-view {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  padding: 3.8cqw 2cqw 2cqw 2cqw;
+}
+
+@keyframes blinkYellow {
+  0%, 100% { color: #ffffff; }
+	50% { color: #ffff00; }
+}
+
+.blink-yellow {
+  animation: blinkYellow 2s steps(1) infinite;
+}
+
+.arr-direction {
+  font-size: 4.1cqw;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 1.8cqw;
+}
+
+.arr-prefix,
+.arr-station {
+  font-size: 7.0cqw;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.arr-prefix {
+  margin-bottom: 3.4cqw;
+}
+
+.arriving-view .caplet-svg {
+  height: 10.2cqw;
+  width: auto;
+  display: block;
+  margin-bottom: 3.4cqw;
+}

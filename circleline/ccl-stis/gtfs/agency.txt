@@ -1,0 +1,4 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_email
+LTA,Land Transport Authority,https://www.lta.gov.sg,Asia/Singapore,en,
+SMRT,SMRT,https://www.smrt.com.sg/,Asia/Singapore,en,
+SBST,SBS Transit,https://www.sbstransit.com.sg/,Asia/Singapore,en,customercare@sbstransit.com.sg

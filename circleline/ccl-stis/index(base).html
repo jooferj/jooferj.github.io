@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCL STIS Display</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- 16:9 STIS Screen Container -->
+  <main class="stis-screen">
+
+    <!-- ==========================================
+         VIEW 1: Standard Next Train Arrival Screen
+         (Toggle .hidden to switch views via JS)
+         ========================================== -->
+    <section id="view-schedule" class="schedule-view">
+      
+      <!-- Top Header Bar -->
+      <header class="top-bar">
+        <div class="platform-name" id="platform-label">Platform A</div>
+        <div class="arriving-header">Arriving in</div>
+      </header>
+
+      <!-- First Upcoming Train Row -->
+      <div class="train-row" id="train-1">
+        <div class="train-info">
+          <div class="direction" id="train-1-dir">Anticlockwise</div>
+          <div class="destination-line">
+            <span class="prefix" id="train-1-prefix">ends at</span>
+            <img src="caplets/CC33 MRB.svg" alt="CC 33 TE 20 NS 27" class="caplet-svg" id="train-1-caplet" />
+            <span class="station-name" id="train-1-station">Marina Bay</span>
+          </div>
+        </div>
+        <div class="eta-block">
+          <span class="eta-number" id="train-1-eta">2</span>
+          <span class="eta-unit" id="train-1-unit">mins</span>
+        </div>
+      </div>
+
+      <!-- Second Upcoming Train Row -->
+      <div class="train-row" id="train-2">
+        <div class="train-info">
+          <div class="direction" id="train-2-dir">Anticlockwise</div>
+          <div class="destination-line">
+            <span class="prefix" id="train-2-prefix">via</span>
+            <img src="caplets/CC10 MPS.svg" alt="CC 10 DT 26" class="caplet-svg" id="train-2-caplet" />
+            <span class="station-name" id="train-2-station">MacPherson</span>
+          </div>
+        </div>
+        <div class="eta-block">
+          <span class="eta-number" id="train-2-eta">6</span>
+          <span class="eta-unit" id="train-2-unit">mins</span>
+        </div>
+      </div>
+
+      <!-- Bottom Clock Footer -->
+      <footer class="bottom-bar">
+        <div class="clock" id="system-clock">22:09:55</div>
+      </footer>
+
+    </section>
+
+    <!-- ==========================================
+         VIEW 2: Full-Screen "Train Arriving" View
+         (Remove .hidden when train is arriving)
+         ========================================== -->
+    <section id="view-arriving" class="arriving-view hidden">
+      <div class="arr-direction" id="arr-dir">Anticlockwise</div>
+      <div class="arr-prefix" id="arr-prefix">ends at</div>
+      <img src="caplets/CC33 MRB.svg" alt="CC 33 TE 20 NS 27" class="arr-caplet-svg" id="arr-caplet" />
+      <div class="arr-station" id="arr-station">Marina Bay</div>
+    </section>
+
+  </main>
+
+</body>
+</html>
