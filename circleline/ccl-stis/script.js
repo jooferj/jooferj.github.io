@@ -18,9 +18,10 @@ let gtfsData = {
 };
 let isDataLoaded = false;
 
-// Audio Announcement State Tracking
+// Audio Announcement & Active Arriving State Tracking
 let lastPlayedTripId = null;
 let currentAudio = null;
+let activeArrivingTripId = null; // Locks the arriving view for the active train
 
 // Circle Line Station Sequence (CC4 to CC34) for Interchange Lookups
 const cclLoop = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34];
@@ -341,66 +342,102 @@ function updateDisplay() {
   const arrDirEl = document.getElementById('arr-dir');
 
   if (arrivingView && scheduleView) {
-    if (filteredTrains.length > 0) {
+    // Check if we have an active arriving train locked in, or if the next train enters the show window
+    let targetTrain = null;
+
+    if (activeArrivingTripId) {
+      // Find the locked train in upcomingTrains (or search all stop times if it has already passed arrival)
+      targetTrain = upcomingTrains.find(t => t.tripId === activeArrivingTripId);
+      if (!targetTrain) {
+        // If it's no longer in upcomingTrains because arrival time passed, grab it from filtered/stored check or stopTimes directly
+        const stMatch = gtfsData.stopTimes.find(st => st.trip_id === activeArrivingTripId && st.stop_id.toUpperCase() === currentStopId.toUpperCase());
+        if (stMatch) {
+          const arrSec = timeToSeconds(stMatch.arrival_time);
+          const depSec = timeToSeconds(stMatch.departure_time || stMatch.arrival_time);
+          const trip = gtfsData.trips[stMatch.trip_id];
+          targetTrain = {
+            tripId: stMatch.trip_id,
+            headsign: trip ? trip.trip_headsign : "Marina Bay",
+            arrivalSeconds: arrSec,
+            departureSeconds: depSec
+          };
+        }
+      }
+
+      if (targetTrain) {
+        const secondsAfterDeparture = currentSeconds - targetTrain.departureSeconds;
+        if (secondsAfterDeparture > HIDE_AFTER_SECONDS) {
+          // Time to release the lock and hide the arriving view
+          activeArrivingTripId = null;
+          targetTrain = null;
+        }
+      } else {
+        activeArrivingTripId = null;
+      }
+    }
+
+    // If no active locked train, check if the next upcoming train meets the SHOW condition
+    if (!targetTrain && filteredTrains.length > 0) {
       const nextTrain = filteredTrains[0];
       const secondsUntilArrival = nextTrain.arrivalSeconds - currentSeconds;
       const secondsAfterDeparture = currentSeconds - nextTrain.departureSeconds;
 
-      // Show SHOW_BEFORE_SECONDS before arrival time, and hide HIDE_AFTER_SECONDS after departure time
       if (secondsUntilArrival <= SHOW_BEFORE_SECONDS && secondsAfterDeparture <= HIDE_AFTER_SECONDS) {
-        arrivingView.classList.remove('hidden');
-        scheduleView.classList.add('hidden');
-        
-        const { baseCode, plat } = parseStopId(currentStopId);
-        const upperBase = baseCode.toUpperCase();
-        const dirText = getDirectionText(baseCode, plat);
-
-        let arrStationText = nextTrain.headsign;
-        let arrCapletTarget = nextTrain.headsign;
-        let arrPrefixText = 'ends at';
-        let isLoop = false;
-        let audioTargetCode = '';
-
-        const headsignUpper = nextTrain.headsign.toUpperCase().trim();
-        const isLoopHeadsign = (headsignUpper === 'CLOCKWISE' || headsignUpper === 'ANTICLOCKWISE');
-
-        if (isLoopHeadsign && upperBase !== 'CC1' && upperBase !== 'CC2' && upperBase !== 'CC3') {
-          const nextIntCode = getNextInterchange(upperBase, dirText);
-          if (nextIntCode && gtfsData.stationsMap[nextIntCode]) {
-            arrPrefixText = 'via';
-            arrStationText = gtfsData.stationsMap[nextIntCode];
-            arrCapletTarget = arrStationText;
-            isLoop = true;
-            audioTargetCode = nextIntCode;
-          }
-        } else {
-          audioTargetCode = getCapletFilename(nextTrain.headsign).replace('.svg', '');
-        }
-
-        document.getElementById('arr-station').textContent = arrStationText;
-        document.getElementById('arr-caplet').src = `caplets/${getCapletFilename(arrCapletTarget)}`;
-        
-        const prefixEl = document.getElementById('arr-prefix');
-        if (prefixEl) prefixEl.textContent = arrPrefixText;
-        
-        if (arrDirEl) {
-          arrDirEl.textContent = dirText;
-          arrDirEl.classList.add('blink-yellow');
-        }
-
-        // Trigger PA Audio Announcement safely
-        playArrivalAnnouncement(plat, dirText, isLoop, audioTargetCode, nextTrain.tripId);
-
-      } else {
-        arrivingView.classList.add('hidden');
-        scheduleView.classList.remove('hidden');
-        if (secondsAfterDeparture > HIDE_AFTER_SECONDS) {
-          lastPlayedTripId = null;
-        }
+        activeArrivingTripId = nextTrain.tripId;
+        targetTrain = nextTrain;
       }
+    }
+
+    if (targetTrain) {
+      arrivingView.classList.remove('hidden');
+      scheduleView.classList.add('hidden');
+      
+      const { baseCode, plat } = parseStopId(currentStopId);
+      const upperBase = baseCode.toUpperCase();
+      const dirText = getDirectionText(baseCode, plat);
+
+      let arrStationText = targetTrain.headsign;
+      let arrCapletTarget = targetTrain.headsign;
+      let arrPrefixText = 'ends at';
+      let isLoop = false;
+      let audioTargetCode = '';
+
+      const headsignUpper = targetTrain.headsign.toUpperCase().trim();
+      const isLoopHeadsign = (headsignUpper === 'CLOCKWISE' || headsignUpper === 'ANTICLOCKWISE');
+
+      if (isLoopHeadsign && upperBase !== 'CC1' && upperBase !== 'CC2' && upperBase !== 'CC3') {
+        const nextIntCode = getNextInterchange(upperBase, dirText);
+        if (nextIntCode && gtfsData.stationsMap[nextIntCode]) {
+          arrPrefixText = 'via';
+          arrStationText = gtfsData.stationsMap[nextIntCode];
+          arrCapletTarget = arrStationText;
+          isLoop = true;
+          audioTargetCode = nextIntCode;
+        }
+      } else {
+        audioTargetCode = getCapletFilename(targetTrain.headsign).replace('.svg', '');
+      }
+
+      document.getElementById('arr-station').textContent = arrStationText;
+      document.getElementById('arr-caplet').src = `caplets/${getCapletFilename(arrCapletTarget)}`;
+      
+      const prefixEl = document.getElementById('arr-prefix');
+      if (prefixEl) prefixEl.textContent = arrPrefixText;
+      
+      if (arrDirEl) {
+        arrDirEl.textContent = dirText;
+        arrDirEl.classList.add('blink-yellow');
+      }
+
+      // Trigger PA Audio Announcement safely
+      playArrivalAnnouncement(plat, dirText, isLoop, audioTargetCode, targetTrain.tripId);
+
     } else {
       arrivingView.classList.add('hidden');
       scheduleView.classList.remove('hidden');
+      if (!activeArrivingTripId) {
+        lastPlayedTripId = null;
+      }
     }
   }
 }
