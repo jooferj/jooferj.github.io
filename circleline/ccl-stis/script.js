@@ -1,6 +1,6 @@
 // --- CONFIGURABLE DELAY VARIABLES ---
-const SHOW_BEFORE_SECONDS = 15; 
-const HIDE_AFTER_SECONDS = 15;  
+const SHOW_BEFORE_SECONDS = 20; 
+const HIDE_AFTER_SECONDS = 0;  
 
 // Parse URL Parameter for stop_id (e.g., index.html?stop=CC3_A)
 const urlParams = new URLSearchParams(window.location.search);
@@ -253,16 +253,10 @@ function playArrivalAnnouncement(platform, directionText, isLoop, targetCode, tr
   }
 
   const audio = new Audio();
-  
-  // If file cannot be found (404), catch error silently and do not play
-  audio.onerror = () => {
-    // File missing - do nothing
-  };
+  audio.onerror = () => {}; // Suppress missing file errors
 
   audio.src = filename;
-  audio.play().catch(() => {
-    // Suppress unhandled promise rejection if file is missing or browser blocks autoplay
-  });
+  audio.play().catch(() => {});
 
   currentAudio = audio;
 }
@@ -313,11 +307,13 @@ function updateDisplay() {
     })
     .map(st => {
       const arrSec = timeToSeconds(st.arrival_time);
+      const depSec = timeToSeconds(st.departure_time || st.arrival_time);
       const trip = gtfsData.trips[st.trip_id];
       return {
         tripId: st.trip_id,
         headsign: trip ? trip.trip_headsign : "Marina Bay",
         arrivalSeconds: arrSec,
+        departureSeconds: depSec,
         etaMinutes: Math.ceil((arrSec - currentSeconds) / 60)
       };
     })
@@ -348,8 +344,10 @@ function updateDisplay() {
     if (filteredTrains.length > 0) {
       const nextTrain = filteredTrains[0];
       const secondsUntilArrival = nextTrain.arrivalSeconds - currentSeconds;
+      const secondsAfterDeparture = currentSeconds - nextTrain.departureSeconds;
 
-      if (secondsUntilArrival <= SHOW_BEFORE_SECONDS && secondsUntilArrival >= -HIDE_AFTER_SECONDS) {
+      // Show SHOW_BEFORE_SECONDS before arrival time, and hide HIDE_AFTER_SECONDS after departure time
+      if (secondsUntilArrival <= SHOW_BEFORE_SECONDS && secondsAfterDeparture <= HIDE_AFTER_SECONDS) {
         arrivingView.classList.remove('hidden');
         scheduleView.classList.add('hidden');
         
@@ -396,7 +394,7 @@ function updateDisplay() {
       } else {
         arrivingView.classList.add('hidden');
         scheduleView.classList.remove('hidden');
-        if (secondsUntilArrival < -HIDE_AFTER_SECONDS) {
+        if (secondsAfterDeparture > HIDE_AFTER_SECONDS) {
           lastPlayedTripId = null;
         }
       }
