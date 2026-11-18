@@ -1,5 +1,5 @@
 // --- CONFIGURABLE DELAY VARIABLES ---
-const SHOW_BEFORE_SECONDS = 30; 
+const SHOW_BEFORE_SECONDS = 15; 
 const HIDE_AFTER_SECONDS = 15;  
 
 // Parse URL Parameter for stop_id (e.g., index.html?stop=CC3_A)
@@ -17,6 +17,10 @@ let gtfsData = {
   stationsMap: {}
 };
 let isDataLoaded = false;
+
+// Audio Announcement State Tracking
+let lastPlayedTripId = null;
+let currentAudio = null;
 
 // Circle Line Station Sequence (CC4 to CC34) for Interchange Lookups
 const cclLoop = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34];
@@ -234,6 +238,35 @@ function getNextInterchange(currentCodeStr, direction) {
   return null;
 }
 
+// Play PA announcement audio safely (does nothing if file is missing/not found)
+function playArrivalAnnouncement(platform, directionText, isLoop, targetCode, tripId) {
+  if (lastPlayedTripId === tripId) return;
+  lastPlayedTripId = tripId;
+
+  const dirCode = (directionText.toUpperCase() === 'CLOCKWISE') ? 'CW' : 'ACW';
+  const typeCode = isLoop ? 'LOOP' : 'END';
+  const filename = `pa/${platform.toUpperCase()} ${dirCode} ${typeCode} ${targetCode.toUpperCase()}.m4a`;
+
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio = null;
+  }
+
+  const audio = new Audio();
+  
+  // If file cannot be found (404), catch error silently and do not play
+  audio.onerror = () => {
+    // File missing - do nothing
+  };
+
+  audio.src = filename;
+  audio.play().catch(() => {
+    // Suppress unhandled promise rejection if file is missing or browser blocks autoplay
+  });
+
+  currentAudio = audio;
+}
+
 // Main update tick
 function updateDisplay() {
   const now = new Date();
@@ -327,6 +360,8 @@ function updateDisplay() {
         let arrStationText = nextTrain.headsign;
         let arrCapletTarget = nextTrain.headsign;
         let arrPrefixText = 'ends at';
+        let isLoop = false;
+        let audioTargetCode = '';
 
         const headsignUpper = nextTrain.headsign.toUpperCase().trim();
         const isLoopHeadsign = (headsignUpper === 'CLOCKWISE' || headsignUpper === 'ANTICLOCKWISE');
@@ -337,7 +372,11 @@ function updateDisplay() {
             arrPrefixText = 'via';
             arrStationText = gtfsData.stationsMap[nextIntCode];
             arrCapletTarget = arrStationText;
+            isLoop = true;
+            audioTargetCode = nextIntCode;
           }
+        } else {
+          audioTargetCode = getCapletFilename(nextTrain.headsign).replace('.svg', '');
         }
 
         document.getElementById('arr-station').textContent = arrStationText;
@@ -350,9 +389,16 @@ function updateDisplay() {
           arrDirEl.textContent = dirText;
           arrDirEl.classList.add('blink-yellow');
         }
+
+        // Trigger PA Audio Announcement safely
+        playArrivalAnnouncement(plat, dirText, isLoop, audioTargetCode, nextTrain.tripId);
+
       } else {
         arrivingView.classList.add('hidden');
         scheduleView.classList.remove('hidden');
+        if (secondsUntilArrival < -HIDE_AFTER_SECONDS) {
+          lastPlayedTripId = null;
+        }
       }
     } else {
       arrivingView.classList.add('hidden');
@@ -388,7 +434,6 @@ function renderTrainRow(rowNum, trainData, currentSeconds) {
 
   if (etaNumEl) etaNumEl.textContent = etaMins;
   
-  // Display "min" if 1 minute away, otherwise "mins"
   if (unitEl) {
     unitEl.textContent = (etaMins === 1) ? 'min' : 'mins';
   }

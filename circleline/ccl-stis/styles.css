@@ -1,3 +1,28 @@
+@font-face {
+  font-family: 'arial';
+  src: url('fonts/arial.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'arial';
+  src: url('fonts/arial_italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'arial';
+  src: url('fonts/arial_bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'arial';
+  src: url('fonts/arial_bolditalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +32,7 @@
 body {
   background-color: #000000;
   color: #ffffff;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'arial', Arial, Helvetica, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +46,7 @@ body {
   height: 56.25vw; /* 16:9 ratio */
   max-height: 100vh;
   max-width: 177.78vh;
-  background-color: #000000;
+  background-color: #050505;
   position: relative;
   display: flex;
   flex-direction: column;
